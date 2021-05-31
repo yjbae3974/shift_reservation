@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Material Design for Bootstrap</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    />
+    <style>
+      .card{
+        
+        height: 664px;
+        margin: 20px;
+      }
+      button{
+        background-color: transparent;
+        border: none;
+
+      }
+      .slick-prev, .slick-next {
+          opacity: 0.5 !important;
+      }
+      .slick-cloned{
+        animation-name: disappear;
+        animation-duration: 1s;
+      }
+      @keyframes disappear{
+        from{
+          opacity: 1;
+        }
+        to{
+          opacity: 0;
+        }
+      }
+     
+    </style>
+    
+    <!-- MDB -->
+    <link rel="stylesheet" href="css/mdb.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+      $(document).on('ready',function(){
+        $('.post-slider').slick({
+          infinite: true,
+          varialbeWidth: true,
+          autoplay: true,
+          autoplaySpeed: 5000,
+          
+          slidesToShow: 2.5,
+          slidesToScroll: 1,
+          lazyLoad: 'ondemand',
+          prevArrow: $('#prev'), 
+          nextArrow: $('#next'),
+          responsive: [
+            {
+              breakpoint: 768,
+              settings: {
+                arrows: false,
+                centerMode: true,
+                
+                slidesToShow: 3
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                arrows: false,
+                centerMode: true,
+                
+                slidesToShow: 1
+              }
+            }
+          ]
+        });
+      });
+      
+    </script>
+  </head>
+  <body>
+    <div class="container text-center my-3" style="background-color: aliceblue;height: 90vh;">
+      <h2 class="font-weight-light">Bootstrap 4 - Multi Item Carousel</h2>
+      <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-7">
+          <div class="post-slider">
+            <div class="card" style="width: 390px;">
+              <div class="card-body">
+                <div class="card-title">1</div>
+                <div class="card-text">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title">2</div>
+                <div class="card-text">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title">3</div>
+                <div class="card-text">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title">4</div>
+                <div class="card-text">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <div class="d-flex" style="padding: 12px;">
+            
+            <button class='slick-prev' id="prev"><i class='fas fa-arrow-left'></i></button>
+            <span>1/4</span><!--여기 어떻게 해야할까...ㅋㅋㅋㅋㅋ-->
+            <button class='slick-next' id="next"><i class='fas fa-arrow-right'></i></button>
+          </div>
+        </div>
+      </div>
+      
+      <h5 class="mt-2">Advances one slide at a time</h5>
+  </div>
+
+    <!-- MDB -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- Custom scripts -->
+    <script type="text/javascript"></script>
+
+    
+  </body>
+</html>
