@@ -43,7 +43,8 @@
     <link rel="stylesheet" href="css/mdb.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="js/slick.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>-->
     <script>
       $(document).on('ready',function(){
         $('.post-slider').slick({
@@ -55,11 +56,10 @@
           slidesToShow: 2.5,
           slidesToScroll: 1,
           lazyLoad: 'ondemand',
-          prevArrow: $('#prev'), 
-          
-           
+          prevArrow: $('#prev'),
+          prevArrow2: $('#prev2'),
           nextArrow: $('#next'),
-          
+          nextArrow2: $('#next2'),
           
           responsive: [
             {
@@ -102,10 +102,10 @@
             <i class="fas fa-bars"></i>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <a href="" class="nav-title">ENTER</a>
-            
-            
-            
+            <!--<a href="" class="nav-title">ENTER</a>-->
+            <a href="" class="nav-title" id="prev2" onclick="prevPg()">EN</a>
+            <a href="" class="nav-title">T</a>
+            <a href="" class="nav-title" id="next2" onclick="nextPg()">ER</a>
           </div>
         </div>
       </div>
@@ -157,9 +157,9 @@
             </div>
             <div class="d-flex" style="padding: 12px;">
               
-              <button class='slick-prev' id="prev"><i class='fas fa-arrow-left'></i></button>
-              <span class="mx-2"><span id="">1</span>/4</span><!--여기 어떻게 해야할까...ㅋㅋㅋㅋㅋ-->
-              <button class='slick-next' id="next"><i class='fas fa-arrow-right'></i></button>
+              <button class='slick-prev' id="prev" onclick="prevPg()"><i class='fas fa-arrow-left'></i></button>
+              <span class="mx-2"><span id="currentPg">1</span>/<span id="maxPg">4</span></span><!--여기 어떻게 해야할까...ㅋㅋㅋㅋㅋ-->
+              <button class='slick-next' id="next" onclick="nextPg()"><i class='fas fa-arrow-right'></i></button>
             </div>
           </div>
         </div>
@@ -173,9 +173,10 @@
 
     <!-- MDB -->
     <script type="text/javascript" src="js/mdb.min.js"></script>
+    
     <!-- Custom scripts -->
     <script type="text/javascript"></script>
-
+    <script type="text/javascript" src="js/pageSlide.js"></script>
     
   </body>
 </html>
