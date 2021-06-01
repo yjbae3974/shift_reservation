@@ -1,0 +1,12 @@
+.bg-strip{
+    background-size: calc(100% / 6);
+    background-repeat: repeat-x;
+    background-image: linear-gradient(to left, #c4c4c4 1px, transparent 1px, transparent);
+       
+}
+.bg-enter{
+    background-image: linear-gradient(to right, #fff calc(100% / 3), #0b1f43 calc(100% / 3) 100%)
+}
+.bg-base{
+    background-image: linear-gradient(to right, #fff 50%, #0b1f43 50% 100%);
+}
