@@ -20,6 +20,23 @@
 .navbar a:hover{
     color: #0b1f43;
 }
-.bg-navbar{
+
+@media(min-width:2000px){
+   
+};
+@media(min-width:576px){
+   
     
-}
+};
+@media(min-width:768px){
+    
+};
+@media(min-width:992px){
+    
+};
+@media(min-width:1200px){
+   
+};
+@media(min-width:1400px){
+   
+};
