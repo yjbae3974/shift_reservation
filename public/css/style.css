@@ -17,3 +17,9 @@
     font-weight: 700;
     color: #000
 }
+.navbar a:hover{
+    color: #0b1f43;
+}
+.bg-navbar{
+    
+}
