@@ -20,23 +20,114 @@
 .navbar a:hover{
     color: #0b1f43;
 }
+.title{
+    font-family: 'Noto Sans KR', sans-serif;
+    text-align: left;
+    margin-left: calc(100%/3);
+    font-weight: 700;
+    color: #060b11;
+}
+.sub-title{
+    font-size: 56px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    color: #060b11;
+}
+.sub-subtitle{
+    font-size: 32px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    color: #060b11;
+}
+.sub-content{
+    font-size: 18px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 400;
+    color: #808080;
+}
 
-@media(min-width:2000px){
-   
-};
+ hr.strip{
+    border: 1px solid #c4c4c4;
+    color: #c4c4c4
+ }
+ .container .below-title{
+     --container-margin: calc(100%/6);
+     margin: 0px var(--container-margin);
+     border-right: 1px solid #c4c4c4;
+     border-left: 1px solid #c4c4c4;
+ }
+ .mobile-nopad{
+     padding-left: 100px;
+ }
+ .mobile-nomar{
+    margin-left: 100px;
+}
+.btn-normal{
+    padding: 2px 20px 2px 20px;
+    margin: 0px;
+    background-color: #fff;
+    border: 1px solid #c4c4c4;
+    font-size: 14px;
+    color: #999999;
+    box-shadow: none;
+    cursor: pointer;
+  }
+  .box{
+      width: 100%;
+      padding: 92px 111px;
+      border: 1px solid #999999;
+      color: #060b11;
+      font-size: 56px;
+      display: flex;
+      justify-content: center;
+
+  }
 @media(min-width:576px){
    
     
-};
+}
 @media(min-width:768px){
+    .title{
+        font-size: 30px;
+    }
     
-};
+}
 @media(min-width:992px){
+    .title{
+        font-size: 40px;
+    }
+    .sub-title{
+        font-size: 40px;
+    }
+}
+@media(min-width:1079px){
     
-};
+    .sub-title{
+        font-size: 40px;
+    }
+}
 @media(min-width:1200px){
-   
-};
+   .title{
+       font-size: 44px;
+   }
+}
 @media(min-width:1400px){
+    .title{
+        font-size: 50px;
+    }
    
-};
+}
+@media(min-width:2000px){
+    .title{
+        font-size: 82px;
+    }
+    .below-title{
+        
+    }
+ }
+ @media(max-width:768px){
+    
+    .mobile-nopad{
+        padding: 0px;
+    }
+}
