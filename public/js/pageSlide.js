@@ -1,20 +1,3 @@
-function prevPg(){
-    currentPg = document.getElementById("currentPg").innerHTML*1
-    if(currentPg - 1 <= 0){ 
-    currentPg = document.getElementById("maxPg").innerHTML*1
-    }
-    else{
-    currentPg = currentPg-1
-    }
-    document.getElementById("currentPg").innerHTML = currentPg
-}
-function nextPg(){
-    currentPg = document.getElementById("currentPg").innerHTML*1
-    if(currentPg + 1 > document.getElementById("maxPg").innerHTML*1){ 
-    currentPg = 1
-    }
-    else{
-    currentPg = currentPg+1
-    }
-    document.getElementById("currentPg").innerHTML = currentPg
-}
+$('.post-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+    document.getElementById("currentPg").innerHTML = nextSlide+1
+  });

@@ -1,3 +1,16 @@
+window.addEventListener('scroll',(event) => {
+    var webpage = $("body");
+    var webpage_height = webpage.height();
+    //alert(webpage_height);
+    var trigger_height = webpage_height * 0.40625;
+    console.log('Scrolling...'+$(window).scrollTop());
+    
+    if ($(window).scrollTop() > (webpage_height-trigger_height)) {
+      console.log($(window).scrollTop()+" > "+(webpage_height-trigger_height));
+      //$("#divtoshow").show();
+    }
+});
+
 function animateValue(obj, start, end, duration) {
     let startTimestamp = null;
     const step = (timestamp) => {
@@ -31,6 +44,7 @@ function animateValue(obj, start, end, duration) {
     }
     return { top: _y, left: _x };
 }
+
 var x = getOffset( document.getElementById('statistics') ).left; 
 console.log(x)
   

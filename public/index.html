@@ -48,6 +48,19 @@
     <script src="js/slick.js"></script>
   
     <script>
+      /*$(document).ready(function(){
+          //Example - show a div after 75% of the web page is scrolled.
+          var webpage = $("body");
+          var webpage_height = webpage.height();
+          //alert(webpage_height);
+          var trigger_height = webpage_height * 0.5;
+
+          if ($(window).scrollTop() > (webpage_height-trigger_height)) {
+            alert($(window).scrollTop()+" > "+(webpage_height-trigger_height));
+            //$("#divtoshow").show();
+          }
+      });*/
+
       $(document).on('ready',function(){
         $('.post-slider').slick({
           infinite: true,
@@ -104,9 +117,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="d-flex">
-          <a href="" class="nav-title" id="prev2" onclick="prevPg()">EN</a>
+          <a href="" class="nav-title" id="prev2">EN</a>
           <a href="" class="nav-title">T</a>
-          <a href="" class="nav-title" id="next2" onclick="nextPg()">ER</a>
+          <a href="" class="nav-title" id="next2">ER</a>
         </div>
        
         <ul class="navbar-nav ms-auto" style="color: #8c8c8c;">
@@ -180,9 +193,9 @@
             </div>
             <div class="d-flex mobile-middle" style="padding: 12px;">
               
-              <button class='slick-prev' style="color: #fff;" id="prev" onclick="prevPg()"><i class='fas fa-arrow-left'></i></button>
+              <button class='slick-prev' style="color: #fff;" id="prev"><i class='fas fa-arrow-left'></i></button>
               <span class="mx-2"><span id="currentPg" style="color: #fff;">1</span> / <span id="maxPg">4</span></span>
-              <button class='slick-next' style="color: #fff;" id="next" onclick="nextPg()"><i class='fas fa-arrow-right'></i></button>
+              <button class='slick-next' style="color: #fff;" id="next"><i class='fas fa-arrow-right'></i></button>
             </div>
           </div>
           <hr class="strip">
