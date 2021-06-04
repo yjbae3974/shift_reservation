@@ -5,7 +5,7 @@ window.addEventListener('scroll',(event) => {
     var webpage_height = webpage.height();
     //alert(webpage_height);
     var trigger_height = webpage_height * 0.40625;
-    console.log('Scrolling...'+$(window).scrollTop());
+    //console.log('Scrolling...'+$(window).scrollTop());
     
     if ($(window).scrollTop() > (webpage_height-trigger_height) && triggered == false) {
       console.log($(window).scrollTop()+" > "+(webpage_height-trigger_height));
