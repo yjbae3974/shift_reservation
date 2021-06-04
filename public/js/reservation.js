@@ -1,3 +1,5 @@
+var triggered = false
+
 window.addEventListener('scroll',(event) => {
     var webpage = $("body");
     var webpage_height = webpage.height();
@@ -5,9 +7,13 @@ window.addEventListener('scroll',(event) => {
     var trigger_height = webpage_height * 0.40625;
     console.log('Scrolling...'+$(window).scrollTop());
     
-    if ($(window).scrollTop() > (webpage_height-trigger_height)) {
+    if ($(window).scrollTop() > (webpage_height-trigger_height) && triggered == false) {
       console.log($(window).scrollTop()+" > "+(webpage_height-trigger_height));
       //$("#divtoshow").show();
+      animateValue(obj_1, 0, 12384, 2000);
+      animateValue(obj_2, 0, 1795, 2000);
+      animateValue(obj_3, 0, 1053, 2000);
+      triggered = true
     }
 });
 
@@ -30,7 +36,7 @@ function animateValue(obj, start, end, duration) {
   let statPosition = document.getElementById("statistics").getBoundingClientRect();
   console.log(statPosition)
   
-    animateValue(obj_1, 0, 12384, 2000);
+  animateValue(obj_1, 0, 12384, 2000);
   animateValue(obj_2, 0, 1795, 2000);
   animateValue(obj_3, 0, 1053, 2000);
   
