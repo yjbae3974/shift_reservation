@@ -21,6 +21,7 @@
     color: #0b1f43;
 }
 .title{
+    font-size: 32px;
     font-family: 'Noto Sans KR', sans-serif;
     text-align: left;
     margin-left: calc(105%/3);
@@ -76,6 +77,16 @@
     box-shadow: none;
     cursor: pointer;
   }
+  .btn-reserve{
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 700 !important;
+      padding: 23px!important;
+      background-color: #fff !important;
+      font-size: 24px !important;
+      color: #222222;
+      border: 1px solid #222222 !important;
+      border-radius: 1rem;
+  }
   .btn-sub{
       width: 20%;
       background-color: #17375e;
@@ -105,8 +116,23 @@
       color: #fff;
       min-height: 170px;
   }
+  .logo-base{
+      flex-wrap: wrap;
+      height: 46px;
+      width: 46px;
+  }
+  .logo-conponent{
+      
+      width: 50%;
+      height: 50%;
+  }
+  .mobile-black{
+      color: #fff;
+  }
 @media(min-width:576px){
-   
+   .title{
+       font-size: 32px;
+   }
     .img-ver{
         width: 267px;
         height:378px;
@@ -175,7 +201,7 @@
 }
 @media(min-width:2000px){
     .title{
-        font-size: 82px;
+        font-size: 75px;
     }
     .below-title{
         
@@ -207,10 +233,13 @@
 }
 @media(max-width: 992px){
     .mobile-nomar{
-        margin: 0px;
+        margin: 0px !important;
     }
     .mobile-nopad{
         padding: 0px;
+    }
+    .mobile-pad{
+        padding: 20px;
     }
     .mobile-middle{
         justify-content: center;
@@ -219,8 +248,15 @@
         margin-top: 113px !important;
         
     }
+    .mobile-ml{
+        margin-left: 2rem;
+    }
+    .mobile-black{
+        color: black;
+    }
     .title{
-        color: white;
+        color: black;
+        margin-left: 0px;
     }
     .container .below-title{
         margin: 0px;
