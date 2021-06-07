@@ -11,6 +11,9 @@
 .bg-base{
     background-image: linear-gradient(to right, #fff 50%, #0b1f43 50% 100%);
 }
+.bg-dark{
+    background-color: #0b1f43;
+}
 .nav-title{
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 30px;
