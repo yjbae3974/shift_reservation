@@ -38,6 +38,12 @@ body{
     font-weight: 400;
     color: #808080;
 }
+.card-font{
+    font-family: 'Inter';
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 4rem;
+}
 .mobile-nopad{
     padding-left: 100px;
 }
@@ -73,6 +79,7 @@ width: 20%;
 .step-text  {
 margin-bottom:  10px;
 color:  #17375e;
+text-align: left;
 }
 
 
@@ -172,6 +179,35 @@ color:  #17375e;
     transform: rotate(-7deg);
 
 }
+.service-ui{
+    width: 100%;
+    height: 0;
+    padding-top: 105%;;
+    position: relative;
+    
+}
+.content-square{
+    border: 1px solid #e4e4e4;
+    position: absolute;
+    padding: 70px 70px 0px 70px;
+    top: 0;
+    left: 0;
+}
+.footer-custom{
+    background-color: #060b11;
+    color: #fff;
+    min-height: 170px;
+}
+.logo-base{
+    flex-wrap: wrap;
+    height: 46px;
+    width: 46px;
+}
+.logo-conponent{
+    
+    width: 50%;
+    height: 50%;
+}
 
 @media(min-width:576px){
 
@@ -232,13 +268,19 @@ color:  #17375e;
         object-fit: contain;
         background-color: #c4c4c4;
       }
+      .step-text{
+          padding-left: 10px;
+      }
+      #content{
+          min-height: 10rem;
+      }
  }
  @media(max-width: 992px){
     .mobile-nomar{
         margin: 0px !important;
     }
     .mobile-nopad{
-        padding: 0px;
+        padding: 0px!important;
     }
     .mobile-pad{
         padding: 20px;
@@ -263,4 +305,16 @@ color:  #17375e;
     .container .below-title{
         margin: 0px;
     }
+}
+#navOption{
+    overflow: hidden;
+    background-color: #fff;
+    opacity: 0.8;
+    z-index: 1;
+    
+}
+.sticky-nav{
+    position: fixed;
+    top: 113px;
+    width: 100%;
 }

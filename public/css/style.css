@@ -43,6 +43,12 @@
     font-weight: 700;
     color: #060b11;
 }
+.card-font{
+    font-family: 'Inter';
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 4rem;
+}
 .sub-content{
     font-size: 16px;
     font-family: 'Noto Sans KR', sans-serif;
