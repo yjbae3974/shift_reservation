@@ -6,25 +6,28 @@ body{
     margin: 0px var(--container-margin);
     
 }
+.bg-nav{
+    background-color: #0d1e33;
+}
+.bg-announce{
+    background-color: #17375e;
+}
 .nav-title{
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 30px;
     font-weight: 700;
     color: #fff;
 }
-.bg-nav{
-    background-color: #0d1e33;
-}
 .title{
-    font-size: 85px;
+    font-size: 36px;
     line-height: normal;
     font-family: 'Noto Sans KR', sans-serif;
     text-align: left;
     font-weight: 700;
-    color: #060b11;
+    color: #fff;
 }
 .sub-title{
-    font-size: 56px;
+    font-size: 24px;
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 700;
     color: #060b11;
