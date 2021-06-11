@@ -313,7 +313,7 @@ text-align: left;
         color: black;
     }
     .title{
-        color: black;
+        
         margin-left: 0px;
     }
     .container .below-title{
@@ -358,4 +358,7 @@ text-align: left;
     width:16px;
     height: auto;
     opacity: 0.35;
+}
+.bg-gray{
+    background-color: #e6e6e6;
 }
