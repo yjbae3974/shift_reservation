@@ -462,7 +462,7 @@
     </div>
       <div class="container" style="margin-top: 100px;">
         <div class="row">
-          <div class="col-lg-6">
+          <div class="col-lg-6" style="padding: 0px 40px;">
             <p class="title" style="color:#060B11">E-mail Us</p>
             <div class="d-flex mt-1" style="align-self: flex-start;flex-wrap: wrap;color: #bfbfbf">
               <label class="checkbox-container">질문사항
@@ -495,10 +495,51 @@
            
           </form>
           </div>
-          <div class="col-lg-6">
+          <div class="col-lg-6" style="padding: 0px 40px;">
             <p class="title" style="color:#060B11">Contact</p>
+            <p style="color: #bfbfbf;line-height: 40px;font-size: 18px;">
+              상담 전화 및 메일 주소는 다음과 같습니다.<br>
+              문의사항이 있으시다면 연락주세요.
+            </p>
+            <div style="font-size: 18px; color: #060B11;">
+              <i class="fas fa-phone-alt me-3" style="color: #17375e;"></i>
+              010.7518.1590
+            </div>
+            <div class="mt-3" style="font-size: 18px; color: #060B11;">
+              <i class="fas fa-envelope me-3" style="color: #17375E;"></i>
+              brianbae6@korea.ac.kr
+            </div>
+            <div class="mt-3" style="font-size: 18px; color: #060B11;">
+              <div class="d-flex">
+                <i class="fas fa-home me-3 mt-1" style="color: #17375E;"></i>
+                <div>
+                  서울특별시 동대문구 안암로 14길<br> (상세주소)
+                </div>
+              </div>
+              
+            </div>
+            <p style="font-size: 22px; color: #060B11;margin-top: 43px;">We are on Socials</p>
+            <div style="color: #bfbfbf;">
+              <i class="fab fa-facebook-square me-3" style="color: #17375E;font-size: 18px;"></i>
+              Facebook
+            </div>
+            <div class="mt-3" style="color: #bfbfbf;">
+              <i class="fab fa-twitter me-3" style="color: #17375E;font-size: 18px;"></i>
+              Twitter
+            </div>
+            <div class="mt-3" style="color: #bfbfbf;">
+              <i class="fab fa-pinterest me-3" style="color: #17375E;font-size: 18px;"></i>
+              Pinterest
+            </div>
+            <div class="mt-3" style="color: #bfbfbf;">
+              <i class="fab fa-instagram me-3" style="color: #17375E;font-size: 18px;"></i>
+              instagram
+            </div>
           </div>
         </div>
+    </div><!--container end-->
+    <div class="container-fluid" style="height: 480px;margin-top: 100px;">
+      <div id="map" style="height: 100%;"></div>
     </div>
       </div>
         </div>
@@ -508,7 +549,7 @@
     
     <!-- Custom scripts -->
     <script type="text/javascript"></script>
-	<script src="introduce_service.js"></script>
+	<script src="announce.js"></script>
   <script src="..\js\jquery.accordion.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
@@ -524,4 +565,7 @@
       });
     });
   </script>
+  <script async
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC33JiJfsCheBCOLJbPiMKqf19OxnkKyyE&callback=initMap">
+</script>
 </body>
