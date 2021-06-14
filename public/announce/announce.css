@@ -276,6 +276,7 @@ text-align: left;
         right: 900px;
         top:300px;
     }
+    
     .img-ver{
         width: 433px;
         height:612px;
@@ -361,4 +362,16 @@ text-align: left;
 }
 .bg-gray{
     background-color: #e6e6e6;
+}
+.form-rounded{
+    border-radius: 1.5rem !important;
+}
+textarea{
+    padding: 12px;
+    border: 2px solid #ebeaed;
+    border-radius: 10px;
+    width: 100%;
+}
+textarea::placeholder{
+    color: #bfbfbf;
 }

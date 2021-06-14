@@ -8,6 +8,14 @@
 .bg-enter{
     background-image: linear-gradient(to right, #fff calc(100% / 3), #0b1f43 calc(100% / 3) 100%)
 }
+.bg-enter-nav{
+    background-image: linear-gradient(to right, #fff calc(100% / 3), #0b1f43 calc(100% / 3) 100%)
+}
+@media(min-width: 2000px){
+    .bg-enter-nav{
+        background-image: linear-gradient(to right, #fff 340px, #0b1f43 340px 100%)
+    }
+}
 .bg-base{
     background-image: linear-gradient(to right, #fff 50%, #0b1f43 50% 100%);
 }
@@ -271,3 +279,17 @@
         margin: 0px;
     }
 }
+
+    @media(min-width:576px){
+        .container-f{max-width:540px}
+    }@media(min-width:768px){
+        .container-f{max-width:720px}
+    }@media(min-width:992px){
+        .container-f{max-width:960px}
+    }@media(min-width:1200px){
+        .container-f{max-width:1140px}
+    }@media(min-width:1400px){
+        .container-f{max-width:1320px}
+    }@media(min-width: 2000px){
+        .container-f{max-width: 1920px;}
+    }
