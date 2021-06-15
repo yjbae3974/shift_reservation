@@ -1,0 +1,29 @@
+.bg-nav{
+    background-color: #0d1e33;
+}
+.bg-container{
+    background-color: #101d2d;
+}
+.bg-ver{
+    position: relative;
+}
+.bg-ver .hr-1{
+    position: absolute;
+    top: 100px;
+    height:1px;
+    width: 100%;
+    background-color: #fff;
+}
+.bg-ver .hr-2{
+    position: absolute;
+    bottom: 100px;
+    height:1px;
+    width: 100%;
+    background-color: #fff;
+}
+.nav-enter{
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff
+}

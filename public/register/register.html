@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Enter-사전예약 페이지</title>
+    <!-- MDB icon -->
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    />
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="register.css">
+    <style>
+      .post-slider .card{
+        border-radius: 2rem !important;
+        height: 664px;
+        margin: 0px 20px;
+       
+        
+      }
+      .slick-slide{
+        border-radius: 1rem;
+      }
+      button{
+        background-color: transparent;
+        border: none;
+
+      }
+      @media(min-width:2000px){.container,.container-lg,.container-md,.container-sm,.container-xl,.container-xxl{max-width:1920px!important}}
+     
+      .slick-slider, .slick-list, .slick-track{
+        height: 664px;
+      }
+      @media(max-width: 992px){
+       
+      }
+    </style>
+    
+    <!-- MDB -->
+    <link rel="stylesheet" href="../css/mdb.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../js/slick.js"></script>
+  
+    <script>
+      $(document).ready(function(){
+        $("#footer").load("../footer.html");
+      });
+      /*$(document).ready(function(){
+          //Example - show a div after 75% of the web page is scrolled.
+          var webpage = $("body");
+          var webpage_height = webpage.height();
+          //alert(webpage_height);
+          var trigger_height = webpage_height * 0.5;
+
+          if ($(window).scrollTop() > (webpage_height-trigger_height)) {
+            alert($(window).scrollTop()+" > "+(webpage_height-trigger_height));
+            //$("#divtoshow").show();
+          }
+      });*/
+
+      $(document).on('ready',function(){
+        $('.post-slider').slick({
+          infinite: true,
+          varialbeWidth: true,
+          centerMode: false,
+          slidesToShow: 2.5,
+          slidesToScroll: 1,
+          lazyLoad: 'ondemand',
+          prevArrow: $('#prev'),
+          prevArrow2: $('#prev2'),
+          nextArrow: $('#next'),
+          nextArrow2: $('#next2'),
+          
+          responsive: [
+            {
+              breakpoint: 992,
+              settings: {
+                arrows: false,
+                centerMode: false,
+                
+                slidesToShow: 2
+              }
+            },
+            {
+              breakpoint: 576,
+              settings: {
+                arrows: false,
+                centerMode: true,
+                
+                slidesToShow: 1
+              }
+            }
+          ]
+        });
+      });
+      
+    </script>
+  </head>
+  <body style="height: 100vh;">
+    <nav class="navbar navbar-expand-lg fixed-top" style="padding: 0px; border-bottom: 2px solid #fff;height: 113px;">
+      <div class="container-fluid bg-nav" style="padding: 0px;">
+        
+          <div class="container d-flex align-items-center" style="min-height: 113px;max-width: 1320px!important;">
+            <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="d-flex">
+          <a href="" class="nav-enter" id="prev2">EN</a>
+          <a href="" class="nav-enter">T</a>
+          <a href="" class="nav-enter" id="next2">ER</a>
+        </div>
+       
+        <ul class="navbar-nav ms-auto" style="color: #8c8c8c;">
+          <li class="me-5">사전예약</li>
+          <li class="me-5">서비스 소개</li>
+          <li class="me-5">공지사항</li>
+          <li class="me-5">회원가입</li>
+          <li class="me-5">로그인</li>
+        </ul>
+        
+        
+      </div>
+    </div>
+        
+        
+      </div>
+      
+    </nav>
+    <div class="container-fluid bg-container bg-strip" style="margin-top:113px; min-height: 957px;padding: 0px;">
+      <div class="container-fluid bg-ver" style="padding: 0px;height: 957px;">
+        <div class="hr-1"></div>
+        <div class="hr-2"></div>
+        <div class="" style="height:957px;">
+        
+        
+        </div>
+        
+    </div>
+    </div>
+    
+    <footer id="footer"></footer>
+    
+
+    <!-- MDB -->
+    <script type="text/javascript" src="../js/mdb.min.js"></script>
+    
+    <!-- Custom scripts -->
+    <script type="text/javascript"></script>
+    <script type="text/javascript" src="../js/pageSlide.js"></script>
+    <script src="../js/reservation.js"></script>
+    
+  </body>
+</html>
