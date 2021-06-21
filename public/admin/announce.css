@@ -1,0 +1,382 @@
+body{
+    font-family: 'Noto Sans KR', sans-serif;
+}
+.below-title{
+    --container-margin: calc(100%/6);
+    margin: 0px var(--container-margin);
+    
+}
+.bg-nav{
+    background-color: #0d1e33;
+}
+.bg-announce{
+    background-color: #17375e;
+}
+.nav-title{
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+}
+.title{
+    font-size: 36px;
+    line-height: normal;
+    font-family: 'Noto Sans KR', sans-serif;
+    text-align: left;
+    font-weight: 700;
+    color: #fff;
+}
+.sub-title{
+    font-size: 24px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    color: #060b11;
+}
+.sub-subtitle{
+    font-size: 32px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    color: #060b11;
+}
+.sub-content{
+    font-size: 16px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 400;
+    color: #808080;
+}
+.card-font{
+    font-family: 'Inter';
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 4rem;
+}
+.mobile-nopad{
+    padding-left: 100px;
+}
+.mobile-nomar{
+   margin-left: 100px;
+}
+
+#stepProgressBar  {
+	display:  flex;
+	justify-content:  center;
+	align-items:  flex-end;
+	width:  100%;
+	margin:  0  auto;
+	margin-bottom:  40px;
+}
+.progress-line{
+    width: 100%;
+    height: 5px;
+    background-color: #17375e;
+}
+.disabled{
+    display: none;
+}
+.appear{
+
+}
+.step  {
+    
+text-align:  center;
+width: 20%;
+}
+
+.step-text  {
+margin-bottom:  10px;
+color:  #17375e;
+text-align: left;
+}
+
+
+.bullet {
+	
+	height: 60px;
+	min-width: 60px;
+	border-radius: 50%;
+    background-color: #e5e5e5;
+	color: #fff;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	position: relative;
+	transition: background-color 1000ms;
+    line-height:20px;
+    z-index: 1;
+}
+
+
+.bullet.completed  {
+	background-color:  #17375e;
+}
+
+
+
+
+
+/* Base styles and helper stuff */
+.hidden  {
+	display:  none;
+}
+ 
+.button  {
+    text-align: center;
+	padding:  12px  32px;
+    background-color: #17375e;
+    color: white;
+	transition:  250ms background-color;
+    width: 152px;
+}
+
+.button:hover  {
+	cursor:  pointer;
+	background-color:  #060b11;
+	color:  white;
+}
+
+.button:disabled:hover  {
+	opacity:  0.6;
+	cursor:  not-allowed;
+}
+.img-ver{
+    width: 267px;
+    height:378px;
+    object-fit: contain;
+    background-color: #c4c4c4;
+  }
+.dot-1{
+    position: absolute;
+    height: 740px;
+    width: 740px;
+    border-radius: 50%;
+    background-color: #17375e;
+    opacity: 0.6;
+    right: 50px; 
+    top: -150px;
+    z-index: 0;
+}
+.dot-2{
+    position: absolute;
+    height: 72px;
+    width: 72px;
+    border-radius: 50%;
+    background-color: #17375e;
+    
+    right: 608px;
+    z-index: 0;
+}
+.dot-3{
+    position: absolute;
+    height: 72px;
+    width: 72px;
+    border-radius: 50%;
+    background-color: #17375e;
+    opacity: 0.8;
+    right: 800px;
+    top:300px;
+}
+.service-img{
+    height: 367.18px;
+    width: 518.61px;
+    max-width: 80vw;
+    max-height: 54vw;
+    box-shadow: 48px 24px 48px rgba(24, 37, 56, 0.12);
+    border-radius: 8px;
+    transform: rotate(-7deg);
+
+}
+.service-ui{
+    width: 100%;
+    height: 0;
+    padding-top: 105%;;
+    position: relative;
+    
+}
+.content-box{
+    width: 33.33vw;
+    height: 33.33vw;
+    border: 1px solid #e4e4e4;
+    padding: 70px 70px 0px 70px;
+}
+.content-square{
+    border: 1px solid #e4e4e4;
+    position: absolute;
+    padding: 70px 70px 0px 70px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+}
+.footer-custom{
+    background-color: #060b11;
+    color: #fff;
+    min-height: 170px;
+}
+.logo-base{
+    flex-wrap: wrap;
+    height: 46px;
+    width: 46px;
+}
+.logo-conponent{
+    
+    width: 50%;
+    height: 50%;
+}
+
+@media(min-width:576px){
+
+}
+    
+ @media(min-width:768px){
+ }
+
+ @media(min-width: 992px){
+    
+   
+}
+ @media(min-width:1079px){
+     
+ }
+ @media(min-width:1200px){
+ }
+
+ @media(min-width:1400px){
+     
+ }
+
+ @media(min-width: 2000px){
+    .dot-1{
+        position: absolute;
+        height: 740px;
+        width: 740px;
+        border-radius: 50%;
+        background-color: #17375e;
+        opacity: 0.6;
+        right: 50px; 
+        top: -150px;
+        z-index: 0;
+    }
+    .dot-2{
+        position: absolute;
+        height: 72px;
+        width: 72px;
+        border-radius: 50%;
+        background-color: #17375e;
+        bottom: -100px;
+        right: 508px;
+        z-index: 0;
+    }
+    .dot-3{
+        position: absolute;
+        height: 72px;
+        width: 72px;
+        border-radius: 50%;
+        background-color: #17375e;
+        opacity: 0.8;
+        right: 900px;
+        top:300px;
+    }
+    
+    .img-ver{
+        width: 433px;
+        height:612px;
+        object-fit: contain;
+        background-color: #c4c4c4;
+      }
+      .step-text{
+          padding-left: 10px;
+      }
+      #content{
+          min-height: 10rem;
+      }
+ }
+ @media(max-width: 992px){
+    .mobile-nomar{
+        margin: 0px !important;
+    }
+    .mobile-nopad{
+        padding: 0px!important;
+    }
+    .mobile-pad{
+        padding: 20px;
+    }
+    .mobile-middle{
+        justify-content: center;
+    }
+    .mobile-mt{
+        margin-top: 113px !important;
+        
+    }
+    .mobile-ml{
+        margin-left: 2rem;
+    }
+    .mobile-black{
+        color: black;
+    }
+    .title{
+        
+        margin-left: 0px;
+    }
+    .container .below-title{
+        margin: 0px;
+    }
+}
+@media(max-width:768px){
+    .position-rewind{
+        top: 0px !important;
+    }
+    .mdmt-5{
+        margin-top: 3rem;
+    }
+}
+#navOption{
+    overflow: hidden;
+    background-color: #fff;
+    opacity: 0.8;
+    z-index: 1;
+    
+}
+.sticky-nav{
+    position: fixed;
+    top: 113px;
+    width: 100%;
+}
+.company-box{
+    padding: 32px 64px;
+    background-color: #fff;
+    box-shadow: 0px 10px 20px rgba(41, 41, 42, 0.07);
+    border-radius: 8px;
+}
+.box-content{
+    font-size: 18px;
+    color: #18191f;
+    line-height: 2rem;
+}
+.opnion-icon{
+    position: absolute;
+    top: 32px;
+    left: 32px;
+    width:16px;
+    height: auto;
+    opacity: 0.35;
+}
+.bg-gray{
+    background-color: #e6e6e6;
+}
+.form-rounded{
+    border-radius: 1.5rem !important;
+}
+textarea{
+    padding: 12px;
+    border: 2px solid #ebeaed;
+    border-radius: 10px;
+    width: 100%;
+}
+textarea::placeholder{
+    color: #bfbfbf;
+}
+.announcement{
+    font-size: 18px;
+    color: #0b0d17;
+    font-weight: 700;
+}
