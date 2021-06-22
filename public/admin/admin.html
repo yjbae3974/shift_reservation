@@ -608,15 +608,19 @@
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#only-one [data-accordion]').accordion();
+      $('#only-one [data-accordion]').accordion({
+        autoheight: false
+      });
 
       $('#multiple [data-accordion]').accordion({
-        singleOpen: false
+        singleOpen: false,
+        autoheight: false
       });
 
       $('#single[data-accordion]').accordion({
         transitionEasing: 'cubic-bezier(0.455, 0.030, 0.515, 0.955)',
-        transitionSpeed: 200
+        transitionSpeed: 200,
+        autoheight: false
       });
       
     });
