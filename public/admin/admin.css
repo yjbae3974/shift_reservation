@@ -6,3 +6,10 @@
 .edit:hover{
     color: #bfbfbf
 }
+.announcement{
+    font-size: 18px;
+    font-weight: 700;
+}
+.note-editable{
+    background-color: #fff;
+}

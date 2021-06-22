@@ -320,6 +320,10 @@ text-align: left;
     .container .below-title{
         margin: 0px;
     }
+    .a-link.active{
+        color: #bfbfbf !important;
+        font-weight: 700;
+    }
 }
 @media(max-width:768px){
     .position-rewind{
@@ -374,4 +378,16 @@ textarea{
 }
 textarea::placeholder{
     color: #bfbfbf;
+}
+.a-link{
+    color: #8c8c8c;
+    cursor: pointer;
+}
+.a-link.active{
+    color: #fff;
+    font-weight: 700;
+}
+.a-link:hover{
+    color: #fff !important;
+    font-weight: 700;
 }

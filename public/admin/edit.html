@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter-공지사항</title>
+    <title>Enter-공지사항(edit)</title>
 	<!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
 	<!-- Google Fonts Roboto -->
@@ -13,10 +13,11 @@
     href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
     />
    
-	<link rel="stylesheet" href="announce.css">
+	<link rel="stylesheet" href="../announce/announce.css">
     <link rel="stylesheet" href="checkbox.css">
     <link rel="stylesheet" href="..\css\jquery.accordion.css">
     <link rel="stylesheet" href="demo.css">
+    <link rel="stylesheet" href="admin.css">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     
     <style>
@@ -92,11 +93,11 @@
 		  </div>
 		 
 		  <ul class="navbar-nav ms-auto" style="color: #8c8c8c;">
-			<li class="me-5">사전예약</li>
-			<li class="me-5">서비스 소개</li>
-			<li class="me-5">공지사항</li>
-			<li class="me-5">회원가입</li>
-			<li class="me-5">로그인</li>
+        <li class="me-5"><a class="a-link" href="../main.html">사전예약</a></li>
+        <li class="me-5"><a class="a-link" href="../introduce\introduce_service.html">서비스 소개</a></li>
+        <li class="me-5"><a class="a-link active" href="../announce\announce.html">공지사항</a></li>
+        <li class="me-5"><a class="a-link" href="../register\register.html">회원가입</a></li>
+        <li class="me-5"><a class="a-link" href="">로그인</a></li>
 		  </ul>
 		  
 		  
@@ -164,12 +165,33 @@
         aria-labelledby="ex1-tab-1"
       >
         
-        <div class="container d-flex justify-content-center" style="margin-top: 300px;">
-          <div class="col-xl-12" style="max-width: 1280px;">
-            <p class="announcement">공지사항</p>
-            <form method="post">
-                <input type="text" class="form-control mb-3" placeholder="제목을 입력하세요">
+      <div class="container" style="margin-top: 300px;">
+        <p class="announcement">공지사항</p>
+          <div class="col-xl-12" style="max-width: 1280px;background-color: #f3f3f3; padding: 30px">
+            <form method="post" class="">
+              <div class="row">
+                <div class="col-md-3">
+                  <select class="form-select form-control" style="background-color: #fff;border-color: #ebeaed;" name="" id="">
+                    <option value="">분류</option>
+                    <option value="">[공지]</option>
+                    <option value="">[업데이트]</option>
+                    <option value="">[이벤트]</option>
+                    <option value="">[개발현황]</option>
+                    <option value="">[버그수정]</option>
+                  </select>
+                </div>
+                <div class="col-md-9">
+                  <input type="text" class="form-control mb-3" placeholder="제목을 입력하세요">
+                </div>
+              </div>
+                
                 <textarea id="summernote" name="editordata"></textarea>
+                <div class="mt-3 d-flex justify-content-between">
+                  <button class="btn mx-3">임시저장</button>
+                  <button class="btn mx-3">등록</button>
+                  <button class="btn mx-3">돌아가기</button>
+                </div>
+                
               </form>
           </div>
           
