@@ -13,3 +13,7 @@ function initMap() {
       map: map,
     });
   }
+ function changeLocation(text){
+  location.href = text;
+ }
+  

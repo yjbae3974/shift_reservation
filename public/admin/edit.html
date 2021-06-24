@@ -186,10 +186,10 @@
               </div>
                 
                 <textarea id="summernote" name="editordata"></textarea>
-                <div class="mt-3 d-flex justify-content-between">
-                  <button class="btn mx-3">임시저장</button>
-                  <button class="btn mx-3">등록</button>
-                  <button class="btn mx-3">돌아가기</button>
+                <div class="mt-5 pt-5 d-flex justify-content-center" style="border-top: 1px solid #8c8c8c;position: relative;">
+                  <div class="btn-base mx-3" style="padding: 4px 16px">임시저장</div>
+                  <div class="btn-base mx-3 text-white" style="padding: 4px 16px;background-color: #17375E;">등록</div>
+                  <div class="btn-base mx-3" style="padding: 4px 16px">돌아가기</div>
                 </div>
                 
               </form>
@@ -438,9 +438,9 @@
         transitionSpeed: 200
       });
       $('#summernote').summernote({
-        placeholder: 'Hello stand alone ui',
+        placeholder: '내용을 입력하세요.',
         tabsize: 2,
-        height: 120,
+        height: 500,
         toolbar: [
           ['style', ['style']],
           ['font', ['bold', 'underline', 'clear']],

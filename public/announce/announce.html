@@ -225,7 +225,7 @@
                 <tbody>
                   <tr>
                     <th scope="row">[업데이트]</th>
-                    <td>7.21 업데이트 현황. 새로운 캐릭터 추가. 각종 수정 및 버그 개선</td>
+                    <td class="hr-link">7.21 업데이트 현황. 새로운 캐릭터 추가. 각종 수정 및 버그 개선</td>
                     <td>2021.05.19 </td>
                     
                   </tr>
@@ -553,6 +553,9 @@
   <script src="..\js\jquery.accordion.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
+      $('.hr-link').click(function(){
+        location.href = 'announce_onclick.html';
+      });
       $('#only-one [data-accordion]').accordion();
 
       $('#multiple [data-accordion]').accordion({

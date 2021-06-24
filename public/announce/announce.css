@@ -12,6 +12,9 @@ body{
 .bg-announce{
     background-color: #17375e;
 }
+.bg-click{
+    background-color: #f9f9f9;
+}
 .nav-title{
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 30px;
@@ -390,4 +393,14 @@ textarea::placeholder{
 .a-link:hover{
     color: #fff !important;
     font-weight: 700;
+}
+.hr-link:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.btn-base{
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #8c8c8c;
+    border-radius: 0.25rem;
 }
