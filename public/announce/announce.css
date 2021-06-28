@@ -404,3 +404,9 @@ textarea::placeholder{
     border: 1px solid #8c8c8c;
     border-radius: 0.25rem;
 }
+.nav-enter{
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff
+}

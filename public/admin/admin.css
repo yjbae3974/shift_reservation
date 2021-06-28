@@ -13,3 +13,9 @@
 .note-editable{
     background-color: #fff;
 }
+.clickable{
+    cursor: pointer;
+}
+.clickable:hover{
+    text-decoration: underline;
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter-공지사항</title>
+    <title>Enter-공지사항(admin)</title>
 	<!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
 	<!-- Google Fonts Roboto -->
@@ -13,7 +13,7 @@
     href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
     />
    
-	<link rel="stylesheet" href="announce.css">
+	<link rel="stylesheet" href="../announce/announce.css">
     <link rel="stylesheet" href="checkbox.css">
     <link rel="stylesheet" href="..\css\jquery.accordion.css">
     <link rel="stylesheet" href="demo.css">
@@ -69,41 +69,7 @@
 	 </script>
 </head>
 <body style="min-height: 100vh;">
-    <nav class="navbar navbar-expand-lg fixed-top" style="padding: 0px; border-bottom: 2px solid #c4c4c4;height: 113px;">
-		<div class="container-fluid bg-nav" style="padding: 0px;">
-		  
-			<div class="container d-flex align-items-center" style="min-height: 113px;">
-			  <button
-		  class="navbar-toggler"
-		  type="button"
-		  data-mdb-toggle="collapse"
-		  data-mdb-target="#navbarSupportedContent"
-		  aria-controls="navbarSupportedContent"
-		  aria-expanded="false"
-		  aria-label="Toggle navigation"
-		>
-		  <i class="fas fa-bars"></i>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		  <div class="d-flex">
-			<a href="" class="nav-title" id="prev2">EN</a>
-			<a href="" class="nav-title">T</a>
-			<a href="" class="nav-title" id="next2">ER</a>
-		  </div>
-		 
-		  <ul class="navbar-nav ms-auto" style="color: #8c8c8c;">
-			<li class="me-5">사전예약</li>
-			<li class="me-5">서비스 소개</li>
-			<li class="me-5">공지사항</li>
-			<li class="me-5">회원가입</li>
-			<li class="me-5">로그인</li>
-		  </ul>
-		  
-		  
-		</div>
-	  </div>  
-		</div>
-	  </nav>
+    <div id="load-after"></div>
 	  <nav id="navOption" class="sticky-nav">
 		  <div class="container">
 			<ul class="nav nav-tabs d-flex justify-content-end" id="ex1" role="tablist" style="border-bottom: 1px solid #fff;">
@@ -229,10 +195,10 @@
                   <tr>
                     <th scope="row">[업데이트]</th>
                     <td>7.21 업데이트 현황. 새로운 캐릭터 추가. 각종 수정 및 버그 개선</td>
-                    <td>2021.05.19 </td>
+                    <td>2021.05.19 </td><!--정렬은 날짜순-->
                     <td>
-                      <a class="edit" href=""><i class="fas fa-edit"></i></a>
-                      <a class="edit" href=""><i class="fas fa-trash-alt"></i></a>
+                      <a class="edit" href="edit.html"><i class="fas fa-edit"></i></a><!--기존에 썼던 데이터 옮겨지면서 edit페이지로 넘어감-->
+                      <a class="edit" href=""><i class="fas fa-trash-alt"></i></a><!--이 행을 아예 삭제-->
                     </td>
                     
                   </tr>
@@ -335,7 +301,10 @@
               </table>
               <!--Table-->
             </div>
-            <div class="d-flex justify-content-end"></div>
+            <div class="d-flex justify-content-end align-items-center" style="color: #8c8c8c;">
+              <div class="mx-5 clickable" id="toSave">임시저장(<span>3</span>)</div>                  <!--이부분 숫자 수정 요망-->
+              <div class="btn-base" id="toEdit" style="padding: 8px 16px;">글쓰기</div>
+            </div>
           </div>
           
         </div>
@@ -401,7 +370,7 @@
     </div>
     <div class="container" style="margin-top: 100px;">
       <section id="single" data-accordion>
-        <button data-control>자주하는 질문(1)</button>
+        <button data-control>자주하는 질문(1)</button><!--밑에 있는 추가답변 작성하기 누르면 이 코드 그대로 복사해서 추가되게-->
         <div data-content>
           <article class="article2edit">
             <div class="row">
@@ -482,7 +451,9 @@
         </div>
       </section>
     </div>
-    
+    <div class="d-flex justify-content-center" style="color: #8c8c8c;margin-top: 40px;">
+      <div class="clickable" style="font-size: 18px;"><span style="font-weight: 700;">+</span> 추가답변 작성하기</div> <!--이 버튼에서 시작-->
+    </div>
     
   
       </div>
@@ -604,7 +575,7 @@
     
     <!-- Custom scripts -->
     <script type="text/javascript"></script>
-	<script src="announce.js"></script>
+	<script src="admin.js"></script>
   <script src="..\js\jquery.accordion.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
   <script type="text/javascript">
@@ -623,7 +594,11 @@
         transitionSpeed: 200,
         autoheight: false
       });
-      
+      $("#load-before").load('../navbar/beforelogin.html');
+      $('#load-after').load('../navbar/afterlogin.html');
+    });
+    $(window).load(function(){
+      $('#소통').addClass('active');
     });
     var edit = function(){
       $('.click2edit').summernote({focus: true,toolbar: false});
@@ -632,6 +607,7 @@
     var save = function(){
       $('.click2edit').summernote('destroy');
     }
+    
   </script>
   <script async
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC33JiJfsCheBCOLJbPiMKqf19OxnkKyyE&callback=initMap">
