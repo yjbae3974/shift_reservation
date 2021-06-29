@@ -372,3 +372,9 @@ text-align: left;
     color: #fff !important;
     font-weight: 700;
 }
+.nav-enter{
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff
+}

@@ -13,3 +13,14 @@ function initMap() {
       map: map,
     });
   }
+  function changeLocation(text){
+    location.href = text;
+   }
+$(document).ready(function(){
+  $('#toSave').click(function(){
+    location.href = 'autosave.html';
+  });
+  $('#toEdit').click(function(){
+    location.href = 'edit.html';
+  });
+});

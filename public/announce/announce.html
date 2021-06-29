@@ -67,41 +67,7 @@
 	 </script>
 </head>
 <body style="min-height: 100vh;">
-    <nav class="navbar navbar-expand-lg fixed-top" style="padding: 0px; border-bottom: 2px solid #c4c4c4;height: 113px;">
-		<div class="container-fluid bg-nav" style="padding: 0px;">
-		  
-			<div class="container d-flex align-items-center" style="min-height: 113px;">
-			  <button
-		  class="navbar-toggler"
-		  type="button"
-		  data-mdb-toggle="collapse"
-		  data-mdb-target="#navbarSupportedContent"
-		  aria-controls="navbarSupportedContent"
-		  aria-expanded="false"
-		  aria-label="Toggle navigation"
-		>
-		  <i class="fas fa-bars"></i>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		  <div class="d-flex">
-			<a href="" class="nav-title" id="prev2">EN</a>
-			<a href="" class="nav-title">T</a>
-			<a href="" class="nav-title" id="next2">ER</a>
-		  </div>
-		 
-		  <ul class="navbar-nav ms-auto" style="color: #8c8c8c;">
-        <li class="me-5"><a class="a-link" href="../main.html">사전예약</a></li>
-        <li class="me-5"><a class="a-link" href="../introduce\introduce_service.html">서비스 소개</a></li>
-        <li class="me-5"><a class="a-link active" href="../announce\announce.html">공지사항</a></li>
-        <li class="me-5"><a class="a-link" href="../register\register.html">회원가입</a></li>
-        <li class="me-5"><a class="a-link" href="">로그인</a></li>
-		  </ul>
-		  
-		  
-		</div>
-	  </div>  
-		</div>
-	  </nav>
+    <div id="load-before"></div>
 	  <nav id="navOption" class="sticky-nav">
 		  <div class="container">
 			<ul class="nav nav-tabs d-flex justify-content-end" id="ex1" role="tablist" style="border-bottom: 1px solid #fff;">
@@ -566,6 +532,11 @@
         transitionEasing: 'cubic-bezier(0.455, 0.030, 0.515, 0.955)',
         transitionSpeed: 200
       });
+      $("#load-before").load('../navbar/beforelogin.html');
+      $('#load-after').load('../navbar/afterlogin.html');
+    });
+    $(window).load(function(){
+      $('#소통').addClass('active');
     });
   </script>
   <script async
