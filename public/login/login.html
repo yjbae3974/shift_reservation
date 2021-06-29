@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Enter-회원가입</title>
+    <title>Enter-로그인</title>
     <!-- MDB icon -->
     
     <!-- Font Awesome -->
@@ -153,6 +153,7 @@
                   </div>
               </div>
                 <div class="col-lg-6 mobile-nopad  d-flex mobile-middle" style="height: 757px; padding-left: 30px;z-index: 1;">
+                  <div id="whereContentChanges"></div>
                   <div class="sign-up text-center">
                     <div class="sign-up-title">
                       Sign in
@@ -181,7 +182,12 @@
                       <div style="color: #bfbfbf;">Don't have an Account?</div>
                       <a class="ms-2" style="color: #59dbe0;" href="../register/register.html">Sign up</a>
                     </div>
+                    <div class="text-center mt-1" style="font-size: 14px;color: #bd064b;font-weight: 700;">
+                      <div class="pointer" onclick="changeContent('id')">Forgot ID</div>
+                      <div class="pointer" onclick="changeContent('password')">Forgot Password?</div>
+                    </div>
                   </div>
+                 
               </div>
               </div>
           </div>
@@ -211,6 +217,7 @@
     <script type="text/javascript" src="../js/pageSlide.js"></script>
     <script src="../js/reservation.js"></script>
     <script src="register.js"></script>
+    <script src="login.js"></script>
     
   </body>
 </html>

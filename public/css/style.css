@@ -28,6 +28,9 @@
     font-weight: 700;
     color: #000
 }
+.nav-title:hover{
+    cursor: default!important;
+}
 .navbar a:hover{
     color: #0b1f43;
 }
