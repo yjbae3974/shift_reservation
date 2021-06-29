@@ -96,8 +96,38 @@
     background-color: #fff;
     left: 45%;
 }
+.hr-9{
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+    bottom: 23%;
+    right: 0%;
+}
 .invit-title{
     font-size: 32px;
     font-family: Lato;
     color: #fff;
+}
+.myinfo-title{
+    font-family: Noto Sans;
+    font-size: 52px;
+    color: #fff;
+    line-height: 70px;
+    font-weight: 700;
+}
+.myinfo-content{
+    font-family: Noto Sans;
+    font-size: 18px;
+    color: #fff;
+}
+.btn-myinfo{
+    font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 700 !important;
+      padding: 18px 23px 23px 23px!important;
+      background-color: transparent !important;
+      font-size: 24px !important;
+      color: #fff!important;
+      border: 2px solid #fff !important;
+      border-radius: 1rem;
 }

@@ -39,8 +39,27 @@
         border: none;
 
       }
+      .input-left{
+        border-radius: 0px !important;
+      }
+      .form-control{
+        background-color: transparent!important;
+      }
+      .form-control::placeholder{
+        color: #fff!important;
+      }
+      .form-control:focus{
+        border-color: #fff!important;
+      }
       .table>:not(caption)>*>* {
           padding: 7.5px 1.4rem !important;
+      }
+      .btn-sub{
+        border-radius: 0px;
+        background-color: #fff;
+        color: #101D2D;
+        font-size: 28px;
+
       }
       @media(min-width:2000px){.container,.container-lg,.container-md,.container-sm,.container-xl,.container-xxl{max-width:1920px!important}}
      
@@ -139,7 +158,8 @@
                        
                    </div>   
               </div>
-                <div class="col-lg-6 mobile-nopad  mobile-middle" style="height: 757px; padding: 0px 30px; z-index: 1;">
+                <div class="col-lg-6 mobile-nopad  mobile-middle" style="height: 757px; padding: 0px 30px; z-index: 1;position: relative;border-right: 1px solid #fff">
+                  <div class="hr-9"></div>
                   <div>
                       <p class="invit-title">Invitation Ranking</p>
                       <table class="table table-borderless align-middle text-center" style="color: white;">
@@ -214,6 +234,12 @@
                           </tbody>
 
                       </table>
+                      <p class="invit-title mt-4">Copy Invitation Code</p>
+                      <div class="d-flex" style="height: 60px;max-width: 700px">
+                        <input type="email" style="width: 80%;color: #fff" class="form-control input-left">
+                        <button type="submit" class="btn-sub">복사</button>
+                      </div>
+                      <p class="mt-1" style="font-size: 18px; color: #30b1c1;">*친구가 초대코드를 통해 들어와서 회원가입시 초대수가 올라갑니다.</p>
                   </div>
               </div>
               </div>
