@@ -43,7 +43,7 @@
       <h2>Welcome</h2>
       <h1 id="userEmail">Firebase Hosting Setup Complete</h1>
       <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Verify your email</a>
+      <a target="_blank" onclick="verifyEmail();">Verify your email</a>
     </div>
     <p id="load">Firebase SDK Loading&hellip;</p>
 
@@ -111,19 +111,8 @@
   
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-        verifyEmail(user);
-    } 
-    else {
-        // No user is signed in.
-        alert("로그인 X");
-    }
-  });
 
-
-function verifyEmail(user){
+function verifyEmail(){
     // Confirm the link is a sign-in with email link.
     if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
     // Additional state parameters can also be passed via URL.
@@ -138,7 +127,6 @@ function verifyEmail(user){
         // attacks, ask the user to provide the associated email again. For example:
         email = window.prompt('Please provide your email for confirmation');
     }
-
 
     // The client SDK will parse the code from the link for you.
     firebase.auth().signInWithEmailLink(email, window.location.href)
@@ -161,11 +149,12 @@ function signUpUser(user, email, password){
     user.updatePassword(password).then(() => {
         // Update successful.
         //alert("pw update!")
-        user.updateProfile({
+        var user1 = firebase.auth().currentUser;
+        user1.updateProfile({
             displayName: email
         }).then(function() {
             //alert("name update!")
-            console.log(user.displayName);
+            console.log(user1.displayName);
             addUser(user.uid, email, password);
             // Update successful.
         }).catch(function(error) {
@@ -179,27 +168,19 @@ function signUpUser(user, email, password){
     });
 }
 
-function setUserName(user1, email){
-    user1.updateProfile({
-      displayName: email
-    }).then(function() {
-      console.log(user1.displayName);
-      // Update successful.
-    }).catch(function(error) {
-      // An error happened.
-      console.log(errorCode);
-      console.log(errorMessage);
-    });
-  }
-
 function addUser(uid, email, password){
     var db = firebase.firestore();
-    alert("회원가입 시작 "+uid+"/"+email+"/"+password);
+    //alert("회원가입 시작 "+uid+"/"+email+"/"+password);
     window.localStorage.removeItem('emailForSignIn');
-    db.collection("user").doc(user1.uid).set({
+    db.collection("user").doc(uid).set({
         email: email,
         password: password,
         signupMethod: "email",
+        
+    }).then(function(){
+        if(confirm("회원가입이 완료되었습니다")){
+            window.location.href = "register.html";
+        }
     })
     .catch(function(error) {
         console.error("Error adding document: ", error);
