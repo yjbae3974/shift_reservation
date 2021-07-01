@@ -69,7 +69,7 @@
 	 </script>
 </head>
 <body style="min-height: 100vh;">
-    <div id="load-after"></div>
+    <div id="navbar"></div>
 	  <nav id="navOption" class="sticky-nav">
 		  <div class="container">
 			<ul class="nav nav-tabs d-flex justify-content-end" id="ex1" role="tablist" style="border-bottom: 1px solid #fff;">
@@ -147,23 +147,23 @@
             </div>
             <div class="d-flex text-white mt-1" style="align-self: flex-start;flex-wrap: wrap;">
                 <label class="checkbox-container mx-3">[공지]
-                    <input type="checkbox" checked="checked">
+                    <input type="checkbox" checked="checked" id="announce">
                     <span class="checkmark"></span>
                   </label>
                   <label class="checkbox-container mx-3">[업데이트]
-                    <input type="checkbox" checked="checked">
+                    <input type="checkbox" checked="checked" id="update">
                     <span class="checkmark"></span>
                   </label>
                   <label class="checkbox-container mx-3">[이벤트]
-                    <input type="checkbox" checked="checked">
+                    <input type="checkbox" checked="checked" id="event">
                     <span class="checkmark"></span>
                   </label>
                   <label class="checkbox-container mx-3">[개발현황]
-                    <input type="checkbox" checked="checked">
+                    <input type="checkbox" checked="checked" id="develop">
                     <span class="checkmark"></span>
                   </label>
                   <label class="checkbox-container mx-3">[버그수정]
-                    <input type="checkbox" checked="checked">
+                    <input type="checkbox" checked="checked" id="debug">
                     <span class="checkmark"></span>
                   </label>
             </div>
@@ -191,18 +191,8 @@
                 <!--Table head-->
       
                 <!--Table body-->
-                <tbody>
-                  <tr>
-                    <th scope="row">[업데이트]</th>
-                    <td>7.21 업데이트 현황. 새로운 캐릭터 추가. 각종 수정 및 버그 개선</td>
-                    <td>2021.05.19 </td><!--정렬은 날짜순-->
-                    <td>
-                      <a class="edit" href="edit.html"><i class="fas fa-edit"></i></a><!--기존에 썼던 데이터 옮겨지면서 edit페이지로 넘어감-->
-                      <a class="edit" href=""><i class="fas fa-trash-alt"></i></a><!--이 행을 아예 삭제-->
-                    </td>
-                    
-                  </tr>
-                  <tr>
+                <tbody id="content-placeholder"></tbody>
+                <!--  <tr>
                     <th scope="row">[업데이트]</th>
                     <td>휴대폰 알뜰폰결제 SK7mobile(SK텔링크) 결제 서비스 추가 안내</td>
                     <td>2021.03.16</td>
@@ -293,8 +283,7 @@
                       <a class="edit" href=""><i class="fas fa-trash-alt"></i></a>
                     </td>
                     
-                  </tr>
-                </tbody>
+                  </tr>-->
                 <!--Table body-->
       
       
@@ -594,8 +583,34 @@
         transitionSpeed: 200,
         autoheight: false
       });
-      $("#load-before").load('../navbar/beforelogin.html');
-      $('#load-after').load('../navbar/afterlogin.html');
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: "AIzaSyA0E-3mY4_qBgV7RfxEdzcU4B7xjJ74e-c",
+        authDomain: "enter-ef3a8.firebaseapp.com",
+        databaseURL: "https://enter-ef3a8-default-rtdb.firebaseio.com",
+        projectId: "enter-ef3a8",
+        storageBucket: "enter-ef3a8.appspot.com",
+        messagingSenderId: "505540008688",
+        appId: "1:505540008688:web:d3d89e4a7ac7ba57178035",
+        measurementId: "G-88XNV769FN"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            $("#navbar").load('../navbar/afterlogin.html');
+            console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+            //window.history.back();
+            getAdminData(getAnnounceSnapshot(), getCheckData());
+          } else {
+            $("#navbar").load('../navbar/beforelogin.html');
+            // No user is signed in.
+            alert("로그인 X");
+          }
+      });
     });
     $(window).load(function(){
       $('#소통').addClass('active');
@@ -612,4 +627,138 @@
   <script async
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC33JiJfsCheBCOLJbPiMKqf19OxnkKyyE&callback=initMap">
 </script>
-</body></html>
+</body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <!--<script src="/__/firebase/8.6.8/firebase-app.js"></script>
+
+  <script src="/__/firebase/8.6.8/firebase-analytics.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+  <script src="/__/firebase/init.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>-->
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-analytics.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==" crossorigin="anonymous"></script>
+
+<script id="some-template" type="text/x-handlebars-template">
+  {{#contents}}
+  <tr>
+    <th scope="row">[{{type}}]</th>
+    <td>{{title}}</td>
+    <td>{{created}} </td><!--정렬은 날짜순-->
+    <td>
+      <a class="edit" href="edit.html?{{title}}"><i class="fas fa-edit"></i></a><!--기존에 썼던 데이터 옮겨지면서 edit페이지로 넘어감-->
+      <a class="edit" href=""><i class="fas fa-trash-alt"></i></a><!--이 행을 아예 삭제-->
+    </td>
+  </tr>
+  {{/contents}}
+</script>
+
+<script>
+var source   = $("#some-template").html();
+var template = Handlebars.compile(source);
+
+function getAnnounceSnapshot(){
+    let ref, snapshot; 
+    // 데이터 불러오기
+    var db = firebase.firestore();
+    
+    ref = db.collection("announce"); 
+    snapshot = ref.get();
+
+    if (snapshot.empty) { // 검색된 데이터가 없는 경우
+        console.log(`Fail to load announce data.`);
+        return;
+    }
+    console.log(`Success to load announce data.`);
+    return snapshot;
+}
+
+function getCheckData(){
+    let check ={ "공지": false, "업데이트": false, "이벤트": false, "개발현황": false, "버그수정": false };
+
+    if(document.getElementById('announce').checked){
+      check["공지"] = true;
+    }
+    if(document.getElementById('update').checked){
+      check["업데이트"] = true;
+    }
+    if(document.getElementById('event').checked){
+      check["이벤트"] = true;
+    }
+    if(document.getElementById('develop').checked){
+      check["개발현황"] = true;
+    }
+    if(document.getElementById('debug').checked){
+      check["버그수정"] = true;
+    }
+    return check;
+}
+
+function getAdminData(Snapshots, check){
+
+  const dataArray = new Array();
+
+  Snapshots.then((snapshot) => {
+    snapshot.forEach((doc) => {
+        var type = doc.get("type");
+        
+        if(check[type]){
+            var temp = new Object();
+            temp.type = type;
+            temp.title = doc.get("title");
+            temp.created = getFormattedDate(doc.get("created").toDate());
+            temp.content = doc.get("content");
+            console.log(temp);
+            dataArray.push(temp);
+
+            makeAdminTable(dataArray);
+        }
+      });
+      console.log(dataArray);
+    });
+}
+
+function makeAdminTable(dataArray){
+    console.log("admintable",dataArray);
+    
+    dataArray.sort(compTime);
+    const data = new Object();
+    data.contents = dataArray;
+    $("#content-placeholder").html(template(data));
+}
+
+function compTime(a,b){
+  return b.created - a.created;
+}
+
+function getFormattedDate(d){
+  var days = ['일','월','화','수','목','금','토'];
+
+  var date = new Date(d)
+  var yyyy = date.getFullYear()
+  var mm = String(date.getMonth() + 1).padStart(2, '0')
+  var dd = String(date.getDate()).padStart(2, '0')
+  var day = "("+ days[date.getDay()] +")"
+  var hh = String(date.getHours()).padStart(2, '0')
+  var MM = String(date.getMinutes()).padStart(2, '0')
+  
+  var formatted_date = yyyy + "-" + mm + "-" + dd + day + " " + hh + ":" + MM;
+  return formatted_date;
+}
+</script>
+</html>
