@@ -161,3 +161,12 @@
           padding: 20px 10px
       }
   }
+  .pwbox{
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: #000;
+      font-weight: 700;
+  }

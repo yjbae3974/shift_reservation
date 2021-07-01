@@ -32,23 +32,55 @@ function changeContent(content){
                       <a class="ms-2" style="color: #59dbe0;" href="../register/register.html">Sign up</a>
                     </div>
                     <div class="text-center mt-1" style="font-size: 14px;color: #bd064b;font-weight: 700;">
-                      <div class="pointer" onclick="">Forgot ID</div>
-                      <div class="pointer" onclick="">Forgot Password?</div>
+                      
+                      <div class="pointer" onclick="changeContent('password')">Forgot Password?</div>
                     </div>
                   </div>
         `
     }
-    else if(contenr === 'password'){
+    else if(content === 'password'){
         change.innerHTML=`
-        
+        <div class="sign-up text-center">
+                    <div class="sign-up-title">
+                      Search PW
+                    </div>
+                    <div style="position: relative;">
+                      <input type="email" class="form-control form-rounded mct-5" placeholder="Your email" style="padding: 10px 20px;">
+                      <div class="btn btn-form" onclick="sendMsg()">Send</div><!--여기서 인증 이메일 보냄-->
+                    </div>
+                    <div id="timeLimit"class="text-start mt-1"></div>
+                    <input type="" class="form-control form-rounded mct-2" placeholder="Certification Number" style="padding: 10px 20px;">
+                    
+                   
+                    <button type="submit" class="btn-rounded text-white text-center mt-3" style="
+                    font-size: 18px;width: 100%;background-color: #17375E;padding: 12px;">Find your PW</button>
+                    <div class="separator mt-3">&</div>
+                    <p class="text-start" style="font-size: 18px;color: #000">Your PW is...</p>
+                    <div class="pwbox">dfd</div><!--위에 버튼 누르면 여기서 비밀번호 생성-->
+                    <div class="text-center" style="font-size:24px;color: #17375e;">Enjoy Your Service!</div>
+                    <div class="d-flex mt-3 justify-content-center" style="font-size: 18px;">
+                      <div style="color: #bfbfbf;">Do you have an Account?</div>
+                      <div class="ms-2" style="color: #59dbe0;cursor: pointer;" onclick="changeContent('main')">Sign in</div>
+                    </div>
+                    <div class="text-center mt-1" style="font-size: 14px;color: #bd064b;font-weight: 700;">
+                      
+                    </div>
+                  </div>
         `
     }
 }
+var cnt = 0;
 function sendMsg(){
   time=document.getElementById('timeLimit');
+  if(cnt === 1){
+    return;
+  }
   time.style.color = '#bd464b';
   time.style.fontSize = '14px';
+  time.style.paddingLeft = '10px';
+  time.style.marginBottom = '-16px';
   timer(time);
+  cnt++;
 }
 function timer(getid){
   var time = 300;
