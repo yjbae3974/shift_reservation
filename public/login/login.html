@@ -18,6 +18,18 @@
     <link rel="stylesheet" href="../register/register.css">
     <link rel="stylesheet" href="../register/checkbox.css">
     <style>
+      .btn-form{
+        position: absolute!important;
+        right: 0px;
+        top: 0px;
+        font-size: 18px!important;
+        padding: 10px 24px!important;
+        text-transform: none!important;
+        color: #fff!important;
+        background-color: #17375E!important;
+        border-radius: 1.5rem!important;
+        font-weight: 400!important;
+      }
       .post-slider .card{
         border-radius: 2rem !important;
         height: 464px;
@@ -156,9 +168,13 @@
                   <div id="whereContentChanges"></div>
                   <div class="sign-up text-center">
                     <div class="sign-up-title">
-                      Sign in
+                      Search PW
                     </div>
-                    <input type="email" class="form-control form-rounded mct-5" placeholder="Your email" style="padding: 10px 20px;">
+                    <div style="position: relative;">
+                      <input type="email" class="form-control form-rounded mct-5" placeholder="Your email" style="padding: 10px 20px;">
+                      <div class="btn btn-form" onclick="sendMsg()">Send</div><!--여기서 인증 이메일 보냄-->
+                    </div>
+                    <div id="timeLimit"></div>
                     <input type="password" class="form-control form-rounded mct-2" placeholder="Your Password" style="padding: 10px 20px;">
                     <div class="d-flex mct-3" style="margin-bottom: 17.6px;">
                         <label class="checkbox-container mx-3 text-start">아이디 저장
@@ -183,8 +199,7 @@
                       <a class="ms-2" style="color: #59dbe0;" href="../register/register.html">Sign up</a>
                     </div>
                     <div class="text-center mt-1" style="font-size: 14px;color: #bd064b;font-weight: 700;">
-                      <div class="pointer" onclick="changeContent('id')">Forgot ID</div>
-                      <div class="pointer" onclick="changeContent('password')">Forgot Password?</div>
+                      <div class="pointer mt-3" onclick="changeContent('password')">Forgot Password?</div>
                     </div>
                   </div>
                  

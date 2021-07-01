@@ -1,6 +1,5 @@
 .bg-nav{
     background-color: #0d1e33;
-    border-bottom: 2px solid #fff
 }
 .bg-container{
     background-color: #101d2d;
@@ -154,10 +153,5 @@
   @media(min-width: 993px){
       .mobile-ver-center{
           align-items: center;
-      }
-  }
-  @media(max-width: 500px){
-      .sign-up{
-          padding: 20px 10px
       }
   }

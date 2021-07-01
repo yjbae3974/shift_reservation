@@ -38,7 +38,35 @@ function changeContent(content){
                   </div>
         `
     }
-    else if(contenr === 'id'){
+    else if(contenr === 'password'){
+        change.innerHTML=`
         
+        `
     }
+}
+function sendMsg(){
+  time=document.getElementById('timeLimit');
+  time.style.color = '#bd464b';
+  time.style.fontSize = '14px';
+  timer(time);
+}
+function timer(getid){
+  var time = 300;
+  var min = "";
+  var sec = "";
+  var x = setInterval(function(){
+    min = parseInt(time/60);
+    sec = time%60;
+    if(sec.toString().length == 2){
+      getid.innerHTML=min+':'+sec;
+    }
+    else{
+      getid.innerHTML=min+':0'+sec;
+    }
+    time--;
+    if(time<0){
+      clearInterval(x);
+      getid.innerHTML="다시 Send 버튼을 눌러 인증을 완료해주세요."
+    }
+  },1000);
 }
