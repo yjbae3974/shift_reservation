@@ -158,8 +158,8 @@
                       Sign up
                     </div>
                     <input type="email" id="userEmail" class="form-control form-rounded mct-5" placeholder="Your email" style="padding: 10px 20px;">
-                    <input type="password" id="password" class="form-control form-rounded mct-2" placeholder="Your Password" style="padding: 10px 20px;" onchange="checkPassword();">
-                    <input type="password" id="password2" class="form-control form-rounded mct-2" placeholder="Rewrite Password" style="padding: 10px 20px;" onchange="checkPassword();">
+                    <input type="password" id="password" class="form-control form-rounded mct-2" placeholder="Your Password" style="padding: 10px 20px;">
+                    <input type="password" id="password2" class="form-control form-rounded mct-2" placeholder="Rewrite Password" style="padding: 10px 20px;">
                     <span id = "check" style="font-size: 10pt; color: green;">비밀번호를 확인해 주세요</span>
                     <label class="checkbox-container mx-3 mct-5 text-start">I agree to the Terms of Service.
                       <input type="checkbox" checked="checked">
@@ -255,6 +255,31 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
 
 <script>
+  
+  $(function(){
+      $('#password').keyup(function(){
+        if($('#password').val().length > 0 && $('#password').val().length < 6){
+            $('#check').html('비밀번호는 6자 이상으로 설정해주세요');
+            //$('#check').attr('color', '#f847C83E');          
+        }
+        else{
+            $('#check').html('비밀번호를 확인해 주세요');
+            //$('#check').attr('color', '#f847C83E');          
+        }
+      });
+
+      $('#password2').keyup(function(){
+          if($('#password').val() != $('#password2').val()){
+            $('#check').html('비밀번호가 일치하지 않습니다');
+            document.getElementById('check').style.color='red';
+          } 
+          else{
+            $('#check').html('비밀번호가 일치합니다');
+            document.getElementById('check').style.color='blue';
+          }
+      });
+  });
+
   function checkPassword(){
     var pw1 = document.getElementById('password').value;
     var pw2 = document.getElementById('password2').value;

@@ -147,23 +147,23 @@
             </div>
             <div class="d-flex text-white mt-1" style="align-self: flex-start;flex-wrap: wrap;">
                 <label class="checkbox-container mx-3">[공지]
-                    <input type="checkbox" checked="checked" id="announce">
+                    <input type="checkbox" checked="checked" id="announce" onchange="getAdminData(getAnnounceSnapshot(), getCheckData(),1);">
                     <span class="checkmark"></span>
                   </label>
                   <label class="checkbox-container mx-3">[업데이트]
-                    <input type="checkbox" checked="checked" id="update">
+                    <input type="checkbox" checked="checked" id="update" onchange="getAdminData(getAnnounceSnapshot(), getCheckData(),1);">
                     <span class="checkmark"></span>
                   </label>
                   <label class="checkbox-container mx-3">[이벤트]
-                    <input type="checkbox" checked="checked" id="event">
+                    <input type="checkbox" checked="checked" id="event" onchange="getAdminData(getAnnounceSnapshot(), getCheckData(),1);">
                     <span class="checkmark"></span>
                   </label>
                   <label class="checkbox-container mx-3">[개발현황]
-                    <input type="checkbox" checked="checked" id="develop">
+                    <input type="checkbox" checked="checked" id="develop" onchange="getAdminData(getAnnounceSnapshot(), getCheckData(),1);">
                     <span class="checkmark"></span>
                   </label>
                   <label class="checkbox-container mx-3">[버그수정]
-                    <input type="checkbox" checked="checked" id="debug">
+                    <input type="checkbox" checked="checked" id="debug" onchange="getAdminData(getAnnounceSnapshot(), getCheckData(),1);">
                     <span class="checkmark"></span>
                   </label>
             </div>
@@ -297,36 +297,8 @@
           </div>
           
         </div>
-        <div class="container mt-5 d-flex justify-content-center">
-          <nav aria-label="...">
-            <ul class="pagination pagination-circle">
-              <li class="page-item">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&lt&lt</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&lt</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2 <span class="visually-hidden">(current)</span></a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">5</a></li>
-              <li class="page-item"><a class="page-link" href="#">6</a></li>
-              <li class="page-item"><a class="page-link" href="#">7</a></li>
-              <li class="page-item"><a class="page-link" href="#">8</a></li>
-              <li class="page-item"><a class="page-link" href="#">9</a></li>
-              <li class="page-item"><a class="page-link" href="#">10</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">&gt</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">&gt&gt</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <div class="container mt-5 d-flex justify-content-center" id="number-placeholder"></div>
+        
       </div><!--여기까지 tab1-->
       <div
         class="tab-pane fade show"
@@ -564,7 +536,7 @@
     
     <!-- Custom scripts -->
     <script type="text/javascript"></script>
-	<script src="admin.js"></script>
+	
   <script src="..\js\jquery.accordion.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
   <script type="text/javascript">
@@ -604,7 +576,7 @@
             $("#navbar").load('../navbar/afterlogin.html');
             console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
             //window.history.back();
-            getAdminData(getAnnounceSnapshot(), getCheckData());
+            getAdminData(getAnnounceSnapshot(), getCheckData(), 1);
           } else {
             $("#navbar").load('../navbar/beforelogin.html');
             // No user is signed in.
@@ -653,8 +625,10 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==" crossorigin="anonymous"></script>
+<script src="admin.js"></script>
+<script src="admin2.js"></script>
 
-<script id="some-template" type="text/x-handlebars-template">
+<script id="announce-template" type="text/x-handlebars-template">
   {{#contents}}
   <tr>
     <th scope="row">[{{type}}]</th>
@@ -662,103 +636,45 @@
     <td>{{created}} </td><!--정렬은 날짜순-->
     <td>
       <a class="edit" href="edit.html?{{title}}"><i class="fas fa-edit"></i></a><!--기존에 썼던 데이터 옮겨지면서 edit페이지로 넘어감-->
-      <a class="edit" href=""><i class="fas fa-trash-alt"></i></a><!--이 행을 아예 삭제-->
+      <a class="edit"><i class="fas fa-trash-alt" id="{{title}}" onclick="deleteDoc(this.id);"></i></a><!--이 행을 아예 삭제-->
     </td>
   </tr>
   {{/contents}}
 </script>
 
+
+<script id="number-template" type="text/x-handlebars-template">
+  <nav aria-label="...">
+    <ul class="pagination pagination-circle">
+      <li class="page-item">
+        <a class="page-link" tabindex="-1" aria-disabled="true">&lt&lt</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" tabindex="-1" aria-disabled="true">&lt</a>
+      </li>
+
+      {{#contents}}
+      <li class="page-item {{#if active}}active{{/if}}">
+        <a class="page-link" aria-current="page" id="{{num}}" onclick="getAdminData(getAnnounceSnapshot(), getCheckData(), this.id);">{{num}}</a>
+      </li>
+      {{/contents}}
+
+      <li class="page-item">
+        <a class="page-link" >&gt</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" >&gt&gt</a>
+      </li>
+    </ul>
+  </nav>
+
+</script>
+
 <script>
-var source   = $("#some-template").html();
-var template = Handlebars.compile(source);
-
-function getAnnounceSnapshot(){
-    let ref, snapshot; 
-    // 데이터 불러오기
-    var db = firebase.firestore();
-    
-    ref = db.collection("announce"); 
-    snapshot = ref.get();
-
-    if (snapshot.empty) { // 검색된 데이터가 없는 경우
-        console.log(`Fail to load announce data.`);
-        return;
-    }
-    console.log(`Success to load announce data.`);
-    return snapshot;
-}
-
-function getCheckData(){
-    let check ={ "공지": false, "업데이트": false, "이벤트": false, "개발현황": false, "버그수정": false };
-
-    if(document.getElementById('announce').checked){
-      check["공지"] = true;
-    }
-    if(document.getElementById('update').checked){
-      check["업데이트"] = true;
-    }
-    if(document.getElementById('event').checked){
-      check["이벤트"] = true;
-    }
-    if(document.getElementById('develop').checked){
-      check["개발현황"] = true;
-    }
-    if(document.getElementById('debug').checked){
-      check["버그수정"] = true;
-    }
-    return check;
-}
-
-function getAdminData(Snapshots, check){
-
-  const dataArray = new Array();
-
-  Snapshots.then((snapshot) => {
-    snapshot.forEach((doc) => {
-        var type = doc.get("type");
-        
-        if(check[type]){
-            var temp = new Object();
-            temp.type = type;
-            temp.title = doc.get("title");
-            temp.created = getFormattedDate(doc.get("created").toDate());
-            temp.content = doc.get("content");
-            console.log(temp);
-            dataArray.push(temp);
-
-            makeAdminTable(dataArray);
-        }
-      });
-      console.log(dataArray);
-    });
-}
-
-function makeAdminTable(dataArray){
-    console.log("admintable",dataArray);
-    
-    dataArray.sort(compTime);
-    const data = new Object();
-    data.contents = dataArray;
-    $("#content-placeholder").html(template(data));
-}
-
-function compTime(a,b){
-  return b.created - a.created;
-}
-
-function getFormattedDate(d){
-  var days = ['일','월','화','수','목','금','토'];
-
-  var date = new Date(d)
-  var yyyy = date.getFullYear()
-  var mm = String(date.getMonth() + 1).padStart(2, '0')
-  var dd = String(date.getDate()).padStart(2, '0')
-  var day = "("+ days[date.getDay()] +")"
-  var hh = String(date.getHours()).padStart(2, '0')
-  var MM = String(date.getMinutes()).padStart(2, '0')
-  
-  var formatted_date = yyyy + "-" + mm + "-" + dd + day + " " + hh + ":" + MM;
-  return formatted_date;
-}
+var source   = $("#announce-template").html();
+var adminTemplate = Handlebars.compile(source);
+var source2   = $("#number-template").html();
+var numberTemplate = Handlebars.compile(source2);
+var contentNum = 2;
 </script>
 </html>
