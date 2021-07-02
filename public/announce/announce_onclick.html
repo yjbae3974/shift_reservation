@@ -123,11 +123,11 @@
       >
         <div class="container-fluid bg-click d-flex align-items-center" style="margin-top: 113px; min-height: 400px;">
             <div class="container" style="height: 100%;">
-                [<span id = "type"></span>]  
+                <span id = "type"></span>  
                 <p class="title mb-4 mt-4" id = "title" style="color: #060B11;font-weight: 500;"><!--여기에 제목 들어감-->
-                     큐브의 잠재능력 재설정 로직과 세부 확률 공개
+                     
                 </p>
-                <p style="color: #bfbfbf;" id="created">2021.03.05</p><!--여기에 날짜-->
+                <p style="color: #bfbfbf;" id="created"></p><!--여기에 날짜-->
             <div>
 
             </div>
@@ -429,7 +429,7 @@ function getContent(title){
         if (doc.exists) {
             console.log("Document data:", doc.data());
             document.getElementById('title').innerHTML = doc.get("title");
-            document.getElementById("type").innerHTML = doc.get("type");
+            document.getElementById("type").innerHTML = "["+doc.get("type")+"]";
             document.getElementById("created").innerHTML = getFormattedDate(doc.get("created").toDate());
             document.getElementById('summernote').innerHTML = doc.get("content");
         } else {

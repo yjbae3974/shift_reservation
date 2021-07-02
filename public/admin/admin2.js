@@ -115,23 +115,25 @@ function getFormattedDate(d){
 }
 
 function deleteDoc(title){
-  var db = firebase.firestore();
-  var docRef = db.collection("announce").doc(title);
-
-  return db.runTransaction((transaction) => {
-      // This code may get re-run multiple times if there are conflicts.
-      return transaction.get(docRef).then((doc) => {
-          if (!doc.exists) {
-              throw "Document does not exist!";
-          }
-          transaction.delete(doc.ref);
-      });
-  }).then(() => {
-      alert("삭제되었습니다");
-      window.location.href = "admin.html";
-  }).catch((error) => {
-      console.log("Transaction failed: ", error);
-  });
+    if(confirm(title+" 을 삭제하시겠습니까?")){
+        var db = firebase.firestore();
+        var docRef = db.collection("announce").doc(title);
+      
+        return db.runTransaction((transaction) => {
+            // This code may get re-run multiple times if there are conflicts.
+            return transaction.get(docRef).then((doc) => {
+                if (!doc.exists) {
+                    throw "Document does not exist!";
+                }
+                transaction.delete(doc.ref);
+            });
+        }).then(() => {
+            alert("삭제되었습니다");
+            window.location.href = "admin.html";
+        }).catch((error) => {
+            console.log("Transaction failed: ", error);
+        });
+    }
 }
 
 function changeTitle(title, type, content, value){
@@ -202,7 +204,6 @@ function saveDoc(title, type, content){
                 alert("같은 제목이 존재합니다");
             } 
             else {
-                alert("사용가능한 제목입니다")
                 // doc.data() will be undefined in this case
                 saveContent(title, type, content);
             }
@@ -235,8 +236,6 @@ function submit(){
     var db = firebase.firestore();
     var s = document.getElementById("post-type");
     var type = s.options[s.selectedIndex].value;
-
-    alert("post-type "+type);
     
     var title = document.getElementById('title').value.trim();
     var content = $('#summernote').summernote('code');
