@@ -134,6 +134,160 @@ function deleteDoc(title){
   });
 }
 
+function changeTitle(title, type, content, value){
+    saveContent(title, type, content);  
+
+    var db = firebase.firestore();
+    var docRef = db.collection("announce").doc(value);
+
+    return db.runTransaction((transaction) => {
+        // This code may get re-run multiple times if there are conflicts.
+        return transaction.get(docRef).then((doc) => {
+            if (!doc.exists) {
+                throw "Document does not exist!";
+            }
+            transaction.delete(doc.ref);
+        });
+    }).then(() => {
+        alert("저장되었습니다");
+        window.location.href = "admin.html";
+    }).catch((error) => {
+        console.log("Transaction failed: ", error);
+    });
+}
+
 function back(){
   window.history.back();
 }
+
+//const dict = {"공지":1, "업데이트":2, "이벤트":3, "개발현황":4, "버그수정":5};
+function getSelection(type){
+    var options= document.getElementById("post-type").options;
+    var n= options.length;
+    for (var i= 0; i<n; i++) {
+        if (options[i].value===type) {
+            return i;
+        }
+}
+}
+
+function getContent(title){
+    var db = firebase.firestore();
+    var docRef = db.collection("announce").doc(title);
+    docRef.get().then((doc) => {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+            document.getElementById('title').value = doc.get("title");
+            document.getElementById("post-type").selectedIndex = getSelection(doc.get("type"));
+            var content = doc.get("content");
+            $("#summernote").summernote("code", content);
+        } else {
+            alert("글이 존재하지 않습니다.");
+            window.location.href="admin.html";
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+}
+
+function saveDoc(title, type, content){
+    var db = firebase.firestore();
+    const value = decodeURI(window.location.search).substr(1);  
+
+    if(value == null || value == ""){
+        var docRef = db.collection("announce").doc(title);
+        docRef.get().then((doc) => {
+            if (doc.exists) {
+                console.log("Document data:", doc.data());
+                alert("같은 제목이 존재합니다");
+            } 
+            else {
+                alert("사용가능한 제목입니다")
+                // doc.data() will be undefined in this case
+                saveContent(title, type, content);
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });        
+    }
+    else{
+        var docRef = db.collection("announce").doc(value);
+        docRef.get().then((doc) => {
+            if (doc.exists) {
+                if(value == title){
+                    updateContent(title, type, content);  
+                }
+                else{
+                if(confirm("제목을 "+title+" 로 변경하시겠습니까?")){
+                    changeTitle(title, type, content, value);  
+                }
+                }
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
+    }
+
+
+}
+
+function submit(){
+    var db = firebase.firestore();
+    var s = document.getElementById("post-type");
+    var type = s.options[s.selectedIndex].value;
+
+    alert("post-type "+type);
+    
+    var title = document.getElementById('title').value.trim();
+    var content = $('#summernote').summernote('code');
+
+    if(type=="" || type==null){
+    alert("분류를 선택해주세요");
+    }
+    else if(title=="" || title==null){
+    alert("제목을 입력해주세요");
+    }
+    else{
+    saveDoc(title, type, content); //check title and save
+    }
+}
+
+function saveContent(title, type, content){
+    var db = firebase.firestore();
+    db.collection("announce").doc(title).set({
+    type : type,
+    title : title,
+    content : content,
+    created : firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(function(docRef) {
+    alert("저장되었습니다");
+    window.location.href = "admin.html";
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+    }); 
+}
+
+function updateContent(title, type, content){
+    var db = firebase.firestore();
+    var docRef = db.collection("announce").doc(title);
+    return db.runTransaction((transaction) => {
+        // This code may get re-run multiple times if there are conflicts.
+        return transaction.get(docRef).then((doc) => {
+            if (!doc.exists) {
+                throw "Document does not exist!";
+            }
+            transaction.update(docRef, 
+            { type : type,
+            content : content,
+            created : firebase.firestore.FieldValue.serverTimestamp() });
+        });
+    }).then(() => {
+        alert("저장되었습니다");
+        window.location.href = "admin.html";
+    }).catch((error) => {
+        console.log("Transaction failed: ", error);
+    });
+}
+

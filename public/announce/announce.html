@@ -67,7 +67,7 @@
 	 </script>
 </head>
 <body style="min-height: 100vh;">
-    <div id="navbar"></div>
+    <div id="load-before"></div>
 	  <nav id="navOption" class="sticky-nav">
 		  <div class="container">
 			<ul class="nav nav-tabs d-flex justify-content-end" id="ex1" role="tablist" style="border-bottom: 1px solid #fff;">
@@ -532,34 +532,8 @@
         transitionEasing: 'cubic-bezier(0.455, 0.030, 0.515, 0.955)',
         transitionSpeed: 200
       });
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      var firebaseConfig = {
-        apiKey: "AIzaSyA0E-3mY4_qBgV7RfxEdzcU4B7xjJ74e-c",
-        authDomain: "enter-ef3a8.firebaseapp.com",
-        databaseURL: "https://enter-ef3a8-default-rtdb.firebaseio.com",
-        projectId: "enter-ef3a8",
-        storageBucket: "enter-ef3a8.appspot.com",
-        messagingSenderId: "505540008688",
-        appId: "1:505540008688:web:d3d89e4a7ac7ba57178035",
-        measurementId: "G-88XNV769FN"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      firebase.analytics();
-
-      firebase.auth().onAuthStateChanged(function(user) {
-          if (user) {
-            $("#navbar").load('../navbar/afterlogin.html');
-            console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
-            //window.history.back();
-            getAdminData(getAnnounceSnapshot(), getCheckData(), 1);
-          } else {
-            $("#navbar").load('../navbar/beforelogin.html');
-            // No user is signed in.
-            alert("로그인 X");
-          }
-      });
+      $("#load-before").load('../navbar/beforelogin.html');
+      $('#load-after').load('../navbar/afterlogin.html');
     });
     $(window).load(function(){
       $('#소통').addClass('active');
@@ -593,53 +567,22 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
-<script src="../admin/admin2.js"></script>
-
-<script id="announce-template" type="text/x-handlebars-template">
-  {{#contents}}
-  <tr>
-    <th scope="row">[{{type}}]</th>
-    <td>{{title}}</td>
-    <td>{{created}} </td><!--정렬은 날짜순-->
-    <td>
-      <a class="edit" href="edit.html?{{title}}"><i class="fas fa-edit"></i></a><!--기존에 썼던 데이터 옮겨지면서 edit페이지로 넘어감-->
-      <a class="edit"><i class="fas fa-trash-alt" id="{{title}}" onclick="deleteDoc(this.id);"></i></a><!--이 행을 아예 삭제-->
-    </td>
-  </tr>
-  {{/contents}}
-</script>
-
-
-<script id="number-template" type="text/x-handlebars-template">
-  <nav aria-label="...">
-    <ul class="pagination pagination-circle">
-      <li class="page-item">
-        <a class="page-link" tabindex="-1" aria-disabled="true">&lt&lt</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" tabindex="-1" aria-disabled="true">&lt</a>
-      </li>
-
-      {{#contents}}
-      <li class="page-item {{#if active}}active{{/if}}">
-        <a class="page-link" aria-current="page" id="{{num}}" onclick="getAdminData(getAnnounceSnapshot(), getCheckData(), this.id);">{{num}}</a>
-      </li>
-      {{/contents}}
-
-      <li class="page-item">
-        <a class="page-link" >&gt</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" >&gt&gt</a>
-      </li>
-    </ul>
-  </nav>
-
-</script>
-
 
 <script>
-
-
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyA0E-3mY4_qBgV7RfxEdzcU4B7xjJ74e-c",
+    authDomain: "enter-ef3a8.firebaseapp.com",
+    databaseURL: "https://enter-ef3a8-default-rtdb.firebaseio.com",
+    projectId: "enter-ef3a8",
+    storageBucket: "enter-ef3a8.appspot.com",
+    messagingSenderId: "505540008688",
+    appId: "1:505540008688:web:d3d89e4a7ac7ba57178035",
+    measurementId: "G-88XNV769FN"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
 </script>
 </html>
