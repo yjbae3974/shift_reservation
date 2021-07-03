@@ -1,9 +1,42 @@
+
+
+function prevPage(checkData){
+    if(currentPage > 1 && currentPage <= maxPage+1){
+        currentPage = currentPage-1;
+        getAdminData(getAnnounceSnapshot(), checkData, currentPage);
+    }
+}
+
+function nextPage(checkData){
+    if(currentPage > 0 && currentPage <= maxPage){
+        currentPage = currentPage+1;
+        getAdminData(getAnnounceSnapshot(), checkData, currentPage);
+    }
+}
+
+
+function firstPage(checkData){
+    if(currentPage > 1 && currentPage <= maxPage+1){
+        currentPage = 1;
+        getAdminData(getAnnounceSnapshot(), checkData, currentPage);
+    }
+}
+
+function lastPage(checkData){
+    console.log(maxPage);
+    if(currentPage > 0 && currentPage <= maxPage){
+        currentPage = maxPage;
+        getAdminData(getAnnounceSnapshot(), checkData, currentPage);
+    }
+}
+
+
 function getAnnounceSnapshot(){
     let ref, snapshot; 
     // 데이터 불러오기
     var db = firebase.firestore();
     
-    ref = db.collection("announce"); 
+    ref = db.collection(collectionName); 
     snapshot = ref.get();
 
     if (snapshot.empty) { // 검색된 데이터가 없는 경우
@@ -35,6 +68,7 @@ function getCheckData(){
     return check;
 }
 
+
 function getAdminData(Snapshots, check, num){
 
   const dataArray = new Array();
@@ -56,7 +90,6 @@ function getAdminData(Snapshots, check, num){
             makeAdminTable(dataArray, num);
         }
       });
-      console.log(dataArray);
     });
 }
 
@@ -84,12 +117,16 @@ function makeAdminTable(dataArray, num){
 function numberArray(num, curr){
   var n = num/contentNum;
   if(num%contentNum != 0) n = n + 1;
-  
+  maxPage = parseInt(n);
+
   const numberArray = new Array();
   for(i=1; i<=n; i++){
     var temp = new Object();
     temp.num = i;
-    if(i==curr) temp.active = true;
+    if(i==curr){
+        temp.active = true;
+        currentPage = i;
+    } 
     numberArray.push(temp);
   }
   return numberArray;
@@ -117,7 +154,7 @@ function getFormattedDate(d){
 function deleteDoc(title){
     if(confirm(title+" 을 삭제하시겠습니까?")){
         var db = firebase.firestore();
-        var docRef = db.collection("announce").doc(title);
+        var docRef = db.collection(collectionName).doc(title);
       
         return db.runTransaction((transaction) => {
             // This code may get re-run multiple times if there are conflicts.
@@ -129,7 +166,7 @@ function deleteDoc(title){
             });
         }).then(() => {
             alert("삭제되었습니다");
-            window.location.href = "admin.html";
+            window.location.href = pageName;
         }).catch((error) => {
             console.log("Transaction failed: ", error);
         });
@@ -140,7 +177,7 @@ function changeTitle(title, type, content, value){
     saveContent(title, type, content);  
 
     var db = firebase.firestore();
-    var docRef = db.collection("announce").doc(value);
+    var docRef = db.collection(collectionName).doc(value);
 
     return db.runTransaction((transaction) => {
         // This code may get re-run multiple times if there are conflicts.
@@ -152,7 +189,7 @@ function changeTitle(title, type, content, value){
         });
     }).then(() => {
         alert("저장되었습니다");
-        window.location.href = "admin.html";
+        window.location.href = pageName;
     }).catch((error) => {
         console.log("Transaction failed: ", error);
     });
@@ -175,7 +212,7 @@ function getSelection(type){
 
 function getContent(title){
     var db = firebase.firestore();
-    var docRef = db.collection("announce").doc(title);
+    var docRef = db.collection(collectionName).doc(title);
     docRef.get().then((doc) => {
         if (doc.exists) {
             console.log("Document data:", doc.data());
@@ -185,7 +222,7 @@ function getContent(title){
             $("#summernote").summernote("code", content);
         } else {
             alert("글이 존재하지 않습니다.");
-            window.location.href="admin.html";
+            window.location.href = pageName;
         }
     }).catch((error) => {
         console.log("Error getting document:", error);
@@ -197,7 +234,7 @@ function saveDoc(title, type, content){
     const value = decodeURI(window.location.search).substr(1);  
 
     if(value == null || value == ""){
-        var docRef = db.collection("announce").doc(title);
+        var docRef = db.collection(collectionName).doc(title);
         docRef.get().then((doc) => {
             if (doc.exists) {
                 console.log("Document data:", doc.data());
@@ -212,7 +249,7 @@ function saveDoc(title, type, content){
         });        
     }
     else{
-        var docRef = db.collection("announce").doc(value);
+        var docRef = db.collection(collectionName).doc(value);
         docRef.get().then((doc) => {
             if (doc.exists) {
                 if(value == title){
@@ -228,8 +265,6 @@ function saveDoc(title, type, content){
             console.log("Error getting document:", error);
         });
     }
-
-
 }
 
 function submit(){
@@ -253,7 +288,7 @@ function submit(){
 
 function saveContent(title, type, content){
     var db = firebase.firestore();
-    db.collection("announce").doc(title).set({
+    db.collection(collectionName).doc(title).set({
     type : type,
     title : title,
     content : content,
@@ -261,7 +296,7 @@ function saveContent(title, type, content){
     })
     .then(function(docRef) {
     alert("저장되었습니다");
-    window.location.href = "admin.html";
+    window.location.href = pageName;
     })
     .catch(function(error) {
         console.error("Error adding document: ", error);
@@ -270,7 +305,7 @@ function saveContent(title, type, content){
 
 function updateContent(title, type, content){
     var db = firebase.firestore();
-    var docRef = db.collection("announce").doc(title);
+    var docRef = db.collection(collectionName).doc(title);
     return db.runTransaction((transaction) => {
         // This code may get re-run multiple times if there are conflicts.
         return transaction.get(docRef).then((doc) => {
@@ -284,7 +319,7 @@ function updateContent(title, type, content){
         });
     }).then(() => {
         alert("저장되었습니다");
-        window.location.href = "admin.html";
+        window.location.href = pageName;
     }).catch((error) => {
         console.log("Transaction failed: ", error);
     });
