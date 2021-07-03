@@ -19,8 +19,37 @@
     <link rel="stylesheet" href="demo.css">
     <link rel="stylesheet" href="admin.css">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    
     <style>
+.accordion{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  float: left;
+}
+
+.accordion-title {
+  background-color: #999;
+  color: white;
+  width: 100%;
+  float: left;
+  padding: 5px;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+.accordion-title.active {
+  background-color: #999;  
+    border-radius: 5px 5px 0 0;
+}
+.accordion-content {
+  display: none;
+  border: 1px solid #999;
+  float: left;
+  width: 100%;
+  padding: 5px;
+}
+
       th{
         font-weight: 700 !important;
       }
@@ -70,41 +99,7 @@
 	 </script>
 </head>
 <body style="min-height: 100vh;">
-    <nav class="navbar navbar-expand-lg fixed-top" style="padding: 0px; border-bottom: 2px solid #c4c4c4;height: 113px;">
-		<div class="container-fluid bg-nav" style="padding: 0px;">
-		  
-			<div class="container d-flex align-items-center" style="min-height: 113px;">
-			  <button
-		  class="navbar-toggler"
-		  type="button"
-		  data-mdb-toggle="collapse"
-		  data-mdb-target="#navbarSupportedContent"
-		  aria-controls="navbarSupportedContent"
-		  aria-expanded="false"
-		  aria-label="Toggle navigation"
-		>
-		  <i class="fas fa-bars"></i>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		  <div class="d-flex">
-			<a href="" class="nav-title" id="prev2">EN</a>
-			<a href="" class="nav-title">T</a>
-			<a href="" class="nav-title" id="next2">ER</a>
-		  </div>
-		 
-		  <ul class="navbar-nav ms-auto" style="color: #8c8c8c;">
-        <li class="me-5"><a class="a-link" href="../index.html">사전예약</a></li>
-        <li class="me-5"><a class="a-link" href="../introduce\introduce_service.html">서비스 소개</a></li>
-        <li class="me-5"><a class="a-link active" href="../announce\announce.html">공지사항</a></li>
-        <li class="me-5"><a class="a-link" href="../register\register.html">회원가입</a></li>
-        <li class="me-5"><a class="a-link" href="">로그인</a></li>
-		  </ul>
-		  
-		  
-		</div>
-	  </div>  
-		</div>
-	  </nav>
+    <div id="navbar"></div>
 	  <nav id="navOption" class="sticky-nav">
 		  <div class="container">
 			<ul class="nav nav-tabs d-flex justify-content-end" id="ex1" role="tablist" style="border-bottom: 1px solid #fff;">
@@ -137,21 +132,21 @@
 				  >
 				  
 				</li>
-                <li class="nav-item" role="presentation" style="max-width: 50%;width: 150px">
-                    <a
-                      class="nav-link text-center tabcolor"
-                      id="ex1-tab-2"
-                      data-mdb-toggle="tab"
-                      data-toggle="tab"
-                      href="#ex1-tabs-3"
-                      role="tab"
-                      aria-controls="ex1-tabs-3"
-                      aria-selected="false"
-                      style="font-size: 16px; font-weight: 900;"
-                      >문의사항</a
-                    >
-                    
-                  </li>
+          <li class="nav-item" role="presentation" style="max-width: 50%;width: 150px">
+              <a
+                class="nav-link text-center tabcolor"
+                id="ex1-tab-2"
+                data-mdb-toggle="tab"
+                data-toggle="tab"
+                href="#ex1-tabs-3"
+                role="tab"
+                aria-controls="ex1-tabs-3"
+                aria-selected="false"
+                style="font-size: 16px; font-weight: 900;"
+                >문의사항</a
+              >
+              
+            </li>
 				
 			  </ul>
 		  </div>
@@ -348,22 +343,11 @@
     
     <!-- Custom scripts -->
     <script type="text/javascript"></script>
-    <!--<script src="announce.js"></script>-->
-    <script src="..\js\jquery.accordion.js"></script>
-  
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+	
+  <script src="..\js\jquery.accordion.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#only-one [data-accordion]').accordion();
-
-      $('#multiple [data-accordion]').accordion({
-        singleOpen: false
-      });
-
-      $('#single[data-accordion]').accordion({
-        transitionEasing: 'cubic-bezier(0.455, 0.030, 0.515, 0.955)',
-        transitionSpeed: 200
-      });
       $('#summernote').summernote({
         placeholder: '내용을 입력하세요.',
         tabsize: 2,
@@ -377,7 +361,7 @@
           ['insert', ['link', 'picture', 'video']],
           ['view', ['fullscreen', 'codeview', 'help']]
         ]
-      });
+      });      
       // Your web app's Firebase configuration
       // For Firebase JS SDK v7.20.0 and later, measurementId is optional
       var firebaseConfig = {
@@ -396,18 +380,37 @@
 
       firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
-            //$("#navbar").load('../navbar/afterlogin.html');
+            $("#navbar").load('../navbar/afterlogin.html');
             console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+            //window.history.back();
+            getQuestionData(getQuestionSnapshot());
           } else {
-            window.location.href = "admin.html";
+            $("#navbar").load('../navbar/beforelogin.html');
+            // No user is signed in.
+            //alert("로그인 X");
           }
       });
-      value = decodeURI(window.location.search).substr(1)
-      
-      if(value!=null || value!=""){
-        getContent(value);
-      }
-      
+    });
+    value = decodeURI(window.location.search).substr(1)
+    if(value!=null || value!=""){
+      getContent(value);
+    }
+    $(window).load(function(){
+      $('#소통').addClass('active');
+      $('#only-one [accordion]').accordion({
+        autoheight: false
+      });
+
+      $('#multiple [accordion]').accordion({
+        singleOpen: false,
+        autoheight: false
+      });
+
+      $('#single[accordion]').accordion({
+        transitionEasing: 'cubic-bezier(0.455, 0.030, 0.515, 0.955)',
+        transitionSpeed: 200,
+        autoheight: false
+      });
     });
   </script>
   <script async
@@ -423,18 +426,49 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
-<script src="admin_announce.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==" crossorigin="anonymous"></script>
 <script src="admin.js"></script>
+<script src="admin_announce.js"></script>
+<script src="admin_question.js"></script>
+
+
+<script id="question-template" type="text/x-handlebars-template">
+  <div class="container" style="margin-top: 100px; overflow:auto;">
+    {{#contents}}
+    <section class="accordion">
+      <button class="accordion-title">
+        <div class="col-10"><div class="click2edit" id="title{{num}}"></div></div>
+      </button>
+      <div class="accordion-content">
+        <article class="article2edit">
+          <div class="row">
+            <div class="col-10">
+              <div class="click2edit" id="content{{num}}"></div>
+            </div>
+            <div class="col-2 d-flex justify-content-end">
+                  <div id="visible{{num}}"></div>
+                  <button class="edit" onclick="edit('{{num}}');"><i class="fas fa-edit"></i><div id="visible{{num}}" style="font-size: 9px;"></div></button>
+                  <button class="edit" onclick="submitQuestion(myTitle('{{num}}'), '{{num}}', myContent('{{num}}'));"><i class="far fa-save"></i><div style="font-size: 9px;">save</div></button>
+                  <button class="edit" onclick="deleteQuestion(myTitle('{{num}}'), '{{num}}')"><i class="fas fa-trash-alt"></i><div style="font-size: 9px;">del</div></button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+    {{/contents}}
+  </div>
+
+  <div class="d-flex justify-content-center" style="color: #8c8c8c; margin-top: 40px; margin-bottom: 40px;">
+    <div class="clickable" style="font-size: 18px;" onclick="addQuestion();"><span style="font-weight: 700;">+</span> 추가답변 작성하기</div>
+  </div>
+</script>
 
 <script>
+  
+var source3   = $("#question-template").html();
+var questionTemplate = Handlebars.compile(source3);
 let collectionName = "announce";
 let pageName = "admin.html";
 
-function autosave(){
-    collectionName = "autosave";
-    pageName = "autosave.html";
-    submit(collectionName, pageName);
-}
 </script>
-
 </html>

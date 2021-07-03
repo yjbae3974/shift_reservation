@@ -132,7 +132,7 @@ function edit(num){
         temp.title = doc.get("title");
         temp.content = doc.get("content");
         temp.num = doc.get("num");
-        console.log(temp);
+        //console.log(temp);
         dataArray.push(temp);
   
         makeQuestionTable(dataArray);   

@@ -1,5 +1,17 @@
 let collectionName = "announce";
 let pageName = "admin.html";
+const contentNum = 4;
+let currentPage = 1;
+let maxPage = 1;
+
+
+function setViewOptions(admin, number, question, collection, page){
+    adminTemplate = admin;
+    numberTemplate = number;
+    questionTemplate = question;
+    collectionName = collection;
+    pateName = page;
+}
 
 function autosave(){
     collectionName = "autosave";
@@ -30,7 +42,7 @@ function firstPage(checkData){
 }
 
 function lastPage(checkData){
-    console.log(maxPage);
+    //console.log(maxPage);
     if(currentPage > 0 && currentPage <= maxPage){
         currentPage = maxPage;
         getAdminData(getAnnounceSnapshot(), checkData, currentPage);
@@ -91,9 +103,8 @@ function getAdminData(Snapshots, check, num){
         temp.created = getFormattedDate(doc.get("created").toDate());
         temp.createdComp = doc.get("created")
         temp.content = doc.get("content");
-        console.log(temp);
+        //console.log(temp);
         dataArray.push(temp);
-
         makeAdminTable(dataArray, num);
     }
     });
@@ -222,7 +233,7 @@ function getContent(title){
     var docRef = db.collection(collectionName).doc(title);
     docRef.get().then((doc) => {
         if (doc.exists) {
-            console.log("Document data:", doc.data());
+            //console.log("Document data:", doc.data());
             document.getElementById('title').value = doc.get("title");
             document.getElementById("post-type").selectedIndex = getSelection(doc.get("type"));
             var content = doc.get("content");
@@ -244,7 +255,7 @@ function saveDoc(title, type, content){
         var docRef = db.collection(collectionName).doc(title);
         docRef.get().then((doc) => {
             if (doc.exists) {
-                console.log("Document data:", doc.data());
+                //console.log("Document data:", doc.data());
                 alert("같은 제목이 존재합니다");
             } 
             else {
