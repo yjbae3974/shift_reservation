@@ -383,18 +383,18 @@
             $("#navbar").load('../navbar/afterlogin.html');
             console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
             //window.history.back();
-            getQuestionData(getQuestionSnapshot());
           } else {
             $("#navbar").load('../navbar/beforelogin.html');
             // No user is signed in.
             //alert("로그인 X");
           }
       });
+      getQuestionData(getQuestionSnapshot());
+      value = decodeURI(window.location.search).substr(1)
+      if(value!=null || value!=""){
+         getContent(value);
+      }
     });
-    value = decodeURI(window.location.search).substr(1)
-    if(value!=null || value!=""){
-      getContent(value);
-    }
     $(window).load(function(){
       $('#소통').addClass('active');
       $('#only-one [accordion]').accordion({

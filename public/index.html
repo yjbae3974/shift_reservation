@@ -394,7 +394,38 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
 <script src="js/reservation.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 <script>
+  function logout() {
+    firebase.auth().signOut().then(function() {
+      console.log("logout success");
+      window.location.href = "../login/login.html";
+      // Sign-out successful.
+    }).catch(function(error) {
+      // An error happened.
+      console.log(error.code, error.message);
+    });
+  }
+
+  //카카오로그아웃  
+  function kakaoLogout() {
+    if(!Kakao.isInitialized()){
+      Kakao.init('8fa8eca2742004d4fa3b93aaf4b736e3'); //발급받은 키 중 javascript키를 사용해준다.
+      console.log(Kakao.isInitialized()); // sdk초기화여부판단
+    }
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function (response) {
+          console.log(response)
+        },
+        fail: function (error) {
+          console.log(error)
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+  }
 </script>
 </html>

@@ -225,7 +225,7 @@ function getSelection(type){
         if (options[i].value===type) {
             return i;
         }
-}
+    }
 }
 
 function getContent(title){
@@ -274,9 +274,9 @@ function saveDoc(title, type, content){
                     updateContent(title, type, content);  
                 }
                 else{
-                if(confirm("제목을 "+title+" 로 변경하시겠습니까?")){
-                    changeTitle(title, type, content, value);  
-                }
+                    if(confirm("제목을 "+title+" 로 변경하시겠습니까?")){
+                        changeTitle(title, type, content, value);  
+                    }
                 }
             }
         }).catch((error) => {
@@ -289,6 +289,7 @@ function saveDoc(title, type, content){
 function submit(collection, page){
     if(collection!=null || collection!="") collectionName = collection;
     if(page!=null || page!="") pageName = page;
+
     var s = document.getElementById("post-type");
     var type = s.options[s.selectedIndex].value;
     
@@ -302,7 +303,7 @@ function submit(collection, page){
     alert("제목을 입력해주세요");
     }
     else{
-    saveDoc(title, type, content); //check title and save
+        saveDoc(title, type, content); //check title and save
     }
 }
 

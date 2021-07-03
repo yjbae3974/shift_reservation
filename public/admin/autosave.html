@@ -379,29 +379,28 @@ body{
             $("#navbar").load('../navbar/afterlogin.html');
             console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
             //window.history.back();
-                                      
-            var source   = $("#announce-template").html();
-            var adminTemplate = Handlebars.compile(source);
-            var source2   = $("#number-template").html();
-            var numberTemplate = Handlebars.compile(source2);
-            var source3   = $("#question-template").html();
-            var questionTemplate = Handlebars.compile(source3);
-            const contentNum = 4;
-            let collectionName = "autosave";
-            let pageName = "autosave.html";
-            let currentPage = 1;
-            let maxPage = 1;
-
-            setViewOptions(adminTemplate, numberTemplate, questionTemplate, collectionName, pageName);
-
-            getAutosaveData(getAnnounceSnapshot(), currentPage);
-            getQuestionData(getQuestionSnapshot());
           } else {
             $("#navbar").load('../navbar/beforelogin.html');
             // No user is signed in.
             //alert("로그인 X");
           }
       });
+      var source   = $("#announce-template").html();
+      var adminTemplate = Handlebars.compile(source);
+      var source2   = $("#number-template").html();
+      var numberTemplate = Handlebars.compile(source2);
+      var source3   = $("#question-template").html();
+      var questionTemplate = Handlebars.compile(source3);
+      const contentNum = 4;
+      let collectionName = "autosave";
+      let pageName = "autosave.html";
+      let currentPage = 1;
+      let maxPage = 1;
+
+      setViewOptions(adminTemplate, numberTemplate, questionTemplate, collectionName, pageName);
+
+      getAutosaveData(getAnnounceSnapshot(), currentPage);
+      getQuestionData(getQuestionSnapshot());
     });
     $(window).load(function(){
       $('#소통').addClass('active');
