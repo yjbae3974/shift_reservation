@@ -1,4 +1,11 @@
+let collectionName = "announce";
+let pageName = "admin.html";
 
+function autosave(){
+    collectionName = "autosave";
+    pageName = "autosave.html";
+    submit(collectionName, pageName);
+}
 
 function prevPage(checkData){
     if(currentPage > 1 && currentPage <= maxPage+1){
@@ -75,30 +82,30 @@ function getAdminData(Snapshots, check, num){
 
   Snapshots.then((snapshot) => {
     snapshot.forEach((doc) => {
-        var type = doc.get("type");
-        
-        if(check[type]){
-            var temp = new Object();
-            temp.type = type;
-            temp.title = doc.get("title");
-            temp.created = getFormattedDate(doc.get("created").toDate());
-            temp.createdComp = doc.get("created")
-            temp.content = doc.get("content");
-            console.log(temp);
-            dataArray.push(temp);
+    var type = doc.get("type");
+    
+    if(check[type]){
+        var temp = new Object();
+        temp.type = type;
+        temp.title = doc.get("title");
+        temp.created = getFormattedDate(doc.get("created").toDate());
+        temp.createdComp = doc.get("created")
+        temp.content = doc.get("content");
+        console.log(temp);
+        dataArray.push(temp);
 
-            makeAdminTable(dataArray, num);
-        }
-      });
+        makeAdminTable(dataArray, num);
+    }
     });
+});
 }
 
 function makeAdminTable(dataArray, num){
-    console.log("admintable",dataArray);
+    //console.log("admintable",dataArray);
 
     var adminArray = dataArray;
     adminArray.sort(compTime);
-    console.log("sort",adminArray);
+    //console.log("sort",adminArray);
 
     if(dataArray.length > contentNum){
       adminArray = dataArray.slice((num-1)*contentNum, num*contentNum);
@@ -267,8 +274,10 @@ function saveDoc(title, type, content){
     }
 }
 
-function submit(){
-    var db = firebase.firestore();
+
+function submit(collection, page){
+    if(collection!=null || collection!="") collectionName = collection;
+    if(page!=null || page!="") pageName = page;
     var s = document.getElementById("post-type");
     var type = s.options[s.selectedIndex].value;
     
@@ -325,3 +334,11 @@ function updateContent(title, type, content){
     });
 }
 
+function getAllCheck(){
+    let check ={ "공지": true, "업데이트": true, "이벤트": true, "개발현황": true, "버그수정": true };
+    return check;
+}
+
+function getAutosaveData(Snapshots, num){
+  getAdminData(getAnnounceSnapshot(), getAllCheck(), currentPage);
+}

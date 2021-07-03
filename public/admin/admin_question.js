@@ -21,6 +21,8 @@ function edit(num){
   }
   
   function submitQuestion(title, num, content){
+    $('#title'+num).summernote('destroy');
+    $('#content'+num).summernote('destroy');
     if(confirm(title+" 을 저장하시겠습니까?")){
       var db = firebase.firestore()
       var docRef = db.collection("question").doc(num);
@@ -40,6 +42,8 @@ function edit(num){
   }
   
   function deleteQuestion(title, num){
+      $('#title'+num).summernote('destroy');
+      $('#content'+num).summernote('destroy');
       if(confirm(title+" 을 삭제하시겠습니까?")){
           var db = firebase.firestore();
           var docRef = db.collection("question").doc(num);
@@ -54,7 +58,7 @@ function edit(num){
               });
           }).then(() => {
               alert("삭제되었습니다");
-              //window.location.href = pageName;
+              window.location.href = pageName;
           }).catch((error) => {
               console.log("Transaction failed: ", error);
           });
@@ -146,15 +150,28 @@ function edit(num){
     console.log(temp);
     dataArray.push(temp);
     makeQuestionTable(dataArray);  
+    setContent(dataArray, num+1);
   }
   
-  function setContent(dataArray){
+  function setContent(dataArray, addNum){
     //console.log(dataArray);
     for(k in dataArray){
       data = dataArray[k]
-      $("#content"+data.num).summernote("code", data.content);
-      $("#content"+data.num).summernote('destroy');
-      document.getElementById("visible"+data.num).innerHTML = "edit";
+      console.log(data);
+
+      if(data.num == addNum){
+        $("#title"+data.num).summernote({focus: true, toolbar: false});
+        $("#title"+data.num).summernote("code", data.title);
+        $("#content"+data.num).summernote({focus: true, toolbar: false});
+        document.getElementById("visible"+data.num).innerHTML = "view";
+      }
+      else{
+        $("#title"+data.num).summernote("code", data.title);
+        $("#title"+data.num).summernote('destroy');
+        $("#content"+data.num).summernote("code", data.content);
+        $("#content"+data.num).summernote('destroy');
+        document.getElementById("visible"+data.num).innerHTML = "edit";
+      }
     }
   }
   

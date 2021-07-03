@@ -20,6 +20,9 @@ $(document).ready(function(){
   $('#toSave').click(function(){
     location.href = 'autosave.html';
   });
+  $('#toAdmin').click(function(){
+    location.href = 'admin.html';
+  });
   $('#toEdit').click(function(){
     location.href = 'edit.html';
   });

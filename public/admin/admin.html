@@ -228,64 +228,12 @@ body{
       
                 <!--Table body-->
                 <tbody id="content-placeholder"></tbody>
-                <!--  <tr>
-                    <th scope="row">[업데이트]</th>
-                    <td>휴대폰 알뜰폰결제 SK7mobile(SK텔링크) 결제 서비스 추가 안내</td>
-                    <td>2021.03.16</td>
-                    <td>
-                      <a class="edit" href=""><i class="fas fa-edit"></i></a>
-                      <a class="edit" href=""><i class="fas fa-trash-alt"></i></a>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <th scope="row">[공지]</th>
-                    <td>고객 간담회를 준비하고 있습니다. </td>
-                    <td>2021.03.11</td>
-                    <td>
-                      <a class="edit" href=""><i class="fas fa-edit"></i></a>
-                      <a class="edit" href=""><i class="fas fa-trash-alt"></i></a>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <th scope="row">[공지]</th>
-                    <td>적절하지 못한 용어 사용으로 불쾌감을 드려 죄송합니다.</td>
-                    <td>2021.03.09</td>
-                    <td>
-                      <a class="edit" href=""><i class="fas fa-edit"></i></a>
-                      <a class="edit" href=""><i class="fas fa-trash-alt"></i></a>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <th scope="row">[공지]</th>
-                    <td>환골탈태의 각오로 고객님들의 신뢰회복에 전심전력을 다하겠습니다.</td>
-                    <td>2021.03.05</td>
-                    <td>
-                      <a class="edit" href=""><i class="fas fa-edit"></i></a>
-                      <a class="edit" href=""><i class="fas fa-trash-alt"></i></a>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <th scope="row">[개발현황]</th>
-                    <td>큐브의 잠재능력 재설정 로직과 세부 확률 공개</td>
-                    <td>2021.03.05</td>
-                    <td>
-                      <a class="edit" href=""><i class="fas fa-edit"></i></a>
-                      <a class="edit" href=""><i class="fas fa-trash-alt"></i></a>
-                    </td>
-                    
-                  </tr>-->
-                <!--Table body-->
-      
       
               </table>
               <!--Table-->
             </div>
             <div class="d-flex justify-content-end align-items-center" style="color: #8c8c8c;">
-              <div class="mx-5 clickable" id="toSave">임시저장(<span>3</span>)</div>                  <!--이부분 숫자 수정 요망-->
+              <div class="mx-5 clickable" id="toSave">임시저장</div>                  <!--이부분 숫자 수정 요망-->
               <div class="btn-base" id="toEdit" style="padding: 8px 16px;">글쓰기</div>
             </div>
           </div>
@@ -325,7 +273,7 @@ body{
     </div>
     
     <div class="container" style="margin-top: 100px;" id="question-placeholder"></div>
-  </div>
+      </div>
     
 
       <div
@@ -594,14 +542,11 @@ body{
 </script>
 
 <script id="question-template" type="text/x-handlebars-template">
-  <div class="d-flex justify-content-center" style="color: #8c8c8c; margin-top: 40px;">
-    <div class="clickable" style="font-size: 18px;" onclick="addQuestion();"><span style="font-weight: 700;">+</span> 추가답변 작성하기</div>
-  </div>
-  <div class="container" style="margin-top: 100px;">
+  <div class="container" style="margin-top: 100px; overflow:auto;">
     {{#contents}}
-    <section id='{{num}}' class="accordion">
+    <section class="accordion">
       <button class="accordion-title">
-        <div class="col-10"><div class="click2edit" id="title{{num}}">{{title}}</div></div>
+        <div class="col-10"><div class="click2edit" id="title{{num}}"></div></div>
       </button>
       <div class="accordion-content">
         <article class="article2edit">
@@ -613,7 +558,7 @@ body{
                   <div id="visible{{num}}"></div>
                   <button class="edit" onclick="edit('{{num}}');"><i class="fas fa-edit"></i></button>
                   <button class="edit" onclick="submitQuestion(myTitle('{{num}}'), '{{num}}', myContent('{{num}}'));"><i class="far fa-save"></i></button>
-                  <button class="edit" onclick=""><i class="fas fa-trash-alt"></i></button>
+                  <button class="edit" onclick="deleteQuestion(myTitle('{{num}}'), '{{num}}')"><i class="fas fa-trash-alt"></i></button>
             </div>
           </div>
         </article>
@@ -622,6 +567,9 @@ body{
     {{/contents}}
   </div>
 
+  <div class="d-flex justify-content-center" style="color: #8c8c8c; margin-top: 40px; margin-bottom: 40px;">
+    <div class="clickable" style="font-size: 18px;" onclick="addQuestion();"><span style="font-weight: 700;">+</span> 추가답변 작성하기</div>
+  </div>
 </script>
 
 <script>
@@ -633,8 +581,8 @@ var numberTemplate = Handlebars.compile(source2);
 var source3   = $("#question-template").html();
 var questionTemplate = Handlebars.compile(source3);
 const contentNum = 4;
-const collectionName = "announce";
-const pageName = "admin.html";
+let collectionName = "announce";
+let pageName = "admin.html";
 let currentPage = 1;
 let maxPage = 1;
 
