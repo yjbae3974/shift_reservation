@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="invitation.css">
     <link rel="stylesheet" href="../register/register.css">
-   
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'> 
+    
     <style>
       .post-slider .card{
         border-radius: 2rem !important;
@@ -170,7 +171,9 @@
                                   <th>Number of Invitation</th>
                               </tr>
                           </thead>
-                          <tbody>
+
+                          <tbody id="content-placeholder"></tbody>
+                          <!--<tbody>
                               <tr>
                                   <th>1</th>
                                   <th>kim***31</th>
@@ -221,23 +224,14 @@
                                 <th>kim***31</th>
                                 <th>70</th>
                             </tr>
-                            <tr>
-                                <th>...</th>
-                                <th>...</th>
-                                <th>...</th>
-                            </tr>
-                            <tr style="border: 1px solid #fff">
-                                <th>1</th>
-                                <th>kim***31</th>
-                                <th>70</th>
-                            </tr>
-                          </tbody>
+
+                          </tbody>-->
 
                       </table>
                       <p class="invit-title mt-4">Copy Invitation Code</p>
                       <div class="d-flex" style="height: 60px;max-width: 700px">
-                        <input type="email" style="width: 80%;color: #fff" class="form-control input-left">
-                        <button type="submit" class="btn-sub">복사</button>
+                        <input type="email" id="invitationLink" style="width: 80%;color: #fff" class="form-control input-left">
+                        <button type="submit" class="btn-sub" onclick="copyToClipboard('#invitationLink');">복사</button>
                       </div>
                       <p class="mt-1" style="font-size: 18px; color: #30b1c1;">*친구가 초대코드를 통해 들어와서 회원가입시 초대수가 올라갑니다.</p>
                   </div>
@@ -252,6 +246,25 @@
     
     <footer id="footer"></footer>
     
+    <script id="invitation-template" type="text/x-handlebars-template">
+      {{#contents}}
+      <tr>
+          <th>{{rank}}</th>
+          <th>{{userId}}</th>
+          <th>{{inviteNum}}</th>
+      </tr>
+      {{/contents}}
+      <tr>
+          <th>...</th>
+          <th>...</th>
+          <th>...</th>
+      </tr>
+      <tr style="border: 1px solid #fff">
+          <th>1</th>
+          <th>kim***31</th>
+          <th>70</th>
+      </tr>
+    </script>
 
     <!-- MDB -->
     <script type="text/javascript" src="../js/mdb.min.js"></script>
@@ -283,6 +296,9 @@
           var emailSplit = user.email.split('@');
           document.getElementById("userId").innerHTML = emailSplit[0];
           document.getElementById("userId2").innerHTML = emailSplit[0];
+          getUserData(getUserSnapshot());
+
+          document.getElementById("invitationLink").value = "https://enter-ef3a8.web.app/register/register.html?uid="+user.uid;
         } else {
           $("#navbar").load('../navbar/beforelogin.html');
           window.location.href='../login/login.htnl';
@@ -309,8 +325,75 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <script>
+function copyToClipboard(element) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(element).val()).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+
+var source   = $("#invitation-template").html();
+var template = Handlebars.compile(source);
+
+function getUserSnapshot(){
+    let ref, snapshot; 
+      // 데이터 불러오기
+      var db = firebase.firestore();
+      
+      ref = db.collection('user'); 
+      snapshot = ref.get();
   
+      if (snapshot.empty) { // 검색된 데이터가 없는 경우
+          console.log(`Fail to load user data.`);
+          return;
+      }
+      console.log(`Success to load user data.`);
+      return snapshot;
+  }
+  
+
+  function getUserData(Snapshots){
+    const dataArray = new Array();
+
+    Snapshots.then((snapshot) => {
+      snapshot.forEach((doc) => {
+
+        var temp = new Object();
+        var emailSplit = doc.get("email").split('@');
+        temp.userId = emailSplit[0];
+        temp.inviteNum = doc.get("inviteNum");
+        //console.log(temp);
+        dataArray.push(temp);
+        makeRankTable(dataArray);         
+      });
+    });
+  }
+
+  function makeRankTable(dataArray){
+      
+      dataArray.sort(compNum);
+      console.log("sort",dataArray);
+
+      if(dataArray.length > 10){
+        dataArray = dataArray.slice(0,10);
+      }
+
+      for(k in dataArray){
+        dataArray[k].rank = (k*1)+1;
+      }
+
+      const data = new Object();
+      data.contents = dataArray;
+      $("#content-placeholder").html(template(data));
+  }
+
+  function compNum(a,b){
+    return b.inviteNum - a.inviteNum;
+  }
+
 </script>
 </html>

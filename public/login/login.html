@@ -238,7 +238,7 @@
             if (user) {
               $("#navbar").load('../navbar/afterlogin.html');
               console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
-              //alert("로그인 완료 "+user.email);
+              alert("로그인 완료 "+user.email);
               //window.location.href = "../";
             } else {
               $("#navbar").load('../navbar/beforelogin.html');
