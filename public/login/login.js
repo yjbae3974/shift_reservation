@@ -1,104 +1,137 @@
-let change = document.getElementById('whereContentChanges');
+function changePage(pageName){
+    window.location.href = pageName+'.html';
+}
 
-function changeContent(content){
-    if(content === 'main'){
-        change.innerHTML=`
-        <div class="sign-up text-center">
-                    <div class="sign-up-title">
-                      Sign in
-                    </div>
-                    <input type="email" class="form-control form-rounded mct-5" placeholder="Your email" style="padding: 10px 20px;">
-                    <input type="password" class="form-control form-rounded mct-2" placeholder="Your Password" style="padding: 10px 20px;">
-                    <div class="d-flex mct-3" style="margin-bottom: 17.6px;">
-                        <label class="checkbox-container mx-3 text-start">아이디 저장
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                          <label class="checkbox-container text-start">자동로그인
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                    </div>
-                   
-                    <button type="submit" class="btn-rounded text-white text-center" style="
-                    font-size: 18px;width: 100%;background-color: #17375E;padding: 12px;">Sign in</button>
-                    <div class="separator mt-3">or</div>
-                    <button type="submit" class="btn-rounded text-white text-center mt-3" style="
-                    font-size: 18px;width: 100%;background-color: #1da1f2;padding: 12px;">Login via Google</button>
-                    <button id="register" type="submit" class="btn-rounded text-white text-center mct-1" style="
-                    font-size: 18px;width: 100%;background-color: #fae100;padding: 12px;">Login via Kakao</button>
-                    <div class="d-flex mt-3 justify-content-center" style="font-size: 18px;">
-                      <div style="color: #bfbfbf;">Don't have an Account?</div>
-                      <a class="ms-2" style="color: #59dbe0;" href="../register/register.html">Sign up</a>
-                    </div>
-                    <div class="text-center mt-1" style="font-size: 14px;color: #bd064b;font-weight: 700;">
-                      
-                      <div class="pointer" onclick="changeContent('password')">Forgot Password?</div>
-                    </div>
-                  </div>
-        `
-    }
-    else if(content === 'password'){
-        change.innerHTML=`
-        <div class="sign-up text-center">
-                    <div class="sign-up-title">
-                      Search PW
-                    </div>
-                    <div style="position: relative;">
-                      <input type="email" class="form-control form-rounded mct-5" placeholder="Your email" style="padding: 10px 20px;">
-                      <div class="btn btn-form" onclick="sendMsg()">Send</div><!--여기서 인증 이메일 보냄-->
-                    </div>
-                    <div id="timeLimit"class="text-start mt-1"></div>
-                    <input type="" class="form-control form-rounded mct-2" placeholder="Certification Number" style="padding: 10px 20px;">
-                    
-                   
-                    <button type="submit" class="btn-rounded text-white text-center mt-3" style="
-                    font-size: 18px;width: 100%;background-color: #17375E;padding: 12px;">Find your PW</button>
-                    <div class="separator mt-3">&</div>
-                    <p class="text-start" style="font-size: 18px;color: #000">Your PW is...</p>
-                    <div class="pwbox">dfd</div><!--위에 버튼 누르면 여기서 비밀번호 생성-->
-                    <div class="text-center" style="font-size:24px;color: #17375e;">Enjoy Your Service!</div>
-                    <div class="d-flex mt-3 justify-content-center" style="font-size: 18px;">
-                      <div style="color: #bfbfbf;">Do you have an Account?</div>
-                      <div class="ms-2" style="color: #59dbe0;cursor: pointer;" onclick="changeContent('main')">Sign in</div>
-                    </div>
-                    <div class="text-center mt-1" style="font-size: 14px;color: #bd064b;font-weight: 700;">
-                      
-                    </div>
-                  </div>
-        `
-    }
-}
-var cnt = 0;
-function sendMsg(){
-  time=document.getElementById('timeLimit');
-  if(cnt === 1){
-    return;
+function pwLogin(){
+    var email = document.getElementById('userEmail').value;
+    var password = document.getElementById('userPassword').value;
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((user) => {
+      alert("로그인 성공");
+      // Signed in
+      // ...
+    })
+    .catch((error) => {
+      alert("아이디와 비밀번호를 확인해 주세요.");
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
   }
-  time.style.color = '#bd464b';
-  time.style.fontSize = '14px';
-  time.style.paddingLeft = '10px';
-  time.style.marginBottom = '-16px';
-  timer(time);
-  cnt++;
-}
-function timer(getid){
-  var time = 300;
-  var min = "";
-  var sec = "";
-  var x = setInterval(function(){
-    min = parseInt(time/60);
-    sec = time%60;
-    if(sec.toString().length == 2){
-      getid.innerHTML=min+':'+sec;
+
+  function googleLogin(){
+    var user = firebase.auth().currentUser;
+    if (user) {
+      // User is signed in.
+      alert("로그인 완료");
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.  
+      window.location.href = "register_complete.html";
+    } 
+    else {
+      // No user is signed in.
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithRedirect(provider);
     }
-    else{
-      getid.innerHTML=min+':0'+sec;
+  }
+
+  firebase.auth().getRedirectResult()
+  .then((result) => {
+    if (result.credential) {
+      /** @type {firebase.auth.OAuthCredential} */
+      var credential = result.credential;
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = credential.accessToken;
+      // ...
     }
-    time--;
-    if(time<0){
-      clearInterval(x);
-      getid.innerHTML="다시 Send 버튼을 눌러 인증을 완료해주세요."
+    // The signed-in user info.
+    var user = result.user;
+    var db = firebase.firestore();
+    db.collection("user").doc(user.uid).set({
+        email: user.email,
+        signupMethod: "google",
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+        alert(error.code+" / "+error.message);
+    });
+    alert("google 로그인 완료"+user.email);
+    
+  }).catch((error) => {
+    // Handle Errors here.
+  });
+
+  function logout() {
+    firebase.auth().signOut().then(function() {
+      console.log("logout success");
+      window.location.href = "../login/login.html";
+      // Sign-out successful.
+    }).catch(function(error) {
+      // An error happened.
+      console.log(error.code, error.message);
+    });
+  }
+
+
+  Kakao.init('8fa8eca2742004d4fa3b93aaf4b736e3'); //발급받은 키 중 javascript키를 사용해준다.
+  console.log(Kakao.isInitialized()); // sdk초기화여부판단
+  //카카오로그인
+  function kakaoLogin() {
+    if(!Kakao.isInitialized()){
+      Kakao.init('8fa8eca2742004d4fa3b93aaf4b736e3'); //발급받은 키 중 javascript키를 사용해준다.
+      console.log(Kakao.isInitialized()); // sdk초기화여부판단
     }
-  },1000);
-}
+    Kakao.Auth.login({
+      scope: "account_email",
+      success: function (response) {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+            console.log(response)
+            alert(response.id+", "+response.kakao_account.email);
+            if(response.kakao_account.email != undefined){
+              firebase.auth().signInWithEmailAndPassword(response.kakao_account.email, String(response.id))
+              .then((userCredential) => {
+                  window.location.href = "../";
+              })
+              .catch((error) => {
+                if(error.code == "auth/user-not-found"){
+                  newUser(response.kakao_account.email, String(response.id));
+                }
+                else{
+                  console.log(error.code+"\n"+error.message);
+                  alert("로그인 에러 "+error.code+"\n"+error.message);
+                }
+              });
+            }
+          },
+          fail: function (error) {
+            alert("이메일 제공에 동의해주세요:)");
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }
+  
+  //카카오로그아웃  
+  function kakaoLogout() {
+    if(!Kakao.isInitialized()){
+      Kakao.init('8fa8eca2742004d4fa3b93aaf4b736e3'); //발급받은 키 중 javascript키를 사용해준다.
+      console.log(Kakao.isInitialized()); // sdk초기화여부판단
+    }
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function (response) {
+          console.log(response)
+        },
+        fail: function (error) {
+          console.log(error)
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+  }

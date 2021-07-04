@@ -41,8 +41,10 @@
   <body>
     <div id="message">
       <h2>Welcome</h2>
-      <h1 id="userEmail">[ENTER 회원가입]</h1>
+      <h1 id="userEmail">[ENTER 로그인]</h1>
       <p> 아래 버튼을 눌러 이메일을 인증해주세요 :)</p>
+      <input type="number" id="verifyCode" class="form-control form-rounded mct-5" placeholder="Your Code" style="padding: 10px 20px;">
+      <br><br>
       <a target="_blank" href="" onclick="verifyEmail();">Verify your email</a>
     </div>
     <p id="load">Firebase SDK Loading&hellip;</p>
@@ -121,7 +123,7 @@ function verifyEmail(){
     // Get the email if available. This should be available if the user completes
     // the flow on the same device where they started it.
     const email = window.localStorage.getItem('emailForSignIn');
-    const password = window.localStorage.getItem('setPassword');
+    const code = window.localStorage.getItem('setCode');
     if (!email) {
         // User opened the link on a different device. To prevent session fixation
         // attacks, ask the user to provide the associated email again. For example:
@@ -131,12 +133,17 @@ function verifyEmail(){
     // The client SDK will parse the code from the link for you.
     firebase.auth().signInWithEmailLink(email, window.location.href)
         .then((result) => {
-        // Clear email from storage.
-        alert("이메일 링크 로그인 " + email+"/"+password);
-        document.getElementById("userEmail").innerHTML = email;
-        window.localStorage.removeItem('emailForSignIn');
+          // Clear email from storage.
+          //alert("이메일 링크 로그인 " + email+"/"+password);
+          document.getElementById("userEmail").innerHTML = email;
+          window.localStorage.removeItem('emailForSignIn');
 
-        signUpUser(result.user, email, password);
+          if(document.getElementById("verifyCode").value == code){
+            changePassword(result.user, email, code);
+          }
+          else{
+            alert("코드가 다릅니다");  
+          }
         })
         .catch((error) => {
             console.log(errorCode);
@@ -145,48 +152,55 @@ function verifyEmail(){
     }
 }
 
-function signUpUser(user, email, password){
+function changePassword(user, email, password){
     user.updatePassword(password).then(() => {
         // Update successful.
         //alert("pw update!")
         var user1 = firebase.auth().currentUser;
-        user1.updateProfile({
-            displayName: email
-        }).then(function() {
-            //alert("name update!")
-            console.log(user1.displayName);
-            addUser(user1.uid, email, password);
-            // Update successful.
-        }).catch(function(error) {
-            // An error happened.
-            console.log(errorCode);
-            console.log(errorMessage);
-        });
+        console.log(user1.displayName);
+        updateUser(user1.uid, email, password);
+
     }).catch((error) => {
         console.log(errorCode);
         console.log(errorMessage);
     });
 }
 
-function addUser(uid, email, password){
+function updateUser(uid, email, password){
     var db = firebase.firestore();
     //alert("회원가입 시작 "+uid+"/"+email+"/"+password);
     window.localStorage.removeItem('emailForSignIn');
-    window.localStorage.removeItem('setPassword');
-    db.collection("user").doc(uid).set({
-        email: email,
-        password: password,
-        signupMethod: "email",
-        
-    }).then(function(){
-        if(confirm("회원가입이 완료되었습니다. 로그인해주세요")){
-            window.location.href = "../login/login.html";
+
+    var db = firebase.firestore();
+    var docRef = db.collection("user").doc(uid);
+    return db.runTransaction((transaction) => {
+        // This code may get re-run multiple times if there are conflicts.
+        return transaction.get(docRef).then((doc) => {
+            if (!doc.exists) {
+                throw "Document does not exist!";
+            }
+            transaction.update(docRef, 
+            { email: email,
+              password: password });
+        });
+    }).then(() => {
+        if(confirm("인증되었습니다. 비밀번호를 변경해주세요")){
+          window.location.href = "change_password.html";
         }
-    })
-    .catch(function(error) {
-        console.error("Error adding document: ", error);
-        alert(error.code+" / "+error.message);
+    }).catch((error) => {
+        console.log("Transaction failed: ", error);
     });
+}
+
+function logout() {
+  firebase.auth().signOut().then(function() {
+    console.log("logout success");
+    window.location.href = "../login/login.html";
+    // Sign-out successful.
+  }).catch(function(error) {
+    // An error happened.
+    console.log(error.code, error.message);
+  });
 }
 </script>
   
