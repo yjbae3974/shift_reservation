@@ -120,7 +120,6 @@ function makeCode(){
 var cnt = 0;
 
 function sendMsg(){
-  if(document.getElementById('sendButton').innerHTML == "Send"){
     var code = makeCode();
     var email = document.getElementById('userEmail').value;
     if(email == null || email == ""){
@@ -140,7 +139,6 @@ function sendMsg(){
       time.innerHTML = "코드 생성 에러";
     }
     changePasswordEmail(email, code);
-  }
 }
 
 function timer(getid){
