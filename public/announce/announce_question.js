@@ -1,7 +1,4 @@
   
-  const dataArray = new Array();
-  let questionNum = 0;
-  
   function getQuestionSnapshot(){
     let ref, snapshot; 
       // 데이터 불러오기
@@ -20,22 +17,45 @@
   
 
   function getQuestionData(Snapshots){
+    const dataArray = new Array();
+    var searchWord = document.getElementById("searchWord2").value;
+    var wordSplit = searchWord.split(/[\s,]+/);
     Snapshots.then((snapshot) => {
       snapshot.forEach((doc) => {
-  
-        var temp = new Object();
-        temp.title = doc.get("title");
-        temp.content = doc.get("content");
-        temp.num = doc.get("num");
-        //console.log(temp);
-        dataArray.push(temp);
-  
-        makeQuestionTable(dataArray);   
-        setContent(dataArray);   
+        var title = doc.get("title");
+        var content = doc.get("content");
+
+        if(wordSearch(wordSplit, title) || wordSearch(wordSplit, content)){
+            var temp = new Object();
+            temp.title = title;
+            temp.content = content;
+            temp.num = doc.get("num");
+            //console.log(temp);
+            dataArray.push(temp);
+      
+            makeQuestionTable(dataArray);   
+            setContent(dataArray);   
+        }
       });
     });
   }
   
+  function wordSearch(wordSplit, sentence){
+    sentence = sentence.replace(/<\/p>/gi, "\n")
+              .replace(/<br\/?>/gi, "\n")
+              .replace(/<\/?[^>]+(>|$)/g, "").replace("&nbsp;"," ").toLowerCase();
+    for(var word in wordSplit){
+        word = wordSplit[word].trim().toLowerCase();
+
+        var index = sentence.indexOf(word);
+        if(index != -1){
+          console.log("*",index);
+          console.log("*",sentence);
+          return true;
+        }
+    }
+    return false;
+  }
   
   function setContent(dataArray, addNum){
     //console.log(dataArray);
@@ -64,8 +84,7 @@
     dataArray.sort(compNum);
   
     var l = dataArray[dataArray.length - 1];
-    questionNum = l.num*1;
-  
+    
     const data = new Object();
     data.contents = dataArray;
     //$("#question-placeholder").html(questionTemplate(data));

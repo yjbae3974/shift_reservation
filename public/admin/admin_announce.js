@@ -89,26 +89,33 @@ function getCheckData(){
 
 
 function getAnnounceData(Snapshots, check, num){
-
-  const dataArray = new Array();
-
-  Snapshots.then((snapshot) => {
-    snapshot.forEach((doc) => {
-    var type = doc.get("type");
-    
-    if(check[type]){
-        var temp = new Object();
-        temp.type = type;
-        temp.title = doc.get("title");
-        temp.created = getFormattedDate(doc.get("created").toDate());
-        temp.createdComp = doc.get("created")
-        temp.content = doc.get("content");
-        //console.log(temp);
-        dataArray.push(temp);
-        makeAnnounceTable(dataArray, num);
-    }
+    //console.log(Snapshots);
+    var searchWord = document.getElementById("searchWord").value;
+    var wordSplit = searchWord.split(/[\s,]+/);
+    const dataArray = new Array();
+  
+    Snapshots.then((snapshot) => {
+      snapshot.forEach((doc) => {
+      //console.log(doc);
+      var type = doc.get("type");
+      var title = doc.get("title");
+      var content = doc.get("content");
+  
+      if(check[type]){
+        if(wordSearch(wordSplit, title) || wordSearch(wordSplit, content)){
+            var temp = new Object();
+            temp.type = type;
+            temp.title = title;
+            temp.created = getFormattedDate(doc.get("created").toDate());
+            temp.createdComp = doc.get("created")
+            temp.content = content;
+            //console.log(temp);
+            dataArray.push(temp);
+            makeAnnounceTable(dataArray, num);
+        }
+      }
+      });
     });
- });
 }
 
 function makeAnnounceTable(dataArray, num){
@@ -359,47 +366,17 @@ function openDoc(title){
     window.location.href = "announce_onclick.html?"+title;
 }
 
-function searchAnnounceData(Snapshots, check, num){
-  console.log(Snapshots);
-  var searchWord = document.getElementById("searchWord").value;
-  var wordSplit = searchWord.split(/[\s,]+/);
-  const dataArray = new Array();
-
-  Snapshots.then((snapshot) => {
-    snapshot.forEach((doc) => {
-    console.log(doc);
-    var type = doc.get("type");
-    var title = doc.get("title");
-    var content = doc.get("content");
-
-    if(check[type]){
-      if(wordSearch(wordSplit, title) || wordSearch(wordSplit, content)){
-          var temp = new Object();
-          temp.type = type;
-          temp.title = doc.get("title");
-          temp.created = getFormattedDate(doc.get("created").toDate());
-          temp.createdComp = doc.get("created")
-          temp.content = doc.get("content");
-          //console.log(temp);
-          dataArray.push(temp);
-          makeAnnounceTable(dataArray, num);
-      }
-    }
-    });
-  });
-}
-
 function wordSearch(wordSplit, sentence){
     sentence = sentence.replace(/<\/p>/gi, "\n")
               .replace(/<br\/?>/gi, "\n")
-              .replace(/<\/?[^>]+(>|$)/g, "").toLowerCase();
+              .replace(/<\/?[^>]+(>|$)/g, "").replace("&nbsp;"," ").toLowerCase();
     for(var word in wordSplit){
         word = wordSplit[word].trim().toLowerCase();
 
         var index = sentence.indexOf(word);
         if(index != -1){
-          console.log("*",index);
-          console.log("*",sentence);
+          //console.log("*",index);
+          //console.log("*",sentence);
           return true;
         }
     }
