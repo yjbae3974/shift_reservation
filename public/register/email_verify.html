@@ -177,8 +177,9 @@ function addUser(uid, email, password){
         email: email,
         password: password,
         signupMethod: "email",
-        
+        inviteNum: 0
     }).then(function(){
+        updateInvitation();
         if(confirm("회원가입이 완료되었습니다. 로그인해주세요")){
             window.location.href = "../login/login.html";
         }
@@ -187,6 +188,54 @@ function addUser(uid, email, password){
         console.error("Error adding document: ", error);
         alert(error.code+" / "+error.message);
     });
+}
+
+function updateInvitation(){
+  let params = (new URL(document.location)).searchParams;
+  var method = params.get("method");
+  var value = params.get("uid");
+  updateMethod(method);
+  if(value != null && value != ""){
+      var db = firebase.firestore();
+      var docRef = db.collection('user').doc(value);
+      return db.runTransaction((transaction) => {
+          // This code may get re-run multiple times if there are conflicts.
+          return transaction.get(docRef).then((doc) => {
+              if (!doc.exists) {
+                  throw "Document does not exist!";
+              }
+              var invited = doc.data().inviteNum + 1;
+              transaction.update(docRef, 
+              { inviteNum: invited });
+          });
+      }).then(() => {
+          console.log("invitation success");
+      }).catch((error) => {
+          console.log("Transaction failed: ", error);
+      });
+  }
+}
+
+function updateMethod(method){
+  if(method != null && method != ""){
+    var db = firebase.firestore();
+    var docRef = db.collection('inviteMethod').doc(method);
+    return db.runTransaction((transaction) => {
+        // This code may get re-run multiple times if there are conflicts.
+        return transaction.get(docRef).then((doc) => {
+            if (!doc.exists) {
+                throw "Document does not exist!";
+            }
+            var invited = doc.data().inviteNum + 1;
+            transaction.update(docRef, 
+            { inviteNum: invited });
+        });
+    }).then(() => {
+        console.log("invitation method update");
+    }).catch((error) => {
+        console.log("Transaction failed: ", error);
+    });
+  } 
 }
 </script>
   

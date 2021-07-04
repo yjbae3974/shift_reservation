@@ -98,7 +98,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
   
   <script>
-  var firebaseConfig = {
+  /*var firebaseConfig = {
       apiKey: "AIzaSyCXRTprV0yWYk8YrVpopvkFM4Cv_Nmhb2g",
       authDomain: "shift-f80bc.firebaseapp.com",
       databaseURL: "https://shift-f80bc-default-rtdb.firebaseio.com",
@@ -111,14 +111,13 @@
   
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
+  firebase.analytics();*/
 
-  value = decodeURI(window.location.search).substr(1)
-  if(value!=null || value!=""){
-      getContent(value);
-  }
-  console.log(value);
-  alert(value);
+  let params = (new URL(document.location)).searchParams;
+  var a = params.get("method");
+  var b = params.get("uid");
+  console.log(a);
+  alert(a+" / "+b);
 
 
 </script>
