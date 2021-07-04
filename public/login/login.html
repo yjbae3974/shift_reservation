@@ -352,7 +352,7 @@
           url: '/v2/user/me',
           success: function (response) {
             console.log(response)
-            //alert(response.id+", "+response.kakao_account.email);
+            alert(response.id+", "+response.kakao_account.email);
             if(response.kakao_account.email != undefined){
               firebase.auth().signInWithEmailAndPassword(response.kakao_account.email, String(response.id))
               .then((userCredential) => {

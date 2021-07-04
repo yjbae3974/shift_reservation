@@ -253,7 +253,7 @@
             $("#navbar").load('../navbar/afterlogin.html');
             console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
             alert("회원가입 완료 "+user.email);
-            window.location.href = "../";
+            //window.location.href = "../";
           } else {
             $("#navbar").load('../navbar/beforelogin.html');
             // No user is signed in.
@@ -324,7 +324,7 @@
     var actionCodeSettings = {
       // URL you want to redirect back to. The domain (www.example.com) for this
       // URL must be in the authorized domains list in the Firebase Console.
-      url: 'http://enter-shift.web.app/register/email_verify.html',
+      url: 'http://enter-ef3a8.web.app/register/email_verify.html',
       // This must be true.
       handleCodeInApp: true
     };
@@ -338,7 +338,9 @@
       // if they open the link on the same device.
       window.localStorage.setItem('emailForSignIn', email);
       window.localStorage.setItem('setPassword', password);
-      alert("이메일 전송 성공");
+      if(confirm("이메일 전송 성공! 이메일을 확인해주세요")){
+        window.close();
+      }
       // ...
     })
     .catch((error) => {
@@ -449,11 +451,18 @@
     firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((user) => {
         var db = firebase.firestore();
-        db.collection("user").doc(user.uid).set({
+        var user1 = firebase.auth().currentUser;
+        db.collection("user").doc(user1.uid).set({
             email: email,
             signupMethod: "kakao",
-        })      
-        sendTo();
+        })
+        .then(function(docRef) {
+            alert("저장되었습니다");
+            sendTo();
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });       
     })
     .catch((error) => {
       alert("회원가입 에러 "+error.code+"\n"+error.message);
@@ -492,9 +501,9 @@
               object_type: 'feed',
               content: {
                 title: '회원가입이 완료되었습니다',
-                /*description: '#케익 #딸기 #삼평동 #카페 #분위기 #소개팅',
+                description: '',
                 image_url:
-                  'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',*/
+                  'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
                 link: {
                   mobile_web_url: 'https://enter-ef3a8.web.app/',
                   web_url: 'https://enter-ef3a8.web.app/',
@@ -517,7 +526,8 @@
             },
           },
           success: function(res) {
-            alert('success: ' + JSON.stringify(res))
+            //alert('success: ' + JSON.stringify(res))
+            window.location.href = "../";
           },
           fail: function(err) {
             alert('error: ' + JSON.stringify(err))
