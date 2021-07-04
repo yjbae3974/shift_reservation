@@ -105,7 +105,7 @@ function edit(num){
   
   
   function getQuestionSnapshot(){
-    let ref, snapshot; 
+      let ref, snapshot; 
       // 데이터 불러오기
       var db = firebase.firestore();
       
@@ -121,36 +121,60 @@ function edit(num){
   }
   
   
-  const dataArray = new Array();
+
   let questionNum = 0;
+  let globalDataArray = new Array();
   
   function getQuestionData(Snapshots){
+    const dataArray = new Array();
+    var searchWord = document.getElementById("searchWord2").value;
+    var wordSplit = searchWord.split(/[\s,]+/);
     Snapshots.then((snapshot) => {
       snapshot.forEach((doc) => {
-  
-        var temp = new Object();
-        temp.title = doc.get("title");
-        temp.content = doc.get("content");
-        temp.num = doc.get("num");
-        //console.log(temp);
-        dataArray.push(temp);
-  
-        makeQuestionTable(dataArray);   
-        setContent(dataArray);   
+        var title = doc.get("title");
+        var content = doc.get("content");
+
+        if(wordSearch(wordSplit, title) || wordSearch(wordSplit, content)){
+            var temp = new Object();
+            temp.title = title;
+            temp.content = content;
+            temp.num = doc.get("num");
+            //console.log(temp);
+            dataArray.push(temp);
+      
+            makeQuestionTable(dataArray);   
+            setContent(dataArray);   
+        }
       });
     });
+  }
+  
+  function wordSearch(wordSplit, sentence){
+    sentence = sentence.replace(/<\/p>/gi, "\n")
+              .replace(/<br\/?>/gi, "\n")
+              .replace(/<\/?[^>]+(>|$)/g, "").replace("&nbsp;"," ").toLowerCase();
+    for(var word in wordSplit){
+        word = wordSplit[word].trim().toLowerCase();
+
+        var index = sentence.indexOf(word);
+        if(index != -1){
+          console.log("*",index);
+          console.log("*",sentence);
+          return true;
+        }
+    }
   }
   
   function addQuestion(){
     var temp = new Object();
     var num = questionNum;
-    temp.title = "자주하는 질문 "+(num+1);
+    temp.title = "자주하는 질문 "+(globalDataArray.length+1);
     temp.content = "";
     temp.num = num+1;
     //console.log(temp);
-    dataArray.push(temp);
-    makeQuestionTable(dataArray);  
-    setContent(dataArray, num+1);
+    globalDataArray.push(temp);
+    makeQuestionTable(globalDataArray);  
+    setContent(globalDataArray, num+1);
   }
   
   function setContent(dataArray, addNum){
@@ -176,6 +200,7 @@ function edit(num){
   }
   
   function makeQuestionTable(dataArray){
+    globalDataArray = dataArray;
     //console.log("questiontable",dataArray);
     dataArray.sort(compNum);
   
