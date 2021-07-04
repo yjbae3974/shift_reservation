@@ -1,5 +1,3 @@
-//let change = document.getElementById('whereContentChanges');
-
 function changePage(pageName){
   window.location.href = pageName+'.html';
 }
@@ -91,7 +89,8 @@ function changePasswordEmail(email, code){
     window.localStorage.setItem('emailForSignIn', email);
     window.localStorage.setItem('setCode', code);
     window.localStorage.setItem('sendTime', Date.now());
-    alert("비빌번호 변경 이메일 전송! 이메일을 확인해주세요");
+    alert("비빌번호 변경 이메일 전송! 이메일을 확인해주세요\n 인증코드: "+code);
+    logout();
     // ...
   })
   .catch((error) => {
@@ -121,29 +120,27 @@ function makeCode(){
 var cnt = 0;
 
 function sendMsg(){
-  var code = makeCode();
-  var email = document.getElementById('userEmail').value;
-  if((code == null || code == "") || (email == null || email == "")){
-    var time=document.getElementById('timeLimit');
-    time.style.color = '#bd464b';
-    time.style.fontSize = '14px';
-    time.style.paddingLeft = '10px';
-    time.style.marginBottom = '-16px';
-    time.innerHTML = "이메일 주소를 확인해주세요";
-    return;
+  if(document.getElementById('sendButton').innerHTML == "Send"){
+    var code = makeCode();
+    var email = document.getElementById('userEmail').value;
+    if(email == null || email == ""){
+      var time=document.getElementById('timeLimit');
+      time.style.color = '#bd464b';
+      time.style.fontSize = '14px';
+      time.style.paddingLeft = '10px';
+      time.style.marginBottom = '-16px';
+      time.innerHTML = "이메일 주소를 확인해주세요";
+      return;
+    }
+    else if(code == null || code == ""){
+      time.style.color = '#bd464b';
+      time.style.fontSize = '14px';
+      time.style.paddingLeft = '10px';
+      time.style.marginBottom = '-16px';
+      time.innerHTML = "코드 생성 에러";
+    }
+    changePasswordEmail(email, code);
   }
-  changePasswordEmail(email, code);
-  
-  var time=document.getElementById('timeLimit');
-  if(cnt === 1){
-    return;
-  }
-  time.style.color = '#bd464b';
-  time.style.fontSize = '14px';
-  time.style.paddingLeft = '10px';
-  time.style.marginBottom = '-16px';
-  timer(time);
-  cnt++;
 }
 
 function timer(getid){
@@ -167,25 +164,62 @@ function timer(getid){
   },1000);
 }
 
-function timer2(getid, sendTime){
-  var now = Date.now();
-  var elapsed = sendTime - now;
-  var time = elapsed.getTime() / 1000;
-  var min = "";
-  var sec = "";
-  var x = setInterval(function(){
-    min = parseInt(time/60);
-    sec = time%60;
-    if(sec.toString().length == 2){
-      getid.innerHTML=min+':'+sec;
-    }
-    else{
-      getid.innerHTML=min+':0'+sec;
-    }
-    time--;
-    if(time<0){
-      clearInterval(x);
-      getid.innerHTML="다시 Send 버튼을 눌러 인증을 완료해주세요."
-    }
-  },1000);
+
+
+function submitPassword(){
+  if(document.getElementById('sendButton').innerHTML == "Confirmed"){
+      var user = firebase.auth().currentUser;
+      var email = document.getElementById("userEmail").value;
+      var password = document.getElementById("userPassword").value;
+      user.updatePassword(password).then(() => {
+          // Update successful.
+          //alert("pw update!")
+          var user1 = firebase.auth().currentUser;
+          console.log(user1.displayName);
+          updateUser(user1.uid, email, password);
+    
+      }).catch((error) => {
+          console.log(error.code);
+          console.log(error.message);
+          alert(error.code+' / '+error.message);
+      });
+  }
+  else{
+    alert("먼저 이메일 인증을 완료해주세요");
+  }
+}
+
+function updateUser(uid, email, password){
+  var db = firebase.firestore();
+  //alert("회원가입 시작 "+uid+"/"+email+"/"+password);
+  
+  var docRef = db.collection("user").doc(uid);
+  return db.runTransaction((transaction) => {
+      // This code may get re-run multiple times if there are conflicts.
+      return transaction.get(docRef).then((doc) => {
+          if (!doc.exists) {
+              throw "Document does not exist!";
+          }
+          transaction.update(docRef, 
+          { email: email,
+            password: password });
+      });
+  }).then(() => {
+      if(confirm("비밀번호 변경 완료!")){
+        window.location.href = "../";
+      }
+  }).catch((error) => {
+      console.log("Transaction failed: ", error);
+  });
+}
+
+function logout() {
+firebase.auth().signOut().then(function() {
+  console.log("logout success");
+  //window.location.href = "../login/login.html";
+  // Sign-out successful.
+}).catch(function(error) {
+  // An error happened.
+  console.log(error.code, error.message);
+});
 }

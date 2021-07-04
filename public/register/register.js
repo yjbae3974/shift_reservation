@@ -49,6 +49,7 @@ function checkPassword(){
       window.localStorage.setItem('emailForSignIn', email);
       window.localStorage.setItem('setPassword', password);
       alert("이메일 전송 성공! 이메일을 확인해주세요");
+      logout();
       // ...
     })
     .catch((error) => {
@@ -103,7 +104,7 @@ function checkPassword(){
   function logout() {
     firebase.auth().signOut().then(function() {
       console.log("logout success");
-      window.location.href = "../login/login.html";
+      //window.location.href = "../login/login.html";
       // Sign-out successful.
     }).catch(function(error) {
       // An error happened.
@@ -162,6 +163,7 @@ function checkPassword(){
         var user1 = firebase.auth().currentUser;
         db.collection("user").doc(user1.uid).set({
             email: email,
+            password: password,
             signupMethod: "kakao",
         })
         .then(function(docRef) {

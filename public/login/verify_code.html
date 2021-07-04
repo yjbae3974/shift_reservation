@@ -45,7 +45,7 @@
       <p> 아래 버튼을 눌러 이메일을 인증해주세요 :)</p>
       <input type="number" id="verifyCode" class="form-control form-rounded mct-5" placeholder="Your Code" style="padding: 10px 20px;">
       <br><br>
-      <a target="_blank" href="" onclick="verifyEmail();">Verify your email</a>
+      <a target="_blank" onclick="verifyEmail();">Verify your email</a>
     </div>
     <p id="load">Firebase SDK Loading&hellip;</p>
 
@@ -98,6 +98,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+  <script src="login.js"></script>
   
   <script>
   var firebaseConfig = {
@@ -122,8 +123,9 @@ function verifyEmail(){
     // the sign-in operation.
     // Get the email if available. This should be available if the user completes
     // the flow on the same device where they started it.
-    const email = window.localStorage.getItem('emailForSignIn');
-    const code = window.localStorage.getItem('setCode');
+    var email = window.localStorage.getItem('emailForSignIn');
+    var code = window.localStorage.getItem('setCode');
+    console.log(email, code);
     if (!email) {
         // User opened the link on a different device. To prevent session fixation
         // attacks, ask the user to provide the associated email again. For example:
@@ -136,8 +138,7 @@ function verifyEmail(){
           // Clear email from storage.
           //alert("이메일 링크 로그인 " + email+"/"+password);
           document.getElementById("userEmail").innerHTML = email;
-          window.localStorage.removeItem('emailForSignIn');
-
+          
           if(document.getElementById("verifyCode").value == code){
             changePassword(result.user, email, code);
           }
@@ -146,61 +147,60 @@ function verifyEmail(){
           }
         })
         .catch((error) => {
-            console.log(errorCode);
-            console.log(errorMessage);
+            console.log(error.code);
+            console.log(error.message);
         });
     }
 }
 
 function changePassword(user, email, password){
-    user.updatePassword(password).then(() => {
-        // Update successful.
-        //alert("pw update!")
-        var user1 = firebase.auth().currentUser;
-        console.log(user1.displayName);
-        updateUser(user1.uid, email, password);
+  user.updatePassword(password).then(() => {
+      // Update successful.
+      //alert("pw update!")
+      var user1 = firebase.auth().currentUser;
+      console.log(user1.displayName);
+      updateUser(user1.uid, email, password);
 
-    }).catch((error) => {
-        console.log(errorCode);
-        console.log(errorMessage);
-    });
+  }).catch((error) => {
+      console.log(error.code);
+      console.log(error.message);
+      alert(error.code+' / '+error.message);
+  });
 }
 
 function updateUser(uid, email, password){
-    var db = firebase.firestore();
-    //alert("회원가입 시작 "+uid+"/"+email+"/"+password);
-    window.localStorage.removeItem('emailForSignIn');
-
-    var db = firebase.firestore();
-    var docRef = db.collection("user").doc(uid);
-    return db.runTransaction((transaction) => {
-        // This code may get re-run multiple times if there are conflicts.
-        return transaction.get(docRef).then((doc) => {
-            if (!doc.exists) {
-                throw "Document does not exist!";
-            }
-            transaction.update(docRef, 
-            { email: email,
-              password: password });
-        });
-    }).then(() => {
-        if(confirm("인증되었습니다. 비밀번호를 변경해주세요")){
-          window.location.href = "change_password.html";
-        }
-    }).catch((error) => {
-        console.log("Transaction failed: ", error);
-    });
+  var db = firebase.firestore();
+  //alert("회원가입 시작 "+uid+"/"+email+"/"+password);
+  
+  var docRef = db.collection("user").doc(uid);
+  return db.runTransaction((transaction) => {
+      // This code may get re-run multiple times if there are conflicts.
+      return transaction.get(docRef).then((doc) => {
+          if (!doc.exists) {
+              throw "Document does not exist!";
+          }
+          transaction.update(docRef, 
+          { email: email,
+            password: password });
+      });
+  }).then(() => {
+      if(confirm("인증되었습니다. 비밀번호를 변경해주세요")){
+        window.location.href = "change_password.html";
+      }
+  }).catch((error) => {
+      console.log("Transaction failed: ", error);
+  });
 }
 
 function logout() {
-  firebase.auth().signOut().then(function() {
-    console.log("logout success");
-    window.location.href = "../login/login.html";
-    // Sign-out successful.
-  }).catch(function(error) {
-    // An error happened.
-    console.log(error.code, error.message);
-  });
+firebase.auth().signOut().then(function() {
+  console.log("logout success");
+  //window.location.href = "../login/login.html";
+  // Sign-out successful.
+}).catch(function(error) {
+  // An error happened.
+  console.log(error.code, error.message);
+});
 }
 </script>
   
