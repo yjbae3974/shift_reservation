@@ -22,14 +22,14 @@ function autosave(){
 function prevPage(checkData){
     if(currentPage > 1 && currentPage <= maxPage+1){
         currentPage = currentPage-1;
-        getAdminData(getAnnounceSnapshot(), checkData, currentPage);
+        getAnnounceData(getAnnounceSnapshot(), checkData, currentPage);
     }
 }
 
 function nextPage(checkData){
     if(currentPage > 0 && currentPage <= maxPage){
         currentPage = currentPage+1;
-        getAdminData(getAnnounceSnapshot(), checkData, currentPage);
+        getAnnounceData(getAnnounceSnapshot(), checkData, currentPage);
     }
 }
 
@@ -37,7 +37,7 @@ function nextPage(checkData){
 function firstPage(checkData){
     if(currentPage > 1 && currentPage <= maxPage+1){
         currentPage = 1;
-        getAdminData(getAnnounceSnapshot(), checkData, currentPage);
+        getAnnounceData(getAnnounceSnapshot(), checkData, currentPage);
     }
 }
 
@@ -45,7 +45,7 @@ function lastPage(checkData){
     //console.log(maxPage);
     if(currentPage > 0 && currentPage <= maxPage){
         currentPage = maxPage;
-        getAdminData(getAnnounceSnapshot(), checkData, currentPage);
+        getAnnounceData(getAnnounceSnapshot(), checkData, currentPage);
     }
 }
 
@@ -88,7 +88,7 @@ function getCheckData(){
 }
 
 
-function getAdminData(Snapshots, check, num){
+function getAnnounceData(Snapshots, check, num){
 
   const dataArray = new Array();
 
@@ -105,13 +105,13 @@ function getAdminData(Snapshots, check, num){
         temp.content = doc.get("content");
         //console.log(temp);
         dataArray.push(temp);
-        makeAdminTable(dataArray, num);
+        makeAnnounceTable(dataArray, num);
     }
     });
-});
+ });
 }
 
-function makeAdminTable(dataArray, num){
+function makeAnnounceTable(dataArray, num){
     //console.log("admintable",dataArray);
 
     var adminArray = dataArray;
@@ -310,10 +310,10 @@ function submit(collection, page){
 function saveContent(title, type, content){
     var db = firebase.firestore();
     db.collection(collectionName).doc(title).set({
-    type : type,
-    title : title,
-    content : content,
-    created : firebase.firestore.FieldValue.serverTimestamp()
+        type : type,
+        title : title,
+        content : content,
+        created : firebase.firestore.FieldValue.serverTimestamp()
     })
     .then(function(docRef) {
     alert("저장되었습니다");
@@ -352,5 +352,56 @@ function getAllCheck(){
 }
 
 function getAutosaveData(Snapshots, num){
-  getAdminData(getAnnounceSnapshot(), getAllCheck(), currentPage);
+  getAnnounceData(getAnnounceSnapshot(), getAllCheck(), currentPage);
+}
+
+function openDoc(title){
+    window.location.href = "announce_onclick.html?"+title;
+}
+
+function searchAnnounceData(Snapshots, check, num){
+  console.log(Snapshots);
+  var searchWord = document.getElementById("searchWord").value;
+  var wordSplit = searchWord.split(/[\s,]+/);
+  const dataArray = new Array();
+
+  Snapshots.then((snapshot) => {
+    snapshot.forEach((doc) => {
+    console.log(doc);
+    var type = doc.get("type");
+    var title = doc.get("title");
+    var content = doc.get("content");
+
+    if(check[type]){
+      if(wordSearch(wordSplit, title) || wordSearch(wordSplit, content)){
+          var temp = new Object();
+          temp.type = type;
+          temp.title = doc.get("title");
+          temp.created = getFormattedDate(doc.get("created").toDate());
+          temp.createdComp = doc.get("created")
+          temp.content = doc.get("content");
+          //console.log(temp);
+          dataArray.push(temp);
+          makeAnnounceTable(dataArray, num);
+      }
+    }
+    });
+  });
+}
+
+function wordSearch(wordSplit, sentence){
+    sentence = sentence.replace(/<\/p>/gi, "\n")
+              .replace(/<br\/?>/gi, "\n")
+              .replace(/<\/?[^>]+(>|$)/g, "").toLowerCase();
+    for(var word in wordSplit){
+        word = wordSplit[word].trim().toLowerCase();
+
+        var index = sentence.indexOf(word);
+        if(index != -1){
+          console.log("*",index);
+          console.log("*",sentence);
+          return true;
+        }
+    }
+    return false;
 }

@@ -147,7 +147,7 @@ function edit(num){
     temp.title = "자주하는 질문 "+(num+1);
     temp.content = "";
     temp.num = num+1;
-    console.log(temp);
+    //console.log(temp);
     dataArray.push(temp);
     makeQuestionTable(dataArray);  
     setContent(dataArray, num+1);
@@ -157,7 +157,7 @@ function edit(num){
     //console.log(dataArray);
     for(k in dataArray){
       data = dataArray[k]
-      console.log(data);
+      //console.log(data);
 
       if(data.num == addNum){
         $("#title"+data.num).summernote({focus: true, toolbar: false});

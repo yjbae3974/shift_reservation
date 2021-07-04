@@ -27,7 +27,7 @@
         temp.title = doc.get("title");
         temp.content = doc.get("content");
         temp.num = doc.get("num");
-        console.log(temp);
+        //console.log(temp);
         dataArray.push(temp);
   
         makeQuestionTable(dataArray);   
@@ -41,7 +41,7 @@
     //console.log(dataArray);
     for(k in dataArray){
       data = dataArray[k]
-      console.log(data);
+      //console.log(data);
 
       if(data.num == addNum){
         $("#title"+data.num).summernote({focus: true, toolbar: false});

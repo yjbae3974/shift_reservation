@@ -501,7 +501,7 @@
 				$("#navbar").load('../navbar/afterlogin.html');
 				console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
 				//window.history.back();
-				getAdminData(getAnnounceSnapshot(), getCheckData(), 1);
+				getAnnounceData(getAnnounceSnapshot(), getCheckData(), 1);
 			} else {
 				$("#navbar").load('../navbar/beforelogin.html');
 				// No user is signed in.

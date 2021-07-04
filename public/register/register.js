@@ -104,7 +104,7 @@ function checkPassword(){
   function logout() {
     firebase.auth().signOut().then(function() {
       console.log("logout success");
-      //window.location.href = "../login/login.html";
+      window.location.href = "../login/login.html";
       // Sign-out successful.
     }).catch(function(error) {
       // An error happened.
