@@ -57,6 +57,7 @@ function updateInvitation(){
               var invited = doc.data().inviteNum + 1;
               transaction.update(docRef, 
               { inviteNum: invited });
+              window.localStorage.removeItem('invitationId');
           });
       }).then(() => {
           console.log("invitation success");
