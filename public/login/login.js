@@ -19,12 +19,29 @@ function pwLogin(){
   });
 }
 
-function updateInvitation(){
+function checkIdExist(collection, uid){
+  var db = firebase.firestore();
+  var docRef = db.collection(collection).doc(uid);
+
+  docRef.get().then((doc) => {
+      if (doc.exists) {
+          console.log("Document data:", doc.data());
+          return true;
+      } else {
+          return false;
+      }
+  }).catch((error) => {
+      console.log("Error getting document:", error);
+      return false;
+  });  
+}
+
+function updateInvitation(uid){
   let params = (new URL(document.location)).searchParams;
   var method = params.get("method");
   var value = params.get("uid");
   updateMethod(method);
-  if(value != null && value != ""){
+  if((value != null && value != "") && !checkIdExist('user',uid)){
       var db = firebase.firestore();
       var docRef = db.collection('user').doc(value);
       return db.runTransaction((transaction) => {
@@ -46,7 +63,7 @@ function updateInvitation(){
 }
 
 function updateMethod(method){
-  if(method != null && method != ""){
+  if((method != null && method != "") && checkIdExist('inviteMethod',method)){
     var db = firebase.firestore();
     var docRef = db.collection('inviteMethod').doc(method);
     return db.runTransaction((transaction) => {

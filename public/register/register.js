@@ -38,7 +38,7 @@ function signUpEmail(){
   var actionCodeSettings = {
     // URL you want to redirect back to. The domain (www.example.com) for this
     // URL must be in the authorized domains list in the Firebase Console.
-    url: 'http://localhost:5000/register/email_verify.html',
+    url: 'https://enter-ef3a8.web.app/register/email_verify.html',
     // This must be true.
     handleCodeInApp: true
   };
@@ -53,7 +53,6 @@ function signUpEmail(){
     window.localStorage.setItem('emailForSignIn', email);
     window.localStorage.setItem('setPassword', password);
     alert("이메일 전송 성공");
-    updateInvitation();
     // ...
   })
   .catch((error) => {
@@ -92,12 +91,29 @@ function logout() {
   });
 }
 
-function updateInvitation(){
+function checkIdExist(collection, uid){
+  var db = firebase.firestore();
+  var docRef = db.collection(collection).doc(uid);
+
+  docRef.get().then((doc) => {
+      if (doc.exists) {
+          console.log("Document data:", doc.data());
+          return true;
+      } else {
+          return false;
+      }
+  }).catch((error) => {
+      console.log("Error getting document:", error);
+      return false;
+  });  
+}
+
+function updateInvitation(uid){
   let params = (new URL(document.location)).searchParams;
   var method = params.get("method");
   var value = params.get("uid");
   updateMethod(method);
-  if(value != null && value != ""){
+  if((value != null && value != "") && !checkIdExist('user',uid)){
       var db = firebase.firestore();
       var docRef = db.collection('user').doc(value);
       return db.runTransaction((transaction) => {
@@ -119,7 +135,7 @@ function updateInvitation(){
 }
 
 function updateMethod(method){
-  if(method != null && method != ""){
+  if((method != null && method != "") && checkIdExist('inviteMethod',method)){
     var db = firebase.firestore();
     var docRef = db.collection('inviteMethod').doc(method);
     return db.runTransaction((transaction) => {

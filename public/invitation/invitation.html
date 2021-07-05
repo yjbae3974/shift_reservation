@@ -299,6 +299,7 @@
           getUserData(getUserSnapshot());
 
           document.getElementById("invitationLink").value = "https://enter-ef3a8.web.app/register/register.html?uid="+user.uid;
+          document.getElementById("invitationLink").disabled = true;
         } else {
           $("#navbar").load('../navbar/beforelogin.html');
           window.location.href='../login/login.htnl';

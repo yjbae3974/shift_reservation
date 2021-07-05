@@ -304,7 +304,7 @@
           signupMethod: "google",
           inviteNum: 0
       }).then(function(){
-        updateInvitation();
+        updateInvitation(user.uid);
         if(confirm("google 회원가입 완료"+user.email)){
           window.location.href="../";
         }
@@ -373,7 +373,7 @@
             inviteNum: 0
         })
         .then(function(docRef) {
-            updateInvitation();
+            updateInvitation(user1.uid);
             sendTo();
             if(confirm("kakao 회원가입 완료 ")+email){
               window.location.href="../";
