@@ -52,6 +52,9 @@ function signUpEmail(){
     // if they open the link on the same device.
     window.localStorage.setItem('emailForSignIn', email);
     window.localStorage.setItem('setPassword', password);
+    let params = (new URL(document.location)).searchParams;
+    var value = params.get("uid");
+    window.localStorage.setItem('invitationId', value);
     alert("이메일 전송 성공");
     // ...
   })
