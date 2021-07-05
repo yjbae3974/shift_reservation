@@ -183,7 +183,7 @@
                     </div>
                    
                     <button type="submit" class="btn-rounded text-white text-center" style="
-                    font-size: 18px;width: 100%;background-color: #17375E;padding: 12px;" onclick="pwLogin()">Sign in</button>
+                    font-size: 18px;width: 100%;background-color: #17375E;padding: 12px;" id="sendButton" onclick="pwLogin()">Sign in</button>
                     <div class="separator mt-3">or</div>
                     <button type="submit" class="btn-rounded text-white text-center mt-3" style="
                     font-size: 18px;width: 100%;background-color: #1da1f2;padding: 12px;" onclick="googleLogin()">Login via Google</button>
@@ -239,6 +239,13 @@
               $("#navbar").load('../navbar/afterlogin.html');
               console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
               alert("로그인 완료 "+user.email);
+              var userEmail = document.getElementById('userEmail');
+              userEmail.value = user.email;
+              userEmail.disabled = true;
+
+              var sendBtn = document.getElementById('sendButton');
+              sendBtn.innerHTML = "Login Complete!";
+              sendBtn.disabled = true;
               //window.location.href = "../";
             } else {
               $("#navbar").load('../navbar/beforelogin.html');
@@ -301,9 +308,9 @@
           signupMethod: "google",
           inviteNum: 0
       }).then(function(){
-        updateInvitation(user.uid);
+        updateInvitation();
         if(confirm("google 회원가입 완료"+user.email)){
-          window.location.href="../";
+          //window.location.href="../";
         }
       }).catch(function(error) {
           console.error("Error adding document: ", error);
@@ -317,6 +324,9 @@
   console.log(Kakao.isInitialized()); // sdk초기화여부판단
   //카카오로그인
   function kakaoLogin() {
+    let params = (new URL(document.location)).searchParams;
+    var value = params.get("uid");
+    window.localStorage.setItem('invitationId', value);
     if(!Kakao.isInitialized()){
       Kakao.init('8fa8eca2742004d4fa3b93aaf4b736e3'); //발급받은 키 중 javascript키를 사용해준다.
       console.log(Kakao.isInitialized()); // sdk초기화여부판단
@@ -336,7 +346,8 @@
               })
               .catch((error) => {
                 if(error.code == "auth/user-not-found"){
-                  console.log("kakao 로그인 시작");
+                  console.log("kakao 회원가입 시작");
+                  updateInvitation();
                   newUser(response.kakao_account.email, String(response.id));
                 }
                 else{
@@ -370,7 +381,6 @@
             inviteNum: 0
         })
         .then(function(docRef) {
-            updateInvitation(user1.uid);
             sendTo();
             if(confirm("kakao 회원가입 완료 ")+email){
               window.location.href="../";

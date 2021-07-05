@@ -122,7 +122,6 @@ function verifyEmail(){
     // the flow on the same device where they started it.
     const email = window.localStorage.getItem('emailForSignIn');
     const password = window.localStorage.getItem('setPassword');
-    const inviteId = window.localStorage.getItem('invitationId');
     if (!email) {
         // User opened the link on a different device. To prevent session fixation
         // attacks, ask the user to provide the associated email again. For example:
@@ -135,7 +134,7 @@ function verifyEmail(){
         // Clear email from storage.
         alert("이메일 링크 로그인 " + email+"/"+password);
         document.getElementById("userEmail").innerHTML = email;
-        updateInvitation(result.user.uid, inviteId);
+        updateInvitation();
         signUpUser(result.user, email, password);
         })
         .catch((error) => {
@@ -187,68 +186,6 @@ function addUser(uid, email, password){
         console.error("Error adding document: ", error);
         alert(error.code+" / "+error.message);
     });
-}
-
-function checkIdExist(collection, uid){
-  var db = firebase.firestore();
-  var docRef = db.collection(collection).doc(uid);
-
-  docRef.get().then((doc) => {
-      if (doc.exists) {
-          console.log("Document data:", doc.data());
-          return true;
-      } else {
-          return false;
-      }
-  }).catch((error) => {
-      console.log("Error getting document:", error);
-      return false;
-  });  
-}
-
-function updateInvitation(uid, inviteId){
-  var value = inviteId;
-  if((value != null && value != "") && !checkIdExist('user',uid)){
-      var db = firebase.firestore();
-      var docRef = db.collection('user').doc(value);
-      return db.runTransaction((transaction) => {
-          // This code may get re-run multiple times if there are conflicts.
-          return transaction.get(docRef).then((doc) => {
-              if (!doc.exists) {
-                  throw "Document does not exist!";
-              }
-              var invited = doc.data().inviteNum + 1;
-              transaction.update(docRef, 
-              { inviteNum: invited });
-          });
-      }).then(() => {
-          console.log("invitation success");
-      }).catch((error) => {
-          console.log("Transaction failed: ", error);
-      });
-  }
-}
-
-function updateMethod(method){
-  if((method != null && method != "") && checkIdExist('inviteMethod',method)){
-    var db = firebase.firestore();
-    var docRef = db.collection('inviteMethod').doc(method);
-    return db.runTransaction((transaction) => {
-        // This code may get re-run multiple times if there are conflicts.
-        return transaction.get(docRef).then((doc) => {
-            if (!doc.exists) {
-                throw "Document does not exist!";
-            }
-            var invited = doc.data().inviteNum + 1;
-            transaction.update(docRef, 
-            { inviteNum: invited });
-        });
-    }).then(() => {
-        console.log("invitation method update");
-    }).catch((error) => {
-        console.log("Transaction failed: ", error);
-    });
-  } 
 }
 
 

@@ -111,12 +111,16 @@ function checkIdExist(collection, uid){
   });  
 }
 
-function updateInvitation(uid){
+function updateInvitation(){
   let params = (new URL(document.location)).searchParams;
   var method = params.get("method");
   var value = params.get("uid");
   updateMethod(method);
-  if((value != null && value != "") && !checkIdExist('user',uid)){
+  if(value != null && value != ""){
+    value = window.localStorage.getItem('invitationId');
+  }
+  console.log("초대시작: "+value);
+  if(value != null && value != ""){
       var db = firebase.firestore();
       var docRef = db.collection('user').doc(value);
       return db.runTransaction((transaction) => {
