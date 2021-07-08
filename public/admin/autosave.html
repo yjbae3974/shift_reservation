@@ -19,8 +19,43 @@
     <link rel="stylesheet" href="demo.css">
     <link rel="stylesheet" href="admin.css">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    
     <style>
+
+body{
+  font-family: sans-serif;
+}
+.accordion{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  float: left;
+}
+
+.accordion-title {
+  background-color: #999;
+  color: white;
+  width: 100%;
+  float: left;
+  padding: 5px;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+.accordion-title.active {
+  background-color: #999;  
+    border-radius: 5px 5px 0 0;
+}
+.accordion-content {
+  display: none;
+  border: 1px solid #999;
+  float: left;
+  width: 100%;
+  padding: 5px;
+}
+
+
+
       th{
         font-weight: 700 !important;
       }
@@ -62,7 +97,7 @@
     </style>
 	 <link rel="stylesheet" href="../css/mdb.min.css" />
 	 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-	 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+	 <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
 	 <script>
 		 $(document).ready(function(){
         $("#footer").load("../footer.html");
@@ -70,41 +105,7 @@
 	 </script>
 </head>
 <body style="min-height: 100vh;">
-    <nav class="navbar navbar-expand-lg fixed-top" style="padding: 0px; border-bottom: 2px solid #c4c4c4;height: 113px;">
-		<div class="container-fluid bg-nav" style="padding: 0px;">
-		  
-			<div class="container d-flex align-items-center" style="min-height: 113px;">
-			  <button
-		  class="navbar-toggler"
-		  type="button"
-		  data-mdb-toggle="collapse"
-		  data-mdb-target="#navbarSupportedContent"
-		  aria-controls="navbarSupportedContent"
-		  aria-expanded="false"
-		  aria-label="Toggle navigation"
-		>
-		  <i class="fas fa-bars"></i>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		  <div class="d-flex">
-			<a href="" class="nav-title" id="prev2">EN</a>
-			<a href="" class="nav-title">T</a>
-			<a href="" class="nav-title" id="next2">ER</a>
-		  </div>
-		 
-		  <ul class="navbar-nav ms-auto" style="color: #8c8c8c;">
-        <li class="me-5"><a class="a-link" href="../main.html">사전예약</a></li>
-        <li class="me-5"><a class="a-link" href="../introduce\introduce_service.html">서비스 소개</a></li>
-        <li class="me-5"><a class="a-link active" href="../announce\announce.html">공지사항</a></li>
-        <li class="me-5"><a class="a-link" href="../register\register.html">회원가입</a></li>
-        <li class="me-5"><a class="a-link" href="">로그인</a></li>
-		  </ul>
-		  
-		  
-		</div>
-	  </div>  
-		</div>
-	  </nav>
+    <div id="navbar"></div>
 	  <nav id="navOption" class="sticky-nav">
 		  <div class="container">
 			<ul class="nav nav-tabs d-flex justify-content-end" id="ex1" role="tablist" style="border-bottom: 1px solid #fff;">
@@ -137,21 +138,21 @@
 				  >
 				  
 				</li>
-                <li class="nav-item" role="presentation" style="max-width: 50%;width: 150px">
-                    <a
-                      class="nav-link text-center tabcolor"
-                      id="ex1-tab-2"
-                      data-mdb-toggle="tab"
-                      data-toggle="tab"
-                      href="#ex1-tabs-3"
-                      role="tab"
-                      aria-controls="ex1-tabs-3"
-                      aria-selected="false"
-                      style="font-size: 16px; font-weight: 900;"
-                      >문의사항</a
-                    >
-                    
-                  </li>
+          <li class="nav-item" role="presentation" style="max-width: 50%;width: 150px">
+              <a
+                class="nav-link text-center tabcolor"
+                id="ex1-tab-2"
+                data-mdb-toggle="tab"
+                data-toggle="tab"
+                href="#ex1-tabs-3"
+                role="tab"
+                aria-controls="ex1-tabs-3"
+                aria-selected="false"
+                style="font-size: 16px; font-weight: 900;"
+                >문의사항</a
+              >
+              
+            </li>
 				
 			  </ul>
 		  </div>
@@ -168,75 +169,45 @@
       <div class="container d-flex justify-content-center" style="margin-top: 300px;">
         
         <div class="col-xl-12" style="max-width: 1280px;">
-            <p style="color: #060B11;font-weight: 700;font-size: 18px;">임시저장(<span>3</span>)</p>
+            <p style="color: #060B11;font-weight: 700;font-size: 18px;">임시저장</p>
           <div class="table-responsive text-nowrap">
-            <!--Table-->
-            <table class="table table-hover">
-    
-              <!--Table head-->
-              <thead class="bg-gray">
-                <tr>
-                  <th>분류</th>
-                  <th>제목</th>
-                  <th>날짜</th>
-                  <th></th>
-                  
-                </tr>
-              </thead>
-              <!--Table head-->
-    
-              <!--Table body-->
-              <tbody>
-                <tr>
-                  <th scope="row">[업데이트]</th>
-                  <td>7.21 업데이트 현황. 새로운 캐릭터 추가. 각종 수정 및 버그 개선</td>
-                  <td>2021.05.19 </td>
-                  <td>
-                    <a class="edit" href="edit.html"><i class="fas fa-edit"></i></a><!--여기도 마찬가지로 기존 데이터 옮겨지기-->
-                    <a class="edit" href=""><i class="fas fa-trash-alt"></i></a>
-                  </td>
-                  
-                </tr>
-                <tr>
-                  <th scope="row">[업데이트]</th>
-                  <td>휴대폰 알뜰폰결제 SK7mobile(SK텔링크) 결제 서비스 추가 안내</td>
-                  <td>2021.03.16</td>
-                  <td>
-                    <a class="edit" href=""><i class="fas fa-edit"></i></a>
-                    <a class="edit" href=""><i class="fas fa-trash-alt"></i></a>
-                  </td>
-                  
-                </tr>
-                <tr>
-                  <th scope="row">[공지]</th>
-                  <td>고객 간담회를 준비하고 있습니다. </td>
-                  <td>2021.03.11</td>
-                  <td>
-                    <a class="edit" href=""><i class="fas fa-edit"></i></a>
-                    <a class="edit" href=""><i class="fas fa-trash-alt"></i></a>
-                  </td>
-                  
-                </tr>
-                
-              </tbody>
-              <!--Table body-->
-    
-    
-            </table>
-            <!--Table-->
+              <!--Table-->
+              <table class="table table-hover">
+      
+                <!--Table head-->
+                <thead class="bg-gray">
+                  <tr>
+                    <th>분류</th>
+                    <th>제목</th>
+                    <th>날짜</th>
+                    <th></th>
+                    
+                  </tr>
+                </thead>
+                <!--Table head-->
+      
+                <!--Table body-->
+                <tbody id="content-placeholder"></tbody>
+      
+              </table>
+              <!--Table-->
+            </div>
+            <div class="d-flex justify-content-end align-items-center" style="color: #8c8c8c;">
+              <div class="mx-5 clickable" id="toAdmin">공지사항으로</div>                  <!--이부분 숫자 수정 요망-->
+              <div class="btn-base" id="toEdit" style="padding: 8px 16px;">글쓰기</div>
+            </div>
           </div>
           
-        </div>
-        
       </div>
+        
+      <div class="container mt-5 d-flex justify-content-center" id="number-placeholder"></div>
         
       </div><!--여기까지 tab1-->
       <div
         class="tab-pane fade show"
         id="ex1-tabs-2"
         role="tabpanel"
-        aria-labelledby="ex1-tab-2"
-      >
+        aria-labelledby="ex1-tab-2">
       <div class="container-fluid bg-announce d-flex align-items-center" style="margin-top: 113px; min-height: 500px;">
         <div class="container col-xl-4 col-lg-6 col-md-8 d-flex justify-content-center align-items-center" style="height: 100%;flex-direction: column;">
             <p class="title mb-5 mt-5">
@@ -260,82 +231,10 @@
         </div>
         
     </div>
-    <div class="container" style="margin-top: 100px;">
-      <section id="single" data-accordion>
-        <button data-control>자주하는 질문(1)</button>
-        <div data-content>
-          <article>Item</article>
-          
-        </div>
-      </section>
-      <section id="single" data-accordion>
-        <button data-control>자주하는 질문(2)</button>
-        <div data-content>
-          <article>Item</article>
-         
-        </div>
-      </section>
-      <section id="single" data-accordion>
-        <button data-control>자주하는 질문(3)</button>
-        <div data-content>
-          <article>Item</article>
-         
-        </div>
-      </section>
-      <section id="single" data-accordion>
-        <button data-control>자주하는 질문(4)</button>
-        <div data-content>
-          <article>Item</article>
-         
-        </div>
-      </section>
-      <section id="single" data-accordion>
-        <button data-control>자주하는 질문(5)</button>
-        <div data-content>
-          <article>Item</article>
-         
-        </div>
-      </section>
-      <section id="single" data-accordion>
-        <button data-control>자주하는 질문(6)</button>
-        <div data-content>
-          <article>Item</article>
-         
-        </div>
-      </section>
-      <section id="single" data-accordion>
-        <button data-control>자주하는 질문(7)</button>
-        <div data-content>
-          <article>Item</article>
-         
-        </div>
-      </section>
-      <section id="single" data-accordion>
-        <button data-control>자주하는 질문(8)</button>
-        <div data-content>
-          <article>Item</article>
-         
-        </div>
-      </section>
-      <section id="single" data-accordion>
-        <button data-control>자주하는 질문(9)</button>
-        <div data-content>
-          <article>Item</article>
-         
-        </div>
-      </section>
-      <section id="single" data-accordion>
-        <button data-control>자주하는 질문(10)</button>
-        <div data-content>
-          <article>Item</article>
-         
-        </div>
-      </section>
-    </div>
     
-    
-  
+    <div class="container" style="margin-top: 100px;" id="question-placeholder"></div>
       </div>
+    
       <div
         class="tab-pane fade show"
         id="ex1-tabs-3"
@@ -454,37 +353,75 @@
     
     <!-- Custom scripts -->
     <script type="text/javascript"></script>
-	<script src="announce.js"></script>
+	
   <script src="..\js\jquery.accordion.js"></script>
-  
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#only-one [data-accordion]').accordion();
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: "AIzaSyA0E-3mY4_qBgV7RfxEdzcU4B7xjJ74e-c",
+        authDomain: "enter-ef3a8.firebaseapp.com",
+        databaseURL: "https://enter-ef3a8-default-rtdb.firebaseio.com",
+        projectId: "enter-ef3a8",
+        storageBucket: "enter-ef3a8.appspot.com",
+        messagingSenderId: "505540008688",
+        appId: "1:505540008688:web:d3d89e4a7ac7ba57178035",
+        measurementId: "G-88XNV769FN"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
 
-      $('#multiple [data-accordion]').accordion({
-        singleOpen: false
+      firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            $("#navbar").load('../navbar/afterlogin.html');
+            console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+            //window.history.back();
+          } else {
+            $("#navbar").load('../navbar/beforelogin.html');
+            // No user is signed in.
+            //alert("로그인 X");
+          }
+      });
+      var source   = $("#announce-template").html();
+      var adminTemplate = Handlebars.compile(source);
+      var source2   = $("#number-template").html();
+      var numberTemplate = Handlebars.compile(source2);
+      var source3   = $("#question-template").html();
+      var questionTemplate = Handlebars.compile(source3);
+      const contentNum = 4;
+      let collectionName = "autosave";
+      let pageName = "autosave.html";
+      let currentPage = 1;
+      let maxPage = 1;
+
+      setViewOptions(adminTemplate, numberTemplate, questionTemplate, collectionName, pageName);
+
+      getAutosaveData(getAnnounceSnapshot(), currentPage);
+      getQuestionData(getQuestionSnapshot());
+    });
+    $(window).load(function(){
+      $('#소통').addClass('active');
+      $('#only-one [accordion]').accordion({
+        autoheight: false
       });
 
-      $('#single[data-accordion]').accordion({
+      $('#multiple [accordion]').accordion({
+        singleOpen: false,
+        autoheight: false
+      });
+
+      $('#single[accordion]').accordion({
         transitionEasing: 'cubic-bezier(0.455, 0.030, 0.515, 0.955)',
-        transitionSpeed: 200
-      });
-      $('#summernote').summernote({
-        placeholder: '내용을 입력하세요.',
-        tabsize: 2,
-        height: 500,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['view', ['fullscreen', 'codeview', 'help']]
-        ]
+        transitionSpeed: 200,
+        autoheight: false
       });
     });
+
+
+    
   </script>
   <script async
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC33JiJfsCheBCOLJbPiMKqf19OxnkKyyE&callback=initMap">
@@ -514,23 +451,83 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==" crossorigin="anonymous"></script>
+<script src="admin.js"></script>
+<script src="admin_announce.js"></script>
+<script src="admin_question.js"></script>
+
+<script id="announce-template" type="text/x-handlebars-template">
+  
+  {{#contents}}
+  <tr>
+    <th scope="row">[{{type}}]</th>
+    <td>{{title}}</td>
+    <td>{{created}} </td><!--정렬은 날짜순-->
+    <td>
+      <a class="edit" href="edit.html?{{title}}"><i class="fas fa-edit"></i></a><!--기존에 썼던 데이터 옮겨지면서 edit페이지로 넘어감-->
+      <a class="edit"><i class="fas fa-trash-alt" id="{{title}}" onclick="deleteDoc(this.id);"></i></a><!--이 행을 아예 삭제-->
+    </td>
+  </tr>
+  {{/contents}}
+</script>
+
+<script id="number-template" type="text/x-handlebars-template">
+  <nav aria-label="...">
+    <ul class="pagination pagination-circle">
+      <li class="page-item">
+        <a class="page-link" tabindex="-1" aria-disabled="true" onclick="firstPage(getAllCheck());">&lt&lt</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" tabindex="-1" aria-disabled="true" onclick="prevPage(getAllCheck());">&lt</a>
+      </li>
+
+      {{#contents}}
+      <li class="page-item {{#if active}}active{{/if}}">
+        <a class="page-link" aria-current="page" id="{{num}}" onclick="getAnnounceData(getAnnounceSnapshot(), getAllCheck(), this.id);">{{num}}</a>
+      </li>
+      {{/contents}}
+
+      <li class="page-item">
+        <a class="page-link" onclick="nextPage(getAllCheck());">&gt</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" onclick="lastPage(getAllCheck());">&gt&gt</a>
+      </li>
+    </ul>
+  </nav>
+</script>
+
+<script id="question-template" type="text/x-handlebars-template">
+  <div class="container" style="margin-top: 100px; overflow:auto;">
+    {{#contents}}
+    <section class="accordion">
+      <button class="accordion-title">
+        <div class="col-10"><div class="click2edit" id="title{{num}}"></div></div>
+      </button>
+      <div class="accordion-content">
+        <article class="article2edit">
+          <div class="row">
+            <div class="col-10">
+              <div class="click2edit" id="content{{num}}"></div>
+            </div>
+            <div class="col-2 d-flex justify-content-end">
+                  <button class="edit" onclick="edit('{{num}}');"><i class="fas fa-edit"></i><div id="visible{{num}}" style="font-size: 9px;"></div></button>
+                  <button class="edit" onclick="submitQuestion(myTitle('{{num}}'), '{{num}}', myContent('{{num}}'));"><i class="far fa-save"></i><div style="font-size: 9px;">save</div></button>
+                  <button class="edit" onclick="deleteQuestion(myTitle('{{num}}'), '{{num}}')"><i class="fas fa-trash-alt"></i><div style="font-size: 9px;">del</div></button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+    {{/contents}}
+  </div>
+
+  <div class="d-flex justify-content-center" style="color: #8c8c8c; margin-top: 40px; margin-bottom: 40px;">
+    <div class="clickable" style="font-size: 18px;" onclick="addQuestion();"><span style="font-weight: 700;">+</span> 추가답변 작성하기</div>
+  </div>
+</script>
 
 <script>
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  var firebaseConfig = {
-    apiKey: "AIzaSyA0E-3mY4_qBgV7RfxEdzcU4B7xjJ74e-c",
-    authDomain: "enter-ef3a8.firebaseapp.com",
-    databaseURL: "https://enter-ef3a8-default-rtdb.firebaseio.com",
-    projectId: "enter-ef3a8",
-    storageBucket: "enter-ef3a8.appspot.com",
-    messagingSenderId: "505540008688",
-    appId: "1:505540008688:web:d3d89e4a7ac7ba57178035",
-    measurementId: "G-88XNV769FN"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
 
 </script>
 </html>

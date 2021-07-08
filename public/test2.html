@@ -98,7 +98,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
   
   <script>
-  var firebaseConfig = {
+  /*var firebaseConfig = {
       apiKey: "AIzaSyCXRTprV0yWYk8YrVpopvkFM4Cv_Nmhb2g",
       authDomain: "shift-f80bc.firebaseapp.com",
       databaseURL: "https://shift-f80bc-default-rtdb.firebaseio.com",
@@ -111,129 +111,14 @@
   
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+  firebase.analytics();*/
 
-function verifyEmail(){
-    // Confirm the link is a sign-in with email link.
-    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-    // Additional state parameters can also be passed via URL.
-    // This can be used to continue the user's intended action before triggering
-    // the sign-in operation.
-    // Get the email if available. This should be available if the user completes
-    // the flow on the same device where they started it.
-    const email = window.localStorage.getItem('emailForSignIn');
-    const password = window.localStorage.getItem('setPassword');
-    const invite = window.localStorage.getItem('invitationId');
-    if (!email) {
-        // User opened the link on a different device. To prevent session fixation
-        // attacks, ask the user to provide the associated email again. For example:
-        email = window.prompt('Please provide your email for confirmation');
-    }
+  let params = (new URL(document.location)).searchParams;
+  var a = params.get("method");
+  var b = params.get("uid");
+  console.log(a);
+  alert(a+" / "+b);
 
-    // The client SDK will parse the code from the link for you.
-    firebase.auth().signInWithEmailLink(email, window.location.href)
-        .then((result) => {
-        // Clear email from storage.
-        alert("이메일 인증 완료 " + email);
-        document.getElementById("userEmail").innerHTML = email;
-        updateInvitation(invite);
-        signUpUser(result.user, email, password);
-        })
-        .catch((error) => {
-            console.log(errorCode);
-            console.log(errorMessage);
-        });
-    }
-}
-
-function signUpUser(user, email, password){
-    user.updatePassword(password).then(() => {
-        // Update successful.
-        //alert("pw update!")
-        var user1 = firebase.auth().currentUser;
-        user1.updateProfile({
-            displayName: email
-        }).then(function() {
-            //alert("name update!")
-            console.log(user1.displayName);
-            addUser(user1.uid, email, password);
-            // Update successful.
-        }).catch(function(error) {
-            // An error happened.
-            console.log(errorCode);
-            console.log(errorMessage);
-        });
-    }).catch((error) => {
-        console.log(errorCode);
-        console.log(errorMessage);
-    });
-}
-
-function addUser(uid, email, password){
-    var db = firebase.firestore();
-    //alert("회원가입 시작 "+uid+"/"+email+"/"+password);
-    window.localStorage.removeItem('emailForSignIn');
-    window.localStorage.removeItem('setPassword');
-    db.collection("user").doc(uid).set({
-        email: email,
-        password: password,
-        signupMethod: "email",
-        inviteNum: 0
-    }).then(function(){
-        if(confirm("회원가입이 완료되었습니다.")){
-            window.location.href = "../";
-        }
-    })
-    .catch(function(error) {
-        console.error("Error adding document: ", error);
-        alert(error.code+" / "+error.message);
-    });
-}
-
-function updateInvitation(value){
-  console.log("초대시작: "+value);
-  if(value != null && value != ""){
-      var db = firebase.firestore();
-      var docRef = db.collection('user').doc(value);
-      return db.runTransaction((transaction) => {
-          // This code may get re-run multiple times if there are conflicts.
-          return transaction.get(docRef).then((doc) => {
-              if (!doc.exists) {
-                  throw "Document does not exist!";
-              }
-              var invited = doc.data().inviteNum + 1;
-              transaction.update(docRef, 
-              { inviteNum: invited });
-              window.localStorage.removeItem('invitationId');
-          });
-      }).then(() => {
-          console.log("invitation success");
-      }).catch((error) => {
-          console.log("Transaction failed: ", error);
-      });
-  }
-}
-
-function updateMethod(method){
-  if((method != null && method != "") && checkIdExist('inviteMethod',method)){
-    var db = firebase.firestore();
-    var docRef = db.collection('inviteMethod').doc(method);
-    return db.runTransaction((transaction) => {
-        // This code may get re-run multiple times if there are conflicts.
-        return transaction.get(docRef).then((doc) => {
-            if (!doc.exists) {
-                throw "Document does not exist!";
-            }
-            var invited = doc.data().inviteNum + 1;
-            transaction.update(docRef, 
-            { inviteNum: invited });
-        });
-    }).then(() => {
-        console.log("invitation method update");
-    }).catch((error) => {
-        console.log("Transaction failed: ", error);
-    });
-  } 
-}
 
 </script>
   

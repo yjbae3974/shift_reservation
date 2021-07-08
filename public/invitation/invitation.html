@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="invitation.css">
     <link rel="stylesheet" href="../register/register.css">
-   
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'> 
+    
     <style>
       .post-slider .card{
         border-radius: 2rem !important;
@@ -77,7 +78,7 @@
     <!-- MDB -->
     <link rel="stylesheet" href="../css/mdb.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="../js/slick.js"></script>
   
     <script>
@@ -102,7 +103,7 @@
     </script>
   </head>
   <body style="height: 100vh;">
-    <div id="load-after"></div>
+    <div id="navbar"></div>
     <div class="container-fluid bg-container body-h" style="margin-top:113px; padding: 0px;">
       <div class="container-fluid bg-ver body-h" style="padding: 0px;">
         <div class="hr-1"></div>
@@ -128,17 +129,17 @@
                         <div class="d-flex align-items-center" style="flex-direction: column;">
                             <div class="circle-outline">
                                 <div class="inner-circle">
-                                    <img src="..\img\kangwongi.png" class="inner-img" alt="" style="">
+                                    <img id="userProfile" src="..\img\kangwongi.png" class="inner-img" alt="" style="">
                                 </div>
                             </div>
-                            <div class="mt-3 id-name">user ID</div>
+                            <div class="mt-3 id-name" id="userId">user ID</div>
                             <div style="font-size: 23px; color: #30b1c1;margin-top:-10px">Reservation Complete</div>
                             <div class="mt-3 text-center" style="font-size: 20px;">
-                                'user ID'님은 <span style="color: #74dd72;font-weight: 700;">사전예약</span>을 <span style="color: #74dd72;font-weight: 700;">완료하신</span> 상태입니다.<br>
+                                '<span id="userId2">user ID</span>' 님은 <span style="color: #74dd72;font-weight: 700;">사전예약</span>을 <span style="color: #74dd72;font-weight: 700;">완료하신</span> 상태입니다.<br>
                                 친구를 사이트에 초대하여<br>
                                 함께 서비스와 혜택을 즐겨보세요!
                             </div>
-                            <div class="your-email mt-3">userid@gmail.com</div><!--가입한 이메일 여기다가 표시-->
+                            <div class="your-email mt-3" id="userEmail">userid@gmail.com</div><!--가입한 이메일 여기다가 표시-->
                             <div class="mt-4 invitefriend">친구 초대하기</div>
                             <div class="mt-3" style="width: 20%;height: 3px;background-color: #17375E;"></div>
                             
@@ -170,7 +171,9 @@
                                   <th>Number of Invitation</th>
                               </tr>
                           </thead>
-                          <tbody>
+
+                          <tbody id="content-placeholder"></tbody>
+                          <!--<tbody>
                               <tr>
                                   <th>1</th>
                                   <th>kim***31</th>
@@ -221,23 +224,14 @@
                                 <th>kim***31</th>
                                 <th>70</th>
                             </tr>
-                            <tr>
-                                <th>...</th>
-                                <th>...</th>
-                                <th>...</th>
-                            </tr>
-                            <tr style="border: 1px solid #fff">
-                                <th>1</th>
-                                <th>kim***31</th>
-                                <th>70</th>
-                            </tr>
-                          </tbody>
+
+                          </tbody>-->
 
                       </table>
                       <p class="invit-title mt-4">Copy Invitation Code</p>
                       <div class="d-flex" style="height: 60px;max-width: 700px">
-                        <input type="email" style="width: 80%;color: #fff" class="form-control input-left">
-                        <button type="submit" class="btn-sub">복사</button>
+                        <input type="email" id="invitationLink" style="width: 80%;color: #fff" class="form-control input-left">
+                        <button type="submit" class="btn-sub" onclick="copyToClipboard('#invitationLink');">복사</button>
                       </div>
                       <p class="mt-1" style="font-size: 18px; color: #30b1c1;">*친구가 초대코드를 통해 들어와서 회원가입시 초대수가 올라갑니다.</p>
                   </div>
@@ -252,6 +246,25 @@
     
     <footer id="footer"></footer>
     
+    <script id="invitation-template" type="text/x-handlebars-template">
+      {{#contents}}
+      <tr>
+          <th>{{rank}}</th>
+          <th>{{userId}}</th>
+          <th>{{inviteNum}}</th>
+      </tr>
+      {{/contents}}
+      <tr>
+          <th>...</th>
+          <th>...</th>
+          <th>...</th>
+      </tr>
+      <tr style="border: 1px solid #fff">
+          <th>1</th>
+          <th>kim***31</th>
+          <th>70</th>
+      </tr>
+    </script>
 
     <!-- MDB -->
     <script type="text/javascript" src="../js/mdb.min.js"></script>
@@ -259,8 +272,40 @@
     <!-- Custom scripts -->
     <script type="text/javascript">
     $(document).ready(function(){
-      $("#load-before").load('../navbar/beforelogin.html');
-      $('#load-after').load('../navbar/afterlogin.html');
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: "AIzaSyA0E-3mY4_qBgV7RfxEdzcU4B7xjJ74e-c",
+        authDomain: "enter-ef3a8.firebaseapp.com",
+        databaseURL: "https://enter-ef3a8-default-rtdb.firebaseio.com",
+        projectId: "enter-ef3a8",
+        storageBucket: "enter-ef3a8.appspot.com",
+        messagingSenderId: "505540008688",
+        appId: "1:505540008688:web:d3d89e4a7ac7ba57178035",
+        measurementId: "G-88XNV769FN"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          $("#navbar").load('../navbar/afterlogin.html');
+          console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+          document.getElementById("userEmail").innerHTML = user.email;
+          var emailSplit = user.email.split('@');
+          document.getElementById("userId").innerHTML = emailSplit[0];
+          document.getElementById("userId2").innerHTML = emailSplit[0];
+          getUserData(getUserSnapshot());
+
+          document.getElementById("invitationLink").value = "https://enter-ef3a8.web.app/register/register.html?uid="+user.uid;
+          document.getElementById("invitationLink").disabled = true;
+        } else {
+          $("#navbar").load('../navbar/beforelogin.html');
+          window.location.href='../login/login.htnl';
+          // No user is signed in.
+        }
+      });
     });
     $(window).load(function(){
       $('#친구초대').addClass('active');
@@ -271,4 +316,85 @@
     <script src="register.js"></script>
     
   </body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-analytics.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script>
+function copyToClipboard(element) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(element).val()).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+
+var source   = $("#invitation-template").html();
+var template = Handlebars.compile(source);
+
+function getUserSnapshot(){
+    let ref, snapshot; 
+      // 데이터 불러오기
+      var db = firebase.firestore();
+      
+      ref = db.collection('user'); 
+      snapshot = ref.get();
+  
+      if (snapshot.empty) { // 검색된 데이터가 없는 경우
+          console.log(`Fail to load user data.`);
+          return;
+      }
+      console.log(`Success to load user data.`);
+      return snapshot;
+  }
+  
+
+  function getUserData(Snapshots){
+    const dataArray = new Array();
+
+    Snapshots.then((snapshot) => {
+      snapshot.forEach((doc) => {
+
+        var temp = new Object();
+        var emailSplit = doc.get("email").split('@');
+        temp.userId = emailSplit[0];
+        temp.inviteNum = doc.get("inviteNum");
+        //console.log(temp);
+        dataArray.push(temp);
+        makeRankTable(dataArray);         
+      });
+    });
+  }
+
+  function makeRankTable(dataArray){
+      
+      dataArray.sort(compNum);
+      console.log("sort",dataArray);
+
+      if(dataArray.length > 10){
+        dataArray = dataArray.slice(0,10);
+      }
+
+      for(k in dataArray){
+        dataArray[k].rank = (k*1)+1;
+      }
+
+      const data = new Object();
+      data.contents = dataArray;
+      $("#content-placeholder").html(template(data));
+  }
+
+  function compNum(a,b){
+    return b.inviteNum - a.inviteNum;
+  }
+
+</script>
 </html>

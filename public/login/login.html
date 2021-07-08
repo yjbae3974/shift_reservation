@@ -69,7 +69,7 @@
     <!-- MDB -->
     <link rel="stylesheet" href="../css/mdb.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="../js/slick.js"></script>
   
     <script>
@@ -108,8 +108,8 @@
     </script>
   </head>
   <body style="height: 100vh;">
-    <div id="load-before"></div>
-    <div class="container-fluid bg-container body-h mobile-none" style="margin-top:113px; padding: 0px;"><!--모바일에서는 안보임-->
+    <div id="navbar"></div>
+    <div class="container-fluid bg-container body-h mobile-none" style="margin-top:113px; padding: 0px;">
       <div class="container-fluid bg-ver body-h" style="padding: 0px;">
         <div class="hr-1"></div>
         <div class="hr-2"></div>
@@ -172,8 +172,8 @@
                     <div class="sign-up-title">
                       Sign in
                     </div>
-                    <input type="email" class="form-control form-rounded mct-5" placeholder="Your email" style="padding: 10px 20px;">
-                    <input type="password" class="form-control form-rounded mct-2" placeholder="Your Password" style="padding: 10px 20px;">
+                    <input type="email" class="form-control form-rounded mct-5" id="userEmail" placeholder="Your email" style="padding: 10px 20px;">
+                    <input type="password" class="form-control form-rounded mct-2" id="userPassword" placeholder="Your Password" style="padding: 10px 20px;">
                     <div class="d-flex mct-3" style="margin-bottom: 17.6px;">
                         <label class="checkbox-container mx-3 text-start">아이디 저장
                             <input type="checkbox" checked="checked">
@@ -186,19 +186,19 @@
                     </div>
                    
                     <button type="submit" class="btn-rounded text-white text-center" style="
-                    font-size: 18px;width: 100%;background-color: #17375E;padding: 12px;">Sign in</button>
+                    font-size: 18px;width: 100%;background-color: #17375E;padding: 12px;" id="sendButton" onclick="pwLogin()">Sign in</button>
                     <div class="separator mt-3">or</div>
                     <button type="submit" class="btn-rounded text-white text-center mt-3" style="
-                    font-size: 18px;width: 100%;background-color: #1da1f2;padding: 12px;">Login via Google</button>
+                    font-size: 18px;width: 100%;background-color: #1da1f2;padding: 12px;" onclick="googleLogin()">Login via Google</button>
                     <button id="register" type="submit" class="btn-rounded text-white text-center mct-1" style="
-                    font-size: 18px;width: 100%;background-color: #fae100;padding: 12px;">Login via Kakao</button>
+                    font-size: 18px;width: 100%;background-color: #fae100;padding: 12px;" onclick="kakaoLogin()">Login via Kakao</button>
                     <div class="d-flex mt-3 justify-content-center" style="font-size: 18px;">
                       <div style="color: #bfbfbf;">Don't have an Account?</div>
                       <a class="ms-2" style="color: #59dbe0;" href="../register/register.html">Sign up</a>
                     </div>
                     <div class="text-center mt-1" style="font-size: 14px;color: #bd064b;font-weight: 700;">
                       
-                      <div class="pointer" onclick="changeContent('password')">Forgot Password?</div>
+                      <div class="pointer" onclick="changePage('change_password')">Forgot Password?</div>
                     </div>
                   </div></div>
                   
@@ -254,18 +254,252 @@
     <!-- Custom scripts -->
     <script type="text/javascript">
     $(document).ready(function(){
-      $("#load-before").load('../navbar/beforelogin.html');
-      $('#load-after').load('../navbar/afterlogin.html');
-    
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+          apiKey: "AIzaSyA0E-3mY4_qBgV7RfxEdzcU4B7xjJ74e-c",
+          authDomain: "enter-ef3a8.firebaseapp.com",
+          databaseURL: "https://enter-ef3a8-default-rtdb.firebaseio.com",
+          projectId: "enter-ef3a8",
+          storageBucket: "enter-ef3a8.appspot.com",
+          messagingSenderId: "505540008688",
+          appId: "1:505540008688:web:d3d89e4a7ac7ba57178035",
+          measurementId: "G-88XNV769FN"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+              $("#navbar").load('../navbar/afterlogin.html');
+              console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+              alert("로그인 완료 "+user.email);
+              var userEmail = document.getElementById('userEmail');
+              userEmail.value = user.email;
+              userEmail.disabled = true;
+
+              var sendBtn = document.getElementById('sendButton');
+              sendBtn.innerHTML = "Login Complete!";
+              sendBtn.disabled = true;
+              //window.location.href = "../";
+            } else {
+              $("#navbar").load('../navbar/beforelogin.html');
+              // No user is signed in.
+              //alert("로그인 X");
+            }
+        });
     });
     $(window).load(function(){
       $('#로그인').addClass('active');
     });
     </script>
     <script type="text/javascript" src="../js/pageSlide.js"></script>
-    <script src="../js/reservation.js"></script>
-    <script src="register.js"></script>
-    <script src="login.js"></script>
-    
   </body>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-analytics.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="login.js"></script>
+<script src="change_password.js"></script>
+
+<script>
+  function googleLogin(){
+    console.log("google 로그인 클릭");
+    var user = firebase.auth().currentUser;
+    if (user) {
+      // User is signed in.
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.  
+      window.location.href = "../";
+    } 
+    else {
+      console.log("google 로그인 시작");
+      // No user is signed in.
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithRedirect(provider);
+    }
+  }
+
+  firebase.auth().getRedirectResult()
+  .then((result) => {
+    if (result.credential) {
+        /** @type {firebase.auth.OAuthCredential} */
+        var credential = result.credential;
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = credential.accessToken;
+        // ...
+      }
+      // The signed-in user info.
+      var user = result.user;
+      console.log("*"+user);
+      var db = firebase.firestore();
+      db.collection("user").doc(user.uid).set({
+          email: user.email,
+          signupMethod: "google",
+          inviteNum: 0
+      }).then(function(){
+        updateInvitation();
+        if(confirm("google 회원가입 완료"+user.email)){
+          //window.location.href="../";
+        }
+      }).catch(function(error) {
+          console.error("Error adding document: ", error);
+          alert(error.code+" / "+error.message);
+      });
+    }).catch((error) => {
+      // Handle Errors here.
+  });
+
+  Kakao.init('8fa8eca2742004d4fa3b93aaf4b736e3'); //발급받은 키 중 javascript키를 사용해준다.
+  console.log(Kakao.isInitialized()); // sdk초기화여부판단
+  //카카오로그인
+  function kakaoLogin() {
+    let params = (new URL(document.location)).searchParams;
+    var value = params.get("uid");
+    window.localStorage.setItem('invitationId', value);
+    if(!Kakao.isInitialized()){
+      Kakao.init('8fa8eca2742004d4fa3b93aaf4b736e3'); //발급받은 키 중 javascript키를 사용해준다.
+      console.log(Kakao.isInitialized()); // sdk초기화여부판단
+    }
+    Kakao.Auth.login({
+      scope: "account_email",
+      success: function (response) {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+            console.log(response)
+            //alert(response.id+", "+response.kakao_account.email);
+            if(response.kakao_account.email != undefined){
+              firebase.auth().signInWithEmailAndPassword(response.kakao_account.email, String(response.id))
+              .then((userCredential) => {
+                  window.location.href = "../";
+              })
+              .catch((error) => {
+                if(error.code == "auth/user-not-found"){
+                  console.log("kakao 회원가입 시작");
+                  updateInvitation();
+                  newUser(response.kakao_account.email, String(response.id));
+                }
+                else{
+                  console.log(error.code+"\n"+error.message);
+                  alert("로그인 에러 "+error.code+"\n"+error.message);
+                }
+              });
+            }
+          },
+          fail: function (error) {
+            alert("이메일 제공에 동의해주세요:)");
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }
+
+  function newUser(email, password){
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((user) => {
+        var db = firebase.firestore();
+        var user1 = firebase.auth().currentUser;
+        db.collection("user").doc(user1.uid).set({
+            email: email,
+            signupMethod: "kakao",
+            password: password,
+            inviteNum: 0
+        })
+        .then(function(docRef) {
+            sendTo();
+            if(confirm("kakao 회원가입 완료 ")+email){
+              window.location.href="../";
+            }
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });       
+    })
+    .catch((error) => {
+      alert("회원가입 에러 "+error.code+"\n"+error.message);
+    });
+  }
+
+  //카카오로그아웃  
+  function kakaoLogout() {
+    if(!Kakao.isInitialized()){
+      Kakao.init('8fa8eca2742004d4fa3b93aaf4b736e3'); //발급받은 키 중 javascript키를 사용해준다.
+      console.log(Kakao.isInitialized()); // sdk초기화여부판단
+    }
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function (response) {
+          console.log(response)
+        },
+        fail: function (error) {
+          console.log(error)
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+  }
+
+  function sendTo() {
+    //kakaoLogin();
+    Kakao.Auth.login({
+      scope: 'TALK_MESSAGE',
+      success: function() {
+        Kakao.API.request({
+          url: '/v2/api/talk/memo/default/send',
+          data: {
+            template_object: {
+              object_type: 'feed',
+              content: {
+                title: '회원가입이 완료되었습니다',
+                description: '',
+                image_url:
+                  'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+                link: {
+                  mobile_web_url: 'https://enter-ef3a8.web.app/',
+                  web_url: 'https://enter-ef3a8.web.app/',
+                },
+              },
+              social: {
+                like_count: 286,
+                comment_count: 45,
+                shared_count: 845,
+              },
+              buttons: [
+                {
+                  title: '웹으로 보기',
+                  link: {
+                    mobile_web_url: 'https://enter-ef3a8.web.app/',
+                    web_url: 'https://enter-ef3a8.web.app/',
+                  },
+                },
+              ],
+            },
+          },
+          success: function(res) {
+            //alert('success: ' + JSON.stringify(res))
+            window.location.href = "../";
+          },
+          fail: function(err) {
+            alert('error: ' + JSON.stringify(err))
+          },
+        })
+      },
+      fail: function(err) {
+        alert('failed to login: ' + JSON.stringify(err))
+      },
+    })
+  }
+</script>
 </html>

@@ -54,7 +54,7 @@
     <!-- MDB -->
     <link rel="stylesheet" href="../css/mdb.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="../js/slick.js"></script>
   
     <script>
@@ -158,19 +158,19 @@
                       Sign up
                     </div>
                     <input type="email" id="userEmail" class="form-control form-rounded mct-5" placeholder="Your email" style="padding: 10px 20px;">
-                    <input type="password" id="password" class="form-control form-rounded mct-2" placeholder="Your Password" style="padding: 10px 20px;" onchange="checkPassword();">
-                    <input type="password" id="password2" class="form-control form-rounded mct-2" placeholder="Rewrite Password" style="padding: 10px 20px;" onchange="checkPassword();">
+                    <input type="password" id="password" class="form-control form-rounded mct-2" placeholder="Your Password" style="padding: 10px 20px;">
+                    <input type="password" id="password2" class="form-control form-rounded mct-2" placeholder="Rewrite Password" style="padding: 10px 20px;">
                     <span id = "check" style="font-size: 10pt; color: green;">비밀번호를 확인해 주세요</span>
                     <label class="checkbox-container mx-3 mct-5 text-start">I agree to the Terms of Service.
                       <input type="checkbox" checked="checked">
                       <span class="checkmark"></span>
                     </label>
-                    <button type="submit" class="btn-rounded text-white text-center" style="font-size: 18px;width: 100%;background-color: #17375E;padding: 12px;" onclick="signUp();">Send Email</button>
+                    <button type="submit" id="sendButton" class="btn-rounded text-white text-center" style="font-size: 18px;width: 100%;background-color: #17375E;padding: 12px;" onclick="signUp();">Send Email</button>
                     <div class="separator mt-3">or</div>
                     <button type="submit" class="btn-rounded text-white text-center mt-3" style="
                     font-size: 18px;width: 100%;background-color: #1da1f2;padding: 12px;" onclick="googleLogin();">Login via Google</button>
                     <button type="submit" class="btn-rounded text-white text-center mct-1" style="
-                    font-size: 18px;width: 100%;background-color: #fae100;padding: 12px;">Login via Kakao</button>
+                    font-size: 18px;width: 100%;background-color: #fae100;padding: 12px;" onclick="kakaoLogin();">Login via Kakao</button>
                     <div class="d-flex mt-3 justify-content-center" style="font-size: 18px;">
                       <div style="color: #bfbfbf;">Do you have an Account?</div>
                       <a class="ms-2" style="color: #59dbe0;" href="../login/login.html">Sign in</a>
@@ -217,32 +217,7 @@
     <!-- Custom scripts -->
     <script type="text/javascript">
     $(document).ready(function(){
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      var firebaseConfig = {
-        apiKey: "AIzaSyA0E-3mY4_qBgV7RfxEdzcU4B7xjJ74e-c",
-        authDomain: "enter-ef3a8.firebaseapp.com",
-        databaseURL: "https://enter-ef3a8-default-rtdb.firebaseio.com",
-        projectId: "enter-ef3a8",
-        storageBucket: "enter-ef3a8.appspot.com",
-        messagingSenderId: "505540008688",
-        appId: "1:505540008688:web:d3d89e4a7ac7ba57178035",
-        measurementId: "G-88XNV769FN"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      firebase.analytics();
-
-      firebase.auth().onAuthStateChanged(function(user) {
-          if (user) {
-            $("#navbar").load('../navbar/afterlogin.html');
-            console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
-            //window.history.back();
-          } else {
-            $("#navbar").load('../navbar/beforelogin.html');
-            // No user is signed in.
-          }
-      });
+      
     });
     $(window).load(function(){
       $('#회원가입').addClass('active');
@@ -276,113 +251,242 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="register.js"></script>
 
 <script>
-  function checkPassword(){
-    var pw1 = document.getElementById('password').value;
-    var pw2 = document.getElementById('password2').value;
-    if(document.getElementById('password').value.length > 0 && document.getElementById('password').value.length < 6){
-      document.getElementById("check").textContent = "비밀번호는 6자 이상으로 설정해주세요"   
-      document.getElementById('check').style.color='green';
-      pwVerified = false;
-    }
-    else{  
-      if(pw1 == pw2){
-        document.getElementById("check").textContent = "비밀번호가 일치합니다"
-        document.getElementById('check').style.color='blue';
-        pwVerified = true;
-      }
-      else{
-        document.getElementById('check').innerHTML='비밀번호가 일치하지 않습니다'
-        document.getElementById('check').style.color='red';
-        pwVerified = false;
-      }
-    }
-    return pwVerified;
-  }
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyA0E-3mY4_qBgV7RfxEdzcU4B7xjJ74e-c",
+    authDomain: "enter-ef3a8.firebaseapp.com",
+    databaseURL: "https://enter-ef3a8-default-rtdb.firebaseio.com",
+    projectId: "enter-ef3a8",
+    storageBucket: "enter-ef3a8.appspot.com",
+    messagingSenderId: "505540008688",
+    appId: "1:505540008688:web:d3d89e4a7ac7ba57178035",
+    measurementId: "G-88XNV769FN"
+  };
+  
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
 
-  function signUp(){
-    if(checkPassword()){
-      var email = document.getElementById('userEmail').value;
-      var password = document.getElementById('password').value;
-      if(!email || !password){
-        alert("회원가입 정보를 적어주세요");
+  firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        $("#navbar").load('../navbar/afterlogin.html');
+        console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+        var userEmail = document.getElementById('userEmail');
+        userEmail.value = user.email;
+        userEmail.disabled = true;
+
+        var sendBtn = document.getElementById('sendButton');
+        sendBtn.innerHTML = "SignIn Complete!";
+        sendBtn.disabled = true;
+      } else {
+        $("#navbar").load('../navbar/beforelogin.html');
+        // No user is signed in.
       }
-      else{
-        signUpEmail();
-      }
-    }
-  }
+  });
 
-  function signUpEmail(){
-    var actionCodeSettings = {
-      // URL you want to redirect back to. The domain (www.example.com) for this
-      // URL must be in the authorized domains list in the Firebase Console.
-      url: 'http://localhost:5000/register/email_verify.html',
-      // This must be true.
-      handleCodeInApp: true
-    };
+  $(function(){
+      $('#password').keyup(function(){
+        if($('#password').val().length > 0 && $('#password').val().length < 6){
+            $('#check').html('비밀번호는 6자 이상으로 설정해주세요');
+            //$('#check').attr('color', '#f847C83E');          
+        }
+        else{
+            $('#check').html('비밀번호를 확인해 주세요');
+            //$('#check').attr('color', '#f847C83E');          
+        }
+      });
 
-    var email = document.getElementById('userEmail').value;
-    var password = document.getElementById('password').value;
-    firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
-    .then(() => {
-      // The link was successfully sent. Inform the user.
-      // Save the email locally so you don't need to ask the user for it again
-      // if they open the link on the same device.
-      window.localStorage.setItem('emailForSignIn', email);
-      window.localStorage.setItem('setPassword', password);
-      alert("이메일 전송 성공");
-      // ...
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode);
-      alert(errorMessage);
-      // ...
-    });
-  }
-
-  function googleLogin(){
-    var user = firebase.auth().currentUser;
-    if (user) {
-      // User is signed in.
-      alert("로그인 완료");
-      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.  
-      window.location.href = "register_complete.html";
-    } 
-    else {
-      // No user is signed in.
-      var provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithRedirect(provider);
-    }
-  }
+      $('#password2').keyup(function(){
+          if($('#password').val() != $('#password2').val()){
+            $('#check').html('비밀번호가 일치하지 않습니다');
+            document.getElementById('check').style.color='red';
+          } 
+          else{
+            $('#check').html('비밀번호가 일치합니다');
+            document.getElementById('check').style.color='blue';
+          }
+      });
+  });
 
   firebase.auth().getRedirectResult()
   .then((result) => {
     if (result.credential) {
-      /** @type {firebase.auth.OAuthCredential} */
-      var credential = result.credential;
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = credential.accessToken;
-      // ...
-    }
-    // The signed-in user info.
-    var user = result.user;
-    var db = firebase.firestore();
-    db.collection("user").doc(user.uid).set({
-        email: user.email,
-        signupMethod: "google",
-    })
-    .catch(function(error) {
-        console.error("Error adding document: ", error);
-        alert(error.code+" / "+error.message);
-    });
-    alert("google 회원가입 완료"+user.email);
-  }).catch((error) => {
-    // Handle Errors here.
+        /** @type {firebase.auth.OAuthCredential} */
+        var credential = result.credential;
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = credential.accessToken;
+        // ...
+      }
+      // The signed-in user info.
+      var user = result.user;
+      console.log("*"+user);
+      var db = firebase.firestore();
+      db.collection("user").doc(user.uid).set({
+          email: user.email,
+          signupMethod: "google",
+          inviteNum: 0
+      }).then(function(){
+        updateInvitation();
+        if(confirm("google 회원가입 완료"+user.email)){
+          //window.location.href="../";
+        }
+      }).catch(function(error) {
+          console.error("Error adding document: ", error);
+          alert(error.code+" / "+error.message);
+      });
+    }).catch((error) => {
+      // Handle Errors here.
   });
-  
+
+  Kakao.init('8fa8eca2742004d4fa3b93aaf4b736e3'); //발급받은 키 중 javascript키를 사용해준다.
+  console.log(Kakao.isInitialized()); // sdk초기화여부판단
+  //카카오로그인
+  function kakaoLogin() {
+    let params = (new URL(document.location)).searchParams;
+    var value = params.get("uid");
+    window.localStorage.setItem('invitationId', value);
+    if(!Kakao.isInitialized()){
+      Kakao.init('8fa8eca2742004d4fa3b93aaf4b736e3'); //발급받은 키 중 javascript키를 사용해준다.
+      console.log(Kakao.isInitialized()); // sdk초기화여부판단
+    }
+    Kakao.Auth.login({
+      scope: "account_email",
+      success: function (response) {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+            console.log(response)
+            //alert(response.id+", "+response.kakao_account.email);
+            if(response.kakao_account.email != undefined){
+              firebase.auth().signInWithEmailAndPassword(response.kakao_account.email, String(response.id))
+              .then((userCredential) => {
+                  //window.location.href = "../";
+              })
+              .catch((error) => {
+                if(error.code == "auth/user-not-found"){
+                  console.log("kakao 회원가입 시작");
+                  updateInvitation();
+                  newUser(response.kakao_account.email, String(response.id));
+                }
+                else{
+                  console.log(error.code+"\n"+error.message);
+                  alert("로그인 에러 "+error.code+"\n"+error.message);
+                }
+              });
+            }
+          },
+          fail: function (error) {
+            alert("이메일 제공에 동의해주세요:)");
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }
+
+  function newUser(email, password){
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((user) => {
+        var db = firebase.firestore();
+        var user1 = firebase.auth().currentUser;
+        db.collection("user").doc(user1.uid).set({
+            email: email,
+            signupMethod: "kakao",
+            password: password,
+            inviteNum: 0
+        })
+        .then(function(docRef) {
+            sendTo();
+            if(confirm("kakao 회원가입 완료 ")+email){
+              //window.location.href="../";
+            }
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });       
+    })
+    .catch((error) => {
+      alert("회원가입 에러 "+error.code+"\n"+error.message);
+    });
+  }
+
+  //카카오로그아웃  
+  function kakaoLogout() {
+    if(!Kakao.isInitialized()){
+      Kakao.init('8fa8eca2742004d4fa3b93aaf4b736e3'); //발급받은 키 중 javascript키를 사용해준다.
+      console.log(Kakao.isInitialized()); // sdk초기화여부판단
+    }
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function (response) {
+          console.log(response)
+        },
+        fail: function (error) {
+          console.log(error)
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+  }
+
+  function sendTo() {
+    //kakaoLogin();
+    Kakao.Auth.login({
+      scope: 'TALK_MESSAGE',
+      success: function() {
+        Kakao.API.request({
+          url: '/v2/api/talk/memo/default/send',
+          data: {
+            template_object: {
+              object_type: 'feed',
+              content: {
+                title: '[ENTER] 회원가입이 완료되었습니다',
+                description: '',
+                image_url:
+                  'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+                link: {
+                  mobile_web_url: 'https://enter-ef3a8.web.app/',
+                  web_url: 'https://enter-ef3a8.web.app/',
+                },
+              },
+              social: {
+                like_count: 286,
+                comment_count: 45,
+                shared_count: 845,
+              },
+              buttons: [
+                {
+                  title: '웹으로 보기',
+                  link: {
+                    mobile_web_url: 'https://enter-ef3a8.web.app/',
+                    web_url: 'https://enter-ef3a8.web.app/',
+                  },
+                },
+              ],
+            },
+          },
+          success: function(res) {
+            console.log('success: ' + JSON.stringify(res))
+            //window.location.href = "../";
+          },
+          fail: function(err) {
+            alert('error: ' + JSON.stringify(err))
+          },
+        })
+      },
+      fail: function(err) {
+        alert('failed to login: ' + JSON.stringify(err))
+      },
+    })
+  }
 </script>
 </html>
