@@ -1,6 +1,6 @@
 .bg-nav{
     background-color: #0d1e33;
-    border-bottom: 2px solid #fff
+    
 }
 .bg-container{
     background-color: #101d2d;
@@ -150,10 +150,25 @@
         .body-h{
             min-height: 1500px;
         }
+        .mobile-none{
+            display: none;
+        }
+        .form-mobile{
+            background-color: transparent!important;
+            color: #fff!important;
+            border: 3px solid #fff!important;
+        }
+        .form-mobile::placeholder{
+            color: #fff!important;
+        }
+        
   }
   @media(min-width: 993px){
       .mobile-ver-center{
           align-items: center;
+      }
+      .mobile-display{
+          display:none;
       }
   }
   @media(max-width: 500px){

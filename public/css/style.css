@@ -262,6 +262,7 @@
         padding: 20px;
     }
     .mobile-middle{
+        display: flex;
         justify-content: center;
     }
     .mobile-mt{

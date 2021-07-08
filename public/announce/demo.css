@@ -10,7 +10,7 @@ body > section {
     margin-bottom: 80px;
 }
 
-button {
+section button {
     margin: 0;
     padding: 0;
     background: inherit;
@@ -364,4 +364,18 @@ table th[class*="span"],
 }
 article{
   background-color: transparent !important;
+}
+.list-title{
+  font-size: 12px;
+  font-weight: 700;
+  color: #060b11;
+}
+.list-content{
+  font-family: Noto Sans;
+  color: #060b11;
+  font-weight: 500;
+  height: 24px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

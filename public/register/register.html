@@ -94,7 +94,7 @@
   </head>
   <body style="height: 100vh;">
     <div id="navbar"></div>
-    <div class="container-fluid bg-container body-h" style="margin-top:113px; padding: 0px;">
+    <div class="container-fluid bg-container body-h mobile-none" style="margin-top:113px; padding: 0px;">
       <div class="container-fluid bg-ver body-h" style="padding: 0px;">
         <div class="hr-1"></div>
         <div class="hr-2"></div>
@@ -183,6 +183,29 @@
         </div>
         
     </div>
+    </div>
+    <div class="mobile-display container-fluid bg-container" style="min-height: 100vh;margin-top: 113px;">
+      <div class="sign-up-title text-center" style="color: #fff;padding-top: 50px;">
+        Sign up
+      </div>
+      <input type="email" id="userEmail" class="form-control form-rounded mct-5 form-mobile" placeholder="Your email" style="padding: 10px 20px;">
+      <input type="password" id="password" class="form-control form-rounded mct-2 form-mobile" placeholder="Your Password" style="padding: 10px 20px;" onchange="checkPassword();">
+      <input type="password" id="password2" class="form-control form-rounded mct-1 form-mobile" placeholder="Rewrite Password" style="padding: 10px 20px;" onchange="checkPassword();">
+      <div class="pe-3 mt-2" id = "check" style="font-size: 10pt; color: #4abb52;text-align: end;">비밀번호를 확인해 주세요</div>
+      <label class="checkbox-container mx-3 mct-4 text-start">I agree to the Terms of Service.
+        <input type="checkbox" checked="checked">
+        <span class="checkmark"></span>
+      </label>
+      <button type="submit" class="btn-rounded text-white text-center" style="font-size: 18px;width: 100%;background-color: #17375E;padding: 12px;" onclick="signUp();">Send Email</button>
+      <div class="separator mt-3">or</div>
+      <button type="submit" class="btn-rounded text-white text-center mt-3" style="
+      font-size: 18px;width: 100%;background-color: #1da1f2;padding: 12px;" onclick="googleLogin();">Login via <span style="font-weight: 700;">Google</span></button>
+      <button type="submit" class="btn-rounded text-white text-center mct-1" style="
+      font-size: 18px;width: 100%;background-color: #fae100;padding: 12px;">Login via <span style="font-weight: 700;">Kakao</span></button>
+      <div class="d-flex mt-3 justify-content-center pb-5" style="font-size: 18px;">
+        <div style="color: #bfbfbf;">Do you have an Account?</div>
+        <a class="ms-2" style="color: #59dbe0;" href="../login/login.html">Sign in</a>
+      </div>
     </div>
     
     <footer id="footer"></footer>

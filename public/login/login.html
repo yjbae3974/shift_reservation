@@ -59,7 +59,10 @@
         width: 450px;
       }
       @media(max-width: 992px){
-       
+       .btn-form{
+         padding: 9px 24px!important;
+         border: 3px solid #fff!important;
+       }
       }
     </style>
     
@@ -106,7 +109,7 @@
   </head>
   <body style="height: 100vh;">
     <div id="load-before"></div>
-    <div class="container-fluid bg-container body-h" style="margin-top:113px; padding: 0px;">
+    <div class="container-fluid bg-container body-h mobile-none" style="margin-top:113px; padding: 0px;"><!--모바일에서는 안보임-->
       <div class="container-fluid bg-ver body-h" style="padding: 0px;">
         <div class="hr-1"></div>
         <div class="hr-2"></div>
@@ -207,6 +210,39 @@
         </div>
         
     </div>
+    </div>
+    <div class="mobile-display container-fluid bg-container" id="mobileChanges" style="min-height: 100vh;margin-top: 113px;">
+      <div class="sign-up-title text-center" style="color: #fff;padding-top: 50px;">Sign in</div>
+      <div>
+        <input type="email" class="form-control form-rounded mct-5 form-mobile" placeholder="Your email" style="padding: 10px 20px;">
+        <input type="password" class="form-control form-rounded mct-2 form-mobile" placeholder="Your Password" style="padding: 10px 20px;">
+        <div class="d-flex mct-3" style="margin-bottom: 17.6px;">
+            <label class="checkbox-container mx-3 text-start">아이디 저장
+                <input type="checkbox" checked="checked">
+                <span class="checkmark"></span>
+              </label>
+              <label class="checkbox-container text-start">자동로그인
+                <input type="checkbox" checked="checked">
+                <span class="checkmark"></span>
+              </label>
+        </div>
+       
+        <button type="submit" class="btn-rounded text-white text-center" style="
+        font-size: 18px;width: 100%;background-color: #17375E;padding: 12px;">Sign in</button>
+        <div class="separator mt-3" style="color: #fff;">or</div>
+        <button type="submit" class="btn-rounded text-white text-center mt-3" style="
+        font-size: 18px;width: 100%;background-color: #1da1f2;padding: 12px;">Login via <span style="font-weight: 700;">Google</span></button>
+        <button id="register" type="submit" class="btn-rounded text-white text-center mct-1" style="
+        font-size: 18px;width: 100%;background-color: #fae100;padding: 12px;">Login via <span style="font-weight: 700;">Kakao</span></button>
+        <div class="d-flex mt-3 justify-content-center" style="font-size: 18px;">
+          <div style="color: #bfbfbf;">Don't have an Account?</div>
+          <a class="ms-2" style="color: #59dbe0;" href="../register/register.html">Sign up</a>
+        </div>
+        <div class="text-center mt-1" style="font-size: 14px;color: #bd064b;font-weight: 700;">
+          
+          <div class="pointer pb-5" onclick="changeContent('password')">Forgot Password?</div>
+        </div>
+      </div>
     </div>
     
     <footer id="footer"></footer>

@@ -225,7 +225,9 @@ text-align: left;
     width: 50%;
     height: 50%;
 }
-
+.mobile-middle{
+    justify-content: flex-end;
+}
 @media(min-width:576px){
 
 }
@@ -304,7 +306,7 @@ text-align: left;
         padding: 20px;
     }
     .mobile-middle{
-        justify-content: center;
+        justify-content: center!important;
     }
     .mobile-mt{
         margin-top: 113px !important;
@@ -324,9 +326,10 @@ text-align: left;
         margin: 0px;
     }
     .a-link.active{
-        color: #bfbfbf !important;
+        color: #fff !important;
         font-weight: 700;
     }
+    
 }
 @media(max-width:768px){
     .position-rewind{

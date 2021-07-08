@@ -55,6 +55,14 @@
   color: #bfbfbf!important;
   
 }
+@media(max-width: 768px){
+  .btn-base{
+    font-weight: 700;
+    font-size: 18px;
+    padding: 10px 18px!important;
+    border-radius: 23px;
+  }
+}
 
     </style>
 	 <link rel="stylesheet" href="../css/mdb.min.css" />
@@ -71,7 +79,7 @@
 	  <nav id="navOption" class="sticky-nav">
 		  <div class="container">
 			<ul class="nav nav-tabs d-flex justify-content-end" id="ex1" role="tablist" style="border-bottom: 1px solid #fff;">
-				<li class="nav-item" role="presentation" style="max-width: 50%;width: 150px">
+				<li class="nav-item" role="presentation" style="max-width: 33%;width: 150px">
 				  <a
 					class="nav-link active text-center tabcolor"
 					id="ex1-tab-1"
@@ -85,7 +93,7 @@
 					>공지사항</a
 				  >
 				</li>
-				<li class="nav-item" role="presentation" style="max-width: 50%;width: 150px">
+				<li class="nav-item" role="presentation" style="max-width: 33%;width: 150px">
 				  <a
 					class="nav-link text-center tabcolor"
 					id="ex1-tab-2"
@@ -100,7 +108,7 @@
 				  >
 				  
 				</li>
-                <li class="nav-item" role="presentation" style="max-width: 50%;width: 150px">
+                <li class="nav-item" role="presentation" style="max-width: 33%;width: 150px">
                     <a
                       class="nav-link text-center tabcolor"
                       id="ex1-tab-2"
@@ -364,7 +372,7 @@
           </div>
         </div>
     </div><!--container end-->
-    <div class="container-fluid" style="height: 480px;margin-top: 100px;">
+    <div class="container-fluid mobile-nopad" style="height: 480px;margin-top: 100px;">
       <div id="map" style="height: 100%;"></div>
     </div>
       </div>
@@ -391,6 +399,9 @@
         transitionEasing: 'cubic-bezier(0.455, 0.030, 0.515, 0.955)',
         transitionSpeed: 200
       });
+    });
+    $(window).load(function(){
+      $('#소통').addClass('active');
     });
   </script>
   <script async
