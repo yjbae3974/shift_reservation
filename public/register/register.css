@@ -146,10 +146,8 @@
   .pointer{
       cursor: pointer;
   }
-  @media(max-width: 992px){
-        .body-h{
-            min-height: 1500px;
-        }
+@media(max-width: 992px){
+        
         .mobile-none{
             display: none;
         }
@@ -160,6 +158,9 @@
         }
         .form-mobile::placeholder{
             color: #fff!important;
+        }
+        .mobile-margintop{
+            margin-top: 40px!important;
         }
         
   }
